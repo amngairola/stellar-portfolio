@@ -6,7 +6,7 @@ export const personal = {
   phone: "+91-9068487652",
   linkedin: "https://www.linkedin.com/in/aman-gairola-8ba2a7244",
   github: "https://github.com/amngairola",
-  leetcode: "https://leetcode.com/amngairola",
+  leetcode: "https://leetcode.com/u/amangairola/",
   resumeUrl: "/AmanGairola_Resume.pdf",
   roles: ["Full Stack Developer", "MERN Specialist", "Software Engineer"],
   tagline:
