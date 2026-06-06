@@ -51,8 +51,8 @@ export const Hero = () => {
 
           <div className="mt-14 grid grid-cols-3 gap-3 sm:gap-6 max-w-xl animate-fade-in" style={{ animationDelay: "0.5s" }}>
             {[
-              { v: "300+", l: "LeetCode" },
-              { v: "3", l: "Full-Stack Apps" },
+              { v: "500+", l: "DSA Solved" },
+              { v: "4", l: "Full-Stack Apps" },
               { v: "<200ms", l: "Realtime Latency" },
             ].map((s) => (
               <div key={s.l} className="glass rounded-xl p-4 text-center">
