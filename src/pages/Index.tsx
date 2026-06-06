@@ -5,6 +5,7 @@ import { Skills } from "@/components/portfolio/Skills";
 import { Projects } from "@/components/portfolio/Projects";
 import { Experience } from "@/components/portfolio/Experience";
 import { Achievements } from "@/components/portfolio/Achievements";
+import { CompetitiveProgramming } from "@/components/portfolio/CompetitiveProgramming";
 import { Contact } from "@/components/portfolio/Contact";
 import { Footer } from "@/components/portfolio/Footer";
 import { useReveal } from "@/hooks/useReveal";
@@ -21,6 +22,7 @@ const Index = () => {
         <Projects />
         <Experience />
         <Achievements />
+        <CompetitiveProgramming />
         <Contact />
       </main>
       <Footer />
