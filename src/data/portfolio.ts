@@ -8,7 +8,12 @@ export const personal = {
   github: "https://github.com/amngairola",
   leetcode: "https://leetcode.com/u/amangairola/",
   resumeUrl: "/AmanGairola_Resume.pdf",
-  roles: ["Full Stack Developer", "MERN Specialist", "Software Engineer"],
+  roles: [
+    "Full Stack Developer",
+    "I Build Things People See",
+    "Turning Ideas Into Interfaces",
+    "Software Engineer",
+  ],
   tagline:
     "I build fast, scalable web products — from real-time collaborative tools to gamified platforms used by hundreds.",
 };
@@ -163,6 +168,45 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/amngairola/yap",
     live: "https://yapiing.vercel.app",
+  },
+  {
+    name: "QuickDrop",
+    tagline: "On-Demand Local Delivery & Ride Booking Platform",
+    description:
+      "A full-stack location-based booking platform that lets users instantly book local rides and delivery services. Features real-time booking management, distance-based fare estimation, live status tracking, Google Authentication, and a dedicated admin dashboard for operational monitoring.",
+    stack: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "React Query",
+      "Framer Motion",
+      "Recharts",
+      "Supabase Auth",
+      "Supabase Postgres",
+      "Supabase Realtime",
+      "Google OAuth",
+      "Vercel",
+    ],
+    features: [
+      "Google OAuth authentication with persistent sessions",
+      "Current location auto-detection, address autocomplete, pickup & drop selection",
+      "Distance-based automated fare estimation",
+      "Booking history, status tracking, and OTP verification",
+      "Role-based admin dashboard with user management, booking filters, and status updates",
+      "Revenue analytics, booking trends, and service performance charts",
+      "Real-time booking notifications and live dashboard sync via Supabase Realtime",
+      "Booking status workflow: Pending → Accepted → In Progress → Completed / Cancelled",
+    ],
+    challenges: [
+      "Implemented Supabase Realtime subscriptions for instant booking updates without page refresh",
+      "Built secure role-based admin authorization using database-driven route protection",
+      "Designed distance-based pricing engine for automated fare calculation",
+      "Integrated Google OAuth with Supabase Auth for secure, persistent user sessions",
+      "Used React Query for caching, optimistic updates, and efficient API state management",
+    ],
+    github: "https://github.com/amngairola/admin-dashboard-Quick-drop",
+    live: "https://rebaaar.vercel.app",
   },
 ];
 
