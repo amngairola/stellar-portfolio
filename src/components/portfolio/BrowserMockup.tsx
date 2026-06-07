@@ -11,6 +11,7 @@ type Props = {
   interval?: number;
   showLabelBadge?: boolean;
   className?: string;
+  baseWidth?: number;
 };
 
 export const BrowserMockup = ({
@@ -18,6 +19,7 @@ export const BrowserMockup = ({
   interval = 5000,
   showLabelBadge = true,
   className = "",
+  baseWidth = 1280,
 }: Props) => {
   const [i, setI] = useState(0);
 
@@ -44,17 +46,28 @@ export const BrowserMockup = ({
         </div>
         <div className="relative aspect-[16/10] bg-background">
           {sites.map((s, idx) => (
-            <iframe
+            <div
               key={s.src}
-              src={s.src}
-              title={s.label}
-              loading="lazy"
-              className={`absolute inset-0 h-full w-full transition-opacity duration-700 ${
+              className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${
                 idx === i ? "opacity-100" : "opacity-0"
               }`}
-              style={{ pointerEvents: "none" }}
-            />
+            >
+              <iframe
+                src={s.src}
+                title={s.label}
+                loading="lazy"
+                style={{
+                  width: `${baseWidth}px`,
+                  height: `${baseWidth * (10 / 16)}px`,
+                  transform: `scale(var(--bm-scale, 1))`,
+                  transformOrigin: "top left",
+                  pointerEvents: "none",
+                  border: 0,
+                }}
+              />
+            </div>
           ))}
+          <ScaleSetter baseWidth={baseWidth} />
           {showLabelBadge && (
             <div className="pointer-events-none absolute bottom-3 right-3 rounded-full border border-border bg-background/80 px-3 py-1 text-xs font-mono backdrop-blur">
               {active.label}
@@ -64,4 +77,21 @@ export const BrowserMockup = ({
       </div>
     </div>
   );
+};
+
+const ScaleSetter = ({ baseWidth }: { baseWidth: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const parent = ref.current?.parentElement;
+    if (!parent) return;
+    const update = () => {
+      const w = parent.clientWidth;
+      parent.style.setProperty("--bm-scale", String(w / baseWidth));
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(parent);
+    return () => ro.disconnect();
+  }, [baseWidth]);
+  return <div ref={ref} className="hidden" />;
 };
