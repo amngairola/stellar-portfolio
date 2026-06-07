@@ -7,7 +7,7 @@ export const personal = {
   linkedin: "https://www.linkedin.com/in/aman-gairola-8ba2a7244",
   github: "https://github.com/amngairola",
   leetcode: "https://leetcode.com/u/amangairola/",
-  resumeUrl: "/AmanGairola_Resume.pdf",
+  resumeUrl: "https://drive.google.com/file/d/1FgC_hTxQFHcDLgBMljTvcKrmz5mJ6i_Q/view?usp=sharing",
   roles: [
     "Full Stack Developer",
     "I Build Things People See",
