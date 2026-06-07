@@ -8,8 +8,12 @@ export const personal = {
   github: "https://github.com/amngairola",
   leetcode: "https://leetcode.com/u/amangairola/",
   resumeUrl: "/AmanGairola_Resume.pdf",
-  roles: ["Full Stack Developer", "MERN Specialist", "Software Engineer"],
-  // legacy roles kept above for reference
+  roles: [
+    "Full Stack Developer",
+    "I Build Things People See",
+    "Turning Ideas Into Interfaces",
+    "Software Engineer",
+  ],
   tagline:
     "I build fast, scalable web products — from real-time collaborative tools to gamified platforms used by hundreds.",
 };
