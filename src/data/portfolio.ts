@@ -9,6 +9,7 @@ export const personal = {
   leetcode: "https://leetcode.com/u/amangairola/",
   resumeUrl: "/AmanGairola_Resume.pdf",
   roles: ["Full Stack Developer", "MERN Specialist", "Software Engineer"],
+  // legacy roles kept above for reference
   tagline:
     "I build fast, scalable web products — from real-time collaborative tools to gamified platforms used by hundreds.",
 };
