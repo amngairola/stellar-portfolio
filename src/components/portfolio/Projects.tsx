@@ -100,9 +100,17 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
 
         <div className="lg:col-span-3">
           <div className="lg:sticky lg:top-24">
-            <BrowserMockup
-              sites={[{ url: project.live.replace(/^https?:\/\//, ""), src: project.live, label: project.name }]}
-            />
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${project.name} in a new tab`}
+              className="block cursor-pointer transition-transform hover:scale-[1.02]"
+            >
+              <BrowserMockup
+                sites={[{ url: project.live.replace(/^https?:\/\//, ""), src: project.live, label: project.name }]}
+              />
+            </a>
           </div>
         </div>
       </div>
