@@ -3,6 +3,7 @@ import { ExternalLink, Github, Star, Zap } from "lucide-react";
 import { projects } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
+import { BrowserMockup } from "./BrowserMockup";
 
 export const Projects = () => (
   <section id="projects" className="py-24 md:py-32 relative">
@@ -69,7 +70,11 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
           </div>
         </div>
 
-        <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+        <div className="lg:col-span-7 space-y-4">
+          <BrowserMockup
+            sites={[{ url: project.live.replace(/^https?:\/\//, ""), src: project.live, label: project.name }]}
+          />
+          <div className="grid sm:grid-cols-2 gap-4">
           <div className="rounded-xl border border-border bg-surface/60 p-5">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary mb-3">
               <Zap className="w-3.5 h-3.5" /> Key Features
@@ -95,6 +100,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
                 </li>
               ))}
             </ul>
+          </div>
           </div>
         </div>
       </div>

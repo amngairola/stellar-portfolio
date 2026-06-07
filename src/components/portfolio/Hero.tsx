@@ -1,7 +1,8 @@
 import { ArrowRight, Download, Mail, MapPin, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { personal } from "@/data/portfolio";
+import { personal, projects } from "@/data/portfolio";
 import { TypingText } from "./TypingText";
+import { BrowserMockup } from "./BrowserMockup";
 
 export const Hero = () => {
   const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -14,7 +15,8 @@ export const Hero = () => {
       <div className="blob bg-secondary/40 w-[480px] h-[480px] bottom-0 right-0" style={{ animationDelay: "4s" }} />
 
       <div className="container relative">
-        <div className="max-w-4xl">
+        <div className="grid items-center gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card/50 backdrop-blur-sm text-xs font-mono text-muted-foreground mb-6 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             Open to Software Engineer roles · 2026
@@ -60,6 +62,17 @@ export const Hero = () => {
                 <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
               </div>
             ))}
+          </div>
+          </div>
+
+          <div className="lg:col-span-5 animate-fade-in" style={{ animationDelay: "0.35s" }}>
+            <BrowserMockup
+              sites={projects.map((p) => ({
+                url: p.live.replace(/^https?:\/\//, ""),
+                src: p.live,
+                label: p.name,
+              }))}
+            />
           </div>
         </div>
       </div>
