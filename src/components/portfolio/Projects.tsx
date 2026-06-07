@@ -40,8 +40,8 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
             "radial-gradient(400px circle at var(--mx) var(--my), hsl(var(--primary) / 0.12), transparent 60%)",
         }}
       />
-      <div className="relative grid lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-5">
+      <div className="relative grid lg:grid-cols-10 gap-8">
+        <div className="lg:col-span-7 space-y-6">
           <div className="font-mono text-xs text-primary mb-3">PROJECT 0{index + 1}</div>
           <h3 className="font-display font-bold text-2xl md:text-3xl mb-2 flex items-center gap-2">
             {project.name}
@@ -56,7 +56,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
               </span>
             ))}
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 mb-2">
             <Button asChild size="sm" className="bg-gradient-primary text-primary-foreground hover:opacity-90">
               <a href={project.live} target="_blank" rel="noreferrer">
                 <ExternalLink className="w-4 h-4 mr-1.5" /> Live Demo
@@ -68,12 +68,6 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
               </a>
             </Button>
           </div>
-        </div>
-
-        <div className="lg:col-span-7 space-y-4">
-          <BrowserMockup
-            sites={[{ url: project.live.replace(/^https?:\/\//, ""), src: project.live, label: project.name }]}
-          />
           <div className="grid sm:grid-cols-2 gap-4">
           <div className="rounded-xl border border-border bg-surface/60 p-5">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary mb-3">
@@ -101,6 +95,14 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
               ))}
             </ul>
           </div>
+          </div>
+        </div>
+
+        <div className="lg:col-span-3">
+          <div className="lg:sticky lg:top-24">
+            <BrowserMockup
+              sites={[{ url: project.live.replace(/^https?:\/\//, ""), src: project.live, label: project.name }]}
+            />
           </div>
         </div>
       </div>
