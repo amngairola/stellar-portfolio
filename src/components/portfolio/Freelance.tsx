@@ -14,7 +14,7 @@ const karigari = {
     "Fast delivery and clean, maintainable code",
     "Tailored solutions for cafes, hotels, salons, gyms, restaurants, and personal brands",
   ],
-  stack: ["React.js", "Tailwind CSS", "Vercel"],
+  stack: ["React.js", "Node.js", "NoSQL", "SQL", "Vercel"],
   live: "https://kaarigarii.vercel.app",
 };
 
