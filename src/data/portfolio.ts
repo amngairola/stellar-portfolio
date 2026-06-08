@@ -212,13 +212,15 @@ export const projects: Project[] = [
 
 export const experience = [
   {
-    role: "Software Engineering Intern",
+    role: "Software Engineering Intern — Frontend",
     company: "VerveGen Tech Pvt Ltd",
     location: "Dehradun, India",
     period: "Jun 2023 – Aug 2023",
     bullets: [
-      "Engineered 15+ modular, reusable React.js components with ES6+ and Tailwind CSS, boosting code reusability by 40% and accelerating feature delivery by 2 weeks across multiple sprints.",
-      "Optimized front-end performance via strategic refactoring, lazy loading, and bundle size reduction — achieving 25% faster initial page loads and a 30-point Lighthouse score improvement.",
+      "Engineered 15+ modular React.js components using ES6+, custom hooks, and Tailwind CSS — improving code reusability by 40% and cutting feature delivery time by 2 weeks across sprints.",
+      "Optimised frontend performance through lazy loading, code splitting, and bundle size reduction — achieving 25% faster initial load times and a 30-point Lighthouse score improvement.",
+      "Architected a shared component library adopted across 3 product modules, standardising UI patterns and reducing design inconsistency.",
+      "Collaborated with designers to translate Figma mockups into pixel-perfect, responsive interfaces with cross-browser compatibility.",
     ],
   },
 ];
