@@ -7,11 +7,19 @@ const icons = [Rocket, Layers, Code2, BookOpen];
 export const About = () => (
   <section id="about" className="py-24 md:py-32 relative">
     <div className="container">
-      <SectionHeading eyebrow="01 — About" title="Engineering with intent." />
+      <SectionHeading eyebrow="01 — About" title="I build things that work and feel good to use." />
       <div className="grid lg:grid-cols-5 gap-10 lg:gap-16">
         <div className="lg:col-span-3 reveal space-y-5 text-base md:text-lg leading-relaxed text-muted-foreground">
           <p>{about.summary}</p>
           <p className="text-foreground">{about.highlight}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+            {about.stats.map((s) => (
+              <div key={s.label} className="glass rounded-xl p-4">
+                <div className="font-display text-2xl font-bold text-foreground">{s.value}</div>
+                <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="lg:col-span-2 reveal grid sm:grid-cols-2 gap-3">
           {about.values.map((v, i) => {
