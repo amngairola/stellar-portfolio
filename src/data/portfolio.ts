@@ -20,14 +20,20 @@ export const personal = {
 
 export const about = {
   summary:
-    "Computer Science undergrad at Shivalik College of Engineering and a Diploma holder in IT with Distinction. I focus on building production-grade full-stack applications with the MERN stack, real-time systems, and meticulous attention to performance and developer experience.",
+    "Full-stack developer with a frontend-first instinct. I work with the MERN stack — React, Node.js, MongoDB, Express — and care deeply about what happens between a user's click and the server's response. Performance, architecture, and experience aren't tradeoffs. They're the same thing.",
   highlight:
-    "As a Software Engineering Intern at VerveGen Tech, I shipped 15+ reusable React components, accelerated feature delivery by two weeks, and improved Lighthouse performance by 30 points.",
+    "As a Software Engineering Intern at VerveGen Tech, I shipped 15+ reusable React components, cut feature delivery time by two weeks, and pushed Lighthouse scores up by 30 points. I've since built and deployed five production-grade products — from a real-time collaborative code editor to a hyperlocal delivery platform with live booking sync.",
+  stats: [
+    { value: "5+", label: "Production apps shipped" },
+    { value: "300+", label: "DSA problems solved" },
+    { value: "1761", label: "LeetCode rating" },
+    { value: "30pt", label: "Lighthouse improvement" },
+  ],
   values: [
-    { title: "Performance First", desc: "Lazy loading, bundle hygiene, sub-200ms experiences." },
-    { title: "Clean Architecture", desc: "Modular code, clear boundaries, scalable patterns." },
-    { title: "Product Thinking", desc: "Frictionless onboarding and PLG-driven design." },
-    { title: "Always Learning", desc: "300+ DSA problems, OSS contributions, new stacks." },
+    { title: "Performance first", desc: "Lazy loading, bundle hygiene, sub-200ms targets." },
+    { title: "Clean architecture", desc: "Modular code, clear boundaries, scalable patterns." },
+    { title: "Product thinking", desc: "Frictionless flows, PLG design, user empathy." },
+    { title: "Always learning", desc: "New stacks, OSS contributions, consistent reps." },
   ],
 };
 
