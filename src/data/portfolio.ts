@@ -7,7 +7,8 @@ export const personal = {
   linkedin: "https://www.linkedin.com/in/aman-gairola-8ba2a7244",
   github: "https://github.com/amngairola",
   leetcode: "https://leetcode.com/u/amangairola/",
-  resumeUrl: "https://drive.google.com/file/d/1FgC_hTxQFHcDLgBMljTvcKrmz5mJ6i_Q/view?usp=sharing",
+  resumeUrl:
+    "https://drive.google.com/file/d/1FgC_hTxQFHcDLgBMljTvcKrmz5mJ6i_Q/view?usp=sharing",
   roles: [
     "Full Stack Developer",
     "I Build Things People See",
@@ -16,6 +17,8 @@ export const personal = {
   ],
   tagline:
     "I build fast, scalable web products — from real-time collaborative tools to gamified platforms used by hundreds.",
+  x: "Aman Gairola",
+  xUrl: "https://x.com/amanngairola",
 };
 
 export const about = {
@@ -30,25 +33,58 @@ export const about = {
     { value: "30pt", label: "Lighthouse improvement" },
   ],
   values: [
-    { title: "Performance first", desc: "Lazy loading, bundle hygiene, sub-200ms targets." },
-    { title: "Clean architecture", desc: "Modular code, clear boundaries, scalable patterns." },
-    { title: "Product thinking", desc: "Frictionless flows, PLG design, user empathy." },
-    { title: "Always learning", desc: "New stacks, OSS contributions, consistent reps." },
+    {
+      title: "Performance first",
+      desc: "Lazy loading, bundle hygiene, sub-200ms targets.",
+    },
+    {
+      title: "Clean architecture",
+      desc: "Modular code, clear boundaries, scalable patterns.",
+    },
+    {
+      title: "Product thinking",
+      desc: "Frictionless flows, PLG design, user empathy.",
+    },
+    {
+      title: "Always learning",
+      desc: "New stacks, OSS contributions, consistent reps.",
+    },
   ],
 };
 
 export const skills = [
   {
     category: "Languages",
-    items: ["Java", "JavaScript (ES6+)", "TypeScript", "C++", "SQL", "HTML5", "CSS3"],
+    items: [
+      "Java",
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "C++",
+      "SQL",
+      "HTML5",
+      "CSS3",
+    ],
   },
   {
     category: "Frontend",
-    items: ["React.js", "Redux", "Tailwind CSS", "Material-UI", "Responsive Design"],
+    items: [
+      "React.js",
+      "Redux",
+      "Tailwind CSS",
+      "Material-UI",
+      "Responsive Design",
+    ],
   },
   {
     category: "Backend",
-    items: ["Node.js", "Express.js", "REST APIs", "WebSockets", "Socket.io", "JWT Auth"],
+    items: [
+      "Node.js",
+      "Express.js",
+      "REST APIs",
+      "WebSockets",
+      "Socket.io",
+      "JWT Auth",
+    ],
   },
   {
     category: "Databases",
@@ -122,7 +158,15 @@ export const projects: Project[] = [
     tagline: "Full Stack Project Management Platform",
     description:
       "SaaS-inspired full-stack project management platform with role-based access control, analytics dashboard, and performance-first React frontend engineering.",
-    stack: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "TanStack Query", "JWT"],
+    stack: [
+      "React",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Tailwind CSS",
+      "TanStack Query",
+      "JWT",
+    ],
     features: [
       "~45% fewer redundant API calls via TanStack Query caching + background refetch",
       "~70% reduction in live search API calls via 300ms debounced input",
@@ -146,7 +190,14 @@ export const projects: Project[] = [
     tagline: "Real-Time Collaborative Code Editor",
     description:
       "Production-grade real-time collaborative code editor. Architected for low-latency multi-user synchronization, optimized React rendering, and scalable WebSocket communication.",
-    stack: ["React", "Node.js", "Express", "MongoDB", "Socket.io", "Monaco Editor"],
+    stack: [
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Socket.io",
+      "Monaco Editor",
+    ],
     features: [
       "~60% reduction in unnecessary re-renders via React.memo + useMemo + useCallback",
       "<50ms average Socket.io event round-trip latency",
@@ -170,7 +221,15 @@ export const projects: Project[] = [
     tagline: "Gamified DSA Progress Tracker",
     description:
       "Gamified DSA progress tracker with GitHub-style activity heatmap, hybrid JWT + OAuth 2.0 authentication, client-side memoization, and streak-based engagement.",
-    stack: ["React", "Node.js", "Express", "MongoDB", "JWT", "OAuth 2.0", "React Context API"],
+    stack: [
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "JWT",
+      "OAuth 2.0",
+      "React Context API",
+    ],
     features: [
       "~40% reduction in redundant API calls via memoization + DSA sheet response caching",
       "Hybrid auth: JWT (email/password) + Google OAuth 2.0 — dual-path login",
@@ -195,7 +254,15 @@ export const projects: Project[] = [
     tagline: "Real-Time Messaging Platform",
     description:
       "Real-time messaging platform with low-latency WebSocket communication, live presence tracking, optimized media sharing via Cloudinary, and persistent chat history.",
-    stack: ["React", "Node.js", "Express.js", "MongoDB", "Socket.io", "Cloudinary", "JWT"],
+    stack: [
+      "React",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Socket.io",
+      "Cloudinary",
+      "JWT",
+    ],
     features: [
       "Sub-100ms message delivery via Socket.io",
       "Live online/offline presence updates via socket events — zero polling",

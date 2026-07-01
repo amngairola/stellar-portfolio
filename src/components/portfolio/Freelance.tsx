@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { BrowserMockup } from "./BrowserMockup";
 
 const karigari = {
-  name: "Karigari",
+  name: "Shilp",
   tagline: "Custom Websites That Bring Customers to Your Business",
   description:
-    "Karigari is my freelance web studio where I design and develop high-converting custom websites for local businesses and personal brands — including cafes, hotels, salons, gyms, and restaurants. Every site is built mobile-first, SEO-ready, and optimized for real business outcomes like leads and customer walk-ins.",
+    "Shilp is my freelance web studio where I design and develop high-converting custom websites for local businesses and personal brands — including cafes, hotels, salons, gyms, and restaurants. Every site is built mobile-first, SEO-ready, and optimized for real business outcomes like leads and customer walk-ins.",
   offerings: [
     "Custom website design and development for local businesses",
     "Mobile-first, SEO-optimized builds",
@@ -15,7 +15,7 @@ const karigari = {
     "Tailored solutions for cafes, hotels, salons, gyms, restaurants, and personal brands",
   ],
   stack: ["React.js", "Node.js", "NoSQL", "SQL", "Vercel"],
-  live: "https://kaarigarii.vercel.app",
+  live: "https://shilp-web.vercel.app",
 };
 
 export const Freelance = () => (
@@ -50,12 +50,18 @@ export const Freelance = () => (
               </span>
             </div>
             <div>
-              <h3 className="font-display font-bold text-2xl md:text-3xl mb-2">{karigari.name}</h3>
+              <h3 className="font-display font-bold text-2xl md:text-3xl mb-2">
+                {karigari.name}
+              </h3>
               <div className="text-muted-foreground">{karigari.tagline}</div>
             </div>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{karigari.description}</p>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              {karigari.description}
+            </p>
             <div className="rounded-xl border border-border bg-surface/60 p-5">
-              <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3">What I offer</div>
+              <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3">
+                What I offer
+              </div>
               <ul className="space-y-2 text-sm">
                 {karigari.offerings.map((o) => (
                   <li key={o} className="flex gap-2 text-muted-foreground">
@@ -76,9 +82,13 @@ export const Freelance = () => (
               ))}
             </div>
             <div className="flex gap-3 pt-1">
-              <Button asChild size="sm" className="bg-gradient-primary text-primary-foreground hover:opacity-90">
+              <Button
+                asChild
+                size="sm"
+                className="bg-gradient-primary text-primary-foreground hover:opacity-90"
+              >
                 <a href={karigari.live} target="_blank" rel="noreferrer">
-                  <ExternalLink className="w-4 h-4 mr-1.5" /> Visit Karigari
+                  <ExternalLink className="w-4 h-4 mr-1.5" /> Visit
                 </a>
               </Button>
             </div>
@@ -92,7 +102,13 @@ export const Freelance = () => (
               className="block cursor-pointer transition-transform hover:scale-[1.02]"
             >
               <BrowserMockup
-                sites={[{ url: karigari.live.replace(/^https?:\/\//, ""), src: karigari.live, label: karigari.name }]}
+                sites={[
+                  {
+                    url: karigari.live.replace(/^https?:\/\//, ""),
+                    src: karigari.live,
+                    label: karigari.name,
+                  },
+                ]}
               />
             </a>
           </div>
