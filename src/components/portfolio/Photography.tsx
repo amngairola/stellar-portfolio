@@ -45,22 +45,22 @@ export const Photography = () => {
 
   const styleForOffset = (o: number): React.CSSProperties => {
     const abs = Math.abs(o);
-    // Sizes: center 500, next 260, far 200 (responsive via CSS vars)
-    const size = abs === 0 ? "var(--ph-c)" : abs === 1 ? "var(--ph-m)" : "var(--ph-s)";
+    const isCenter = abs === 0;
+    const w = isCenter ? "var(--ph-c-w)" : "var(--ph-w)";
+    const h = isCenter ? "var(--ph-c-h)" : "var(--ph-h)";
     const opacity = abs === 0 ? 1 : abs === 1 ? 0.55 : 0.35;
     const scale = abs === 0 ? 1 : abs === 1 ? 0.92 : 0.82;
-    // horizontal offset from center in px (accumulated)
-    // spacing between adjacent slots
-    const gapMid = "calc((var(--ph-c) + var(--ph-m)) / 2 + 16px)";
-    const gapOuter = "calc(var(--ph-m) + 24px)";
+    const gapMid = "calc((var(--ph-c-w) + var(--ph-w)) / 2 + 16px)";
+    const gapOuter = "calc(var(--ph-w) + 24px)";
     let tx = "0px";
     if (o === -1) tx = `calc(-1 * ${gapMid})`;
     else if (o === 1) tx = gapMid;
     else if (o === -2) tx = `calc(-1 * ${gapMid} - ${gapOuter})`;
     else if (o === 2) tx = `calc(${gapMid} + ${gapOuter})`;
     return {
-      width: size,
-      height: size,
+      width: w,
+      height: h,
+      borderRadius: "8px",
       opacity,
       transform: `translate(-50%, -50%) translateX(${tx}) scale(${scale})`,
       zIndex: 10 - abs,
@@ -109,11 +109,12 @@ export const Photography = () => {
         <div
           className="reveal relative mx-auto select-none"
           style={{
-            // Responsive sizes via CSS vars
-            ["--ph-c" as any]: "min(500px, 70vw)",
-            ["--ph-m" as any]: "min(240px, 34vw)",
-            ["--ph-s" as any]: "min(180px, 26vw)",
-            height: "min(520px, 74vw)",
+            // Responsive sizes via CSS vars (portrait 3:4 cards)
+            ["--ph-c-w" as any]: "min(380px, 60vw)",
+            ["--ph-c-h" as any]: "min(500px, 80vw)",
+            ["--ph-w" as any]: "min(200px, 32vw)",
+            ["--ph-h" as any]: "min(270px, 43vw)",
+            height: "min(540px, 86vw)",
             WebkitMaskImage:
               "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
             maskImage:
@@ -134,7 +135,7 @@ export const Photography = () => {
                   else next();
                 }}
                 aria-label={isCenter ? "Open photo fullscreen" : o < 0 ? "Previous" : "Next"}
-                className="absolute top-1/2 left-1/2 overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="absolute top-1/2 left-1/2 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 style={{
                   ...styleForOffset(o),
                   transition:
