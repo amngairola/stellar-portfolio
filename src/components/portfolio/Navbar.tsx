@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Moon, Sun, Download } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
 import { personal } from "@/data/portfolio";
@@ -19,6 +20,9 @@ export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const onHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => {
@@ -40,6 +44,11 @@ export const Navbar = () => {
 
   const go = (id: string) => {
     setOpen(false);
+    if (!onHome) {
+      navigate("/", { state: { scrollTo: id } });
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+      return;
+    }
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -50,8 +59,9 @@ export const Navbar = () => {
       }`}
     >
       <nav className="container flex items-center justify-between h-16 md:h-20">
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        <Link
+          to="/"
+          onClick={() => onHome && window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2 group"
           aria-label="Home"
         >
@@ -59,7 +69,7 @@ export const Navbar = () => {
             {personal.initials}
           </span>
           <span className="hidden sm:block font-display font-semibold">{personal.name}</span>
-        </button>
+        </Link>
 
         <div className="hidden md:flex items-center gap-1">
           {links.map(l => (
@@ -67,7 +77,7 @@ export const Navbar = () => {
               key={l.id}
               onClick={() => go(l.id)}
               className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                active === l.id
+                onHome && active === l.id
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               }`}
@@ -75,6 +85,16 @@ export const Navbar = () => {
               {l.label}
             </button>
           ))}
+          <Link
+            to="/blogs"
+            className={`px-3 py-2 text-sm rounded-md transition-colors ${
+              location.pathname.startsWith("/blogs")
+                ? "text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Blogs
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
@@ -108,12 +128,21 @@ export const Navbar = () => {
                 key={l.id}
                 onClick={() => go(l.id)}
                 className={`text-left px-3 py-3 rounded-md ${
-                  active === l.id ? "text-primary bg-muted" : "text-muted-foreground"
+                  onHome && active === l.id ? "text-primary bg-muted" : "text-muted-foreground"
                 }`}
               >
                 {l.label}
               </button>
             ))}
+            <Link
+              to="/blogs"
+              onClick={() => setOpen(false)}
+              className={`text-left px-3 py-3 rounded-md ${
+                location.pathname.startsWith("/blogs") ? "text-primary bg-muted" : "text-muted-foreground"
+              }`}
+            >
+              Blogs
+            </Link>
           </div>
         </div>
       )}
