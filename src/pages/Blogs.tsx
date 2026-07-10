@@ -293,7 +293,8 @@ const Blogs = () => {
       .order("created_at", { ascending: false })
       .then(({ data, error }) => {
         if (!mounted) return;
-        if (error) console.error(error);
+        console.log("[Blogs] supabase response:", { data, error });
+        if (error) console.error("[Blogs] fetch error:", error);
         setPosts((data as Blog[] | null) ?? []);
       });
     return () => {
