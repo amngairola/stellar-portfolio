@@ -1,49 +1,78 @@
-## Goal
+## Overview
 
-Mirror the Karigari-style live browser preview (auto-rotating iframe inside a macOS browser frame) and add a similar live preview to each project card.
+Re-theme the portfolio to a premium, non-generic dark palette, restructure the single scroll into 5 chapter pages with animated navigation, and expand the photography gallery with 6 new Uttarakhand shots. All existing resume/project/blog content and functionality stays intact.
 
-## 1. New shared component: `BrowserMockup`
+---
 
-Create `src/components/portfolio/BrowserMockup.tsx`:
+## 1. New color system
 
-- macOS-style chrome: 3 traffic-light dots + URL pill in title bar.
-- Body: `aspect-[16/10]`, renders one or more `<iframe>`s stacked absolutely with opacity crossfade (700ms).
-- Props:
-  - `sites: { url: string; src: string; label: string }[]`
-  - `interval?: number` (default 5000) — only auto-rotates when `sites.length > 1`.
-  - `showLabelBadge?: boolean` (default true).
-- Iframes use `loading="lazy"`, `pointer-events: none`, `title={label}`.
-- Styling matches existing portfolio design tokens (`border-border`, `bg-card`, `glass`, `shadow-glow`, gradient blur halo behind), so it visually fits the dark/neon theme — no changes to design system.
+Replace the current cyan (`187 92%`) + violet (`270 91%`) gradient system with a warm, intentional palette. Proposed default (final tokens confirmed at implementation):
 
-## 2. Hero — add rotating preview on the right
+- Background: deep espresso-ink `hsl(30 8% 7%)` (warm, not #000)
+- Surface: `hsl(30 8% 10%)`
+- Surface elevated: `hsl(30 8% 13%)`
+- Border: `hsl(30 8% 18%)`
+- Muted text: `hsl(35 10% 65%)`
+- Foreground: warm off-white `hsl(35 20% 92%)` (no pure #fff)
+- Accent (primary): warm amber/ochre `hsl(35 75% 58%)`
+- Accent hover/glow: `hsl(35 85% 68%)`
+- No secondary purple — the old `--secondary` becomes a muted warm tone used only for chips.
 
-Edit `src/components/portfolio/Hero.tsx`:
+Changes:
+- Rewrite `:root` and `.dark` tokens in `src/index.css`; retire `--primary-glow` gradient into a subtle amber-only gradient (`linear-gradient(135deg, accent, accent-hover)`).
+- Soften `--shadow-glow` (drop the neon halo, use a low-opacity warm shadow).
+- Sweep components for any hardcoded blue/purple/cyan classes or inline colors and retint. Prose editorial and code block colors updated to the new accent.
+- Light mode preserved but re-tinted to a cream/paper base with the same amber accent, so the toggle still works.
 
-- Wrap existing hero content in a `lg:grid-cols-12` grid.
-  - Left column `lg:col-span-7`: current intro (badge, name, TypingText, tagline, location, buttons, stats) — unchanged content.
-  - Right column `lg:col-span-5`: `<BrowserMockup sites={heroSites} />` cycling through all 4 projects' live URLs every 5s.
-- Add a small floating "Live preview" pill (similar to Karigari's "Avg. delivery 7 days" chip) showing the current project name.
-- On mobile (`<lg`), the preview stacks below intro and remains visible.
+## 2. Component libraries
 
-`heroSites` derived from `projects` in `src/data/portfolio.ts` (name → label, live → src/url) — no data file changes needed.
+- Continue using shadcn/ui components already installed; the retheme happens entirely via CSS variables and `tailwind.config.ts` — no visual "default shadcn" leftovers.
+- Add one Aceternity/Magic-UI style effect on Hero only (spotlight + animated gradient border on the browser mockup), reimplemented locally with the amber accent (no library neon defaults). One additional subtle "shine on hover" card treatment on the Projects list. Everything else stays as-is.
 
-## 3. Per-project preview inside `Projects.tsx`
+## 3. Page structure — 5 chapter pages
 
-Edit `src/components/portfolio/Projects.tsx`:
+Break `src/pages/Index.tsx` into 5 routed pages using existing section components:
 
-- Replace the existing right-side 2-column grid (Key Features + Challenges) layout slightly:
-  - Top of right column (`lg:col-span-7`): add a `<BrowserMockup sites={[{ url, src: project.live, label: project.name }]} />` (single-site, no rotation) showing that project live.
-  - Below it: keep the existing Key Features + Challenges cards exactly as they are (same styling, same content, same spacing rhythm).
-- No changes to project data, tags, buttons, or animations.
+```text
+/                → Home (Hero) + About
+/work            → Skills + Projects + CompetitiveProgramming (LeetCode)
+/journey         → Experience + Education + Achievements + Freelance
+/lens            → Photography (expanded gallery)
+/contact         → Contact + Footer socials
+```
 
-## 4. Notes / constraints
+Routing:
+- `src/App.tsx`: add the 5 routes, keep existing `/blogs*` routes and `NotFound`.
+- `Navbar.tsx`: replace section-scroll buttons with `NavLink`s to the 5 pages + Blogs. Active state uses amber underline. Mobile menu updated accordingly.
+- New `ChapterLayout` wrapper: renders `<Navbar/>`, `<Outlet/>` inside an `AnimatePresence` fade/slide transition (framer-motion is already available via shadcn deps; if not, install it), plus the floating next-page pill and page indicator.
+- Floating pill (bottom-right, fixed): shows next chapter name — e.g. on `/work` → `Journey →`. On `/contact` wraps to `Home →`. Uses accent color, pill-shaped, subtle shadow.
+- Page indicator: small `3 / 5` counter with 5 dots to the left of the pill; current dot filled amber.
+- Keyboard: `ArrowRight` / `ArrowLeft` navigate between chapters. Touch swipe (left/right) on mobile via a lightweight pointer handler. Skipped inside inputs and the blog reader.
+- Blogs pages keep their own layout but the Navbar still shows.
 
-- Iframes embed the live Vercel URLs already in `portfolio.ts`. Some sites may set `X-Frame-Options: DENY` and fail to render — in that case the frame shows blank. We'll keep `loading="lazy"` and a subtle background so blank states look intentional. If any project blocks embedding, we can later swap in a static screenshot.
-- No design system, token, color, font, or animation changes. Only adds the new component + grid wrappers.
-- No new dependencies.
+## 4. Hobbies (Lens) page — expanded gallery
 
-## Files
+- Keep the current cinematic carousel as the hero of the page.
+- Add a new masonry/staggered grid below it with all 12 photos (6 existing + 6 new Uttarakhand URLs), styled as shadcn `Card`s with rounded corners, hover lift, and staggered fade-in on scroll.
+- Short intro copy tying it to Uttarakhand/where I'm from ("Frames from home — Uttarakhand and beyond").
+- Lightbox remains functional for both carousel and grid.
 
-- Add: `src/components/portfolio/BrowserMockup.tsx`
-- Edit: `src/components/portfolio/Hero.tsx`
-- Edit: `src/components/portfolio/Projects.tsx`
+## 5. General
+
+- Audit and retint every gradient, glow, ring, and border referencing the old cyan/violet in: `Hero`, `Projects`, `Freelance`, `Achievements`, `CompetitiveProgramming`, `About`, `BrowserMockup`, `Photography`, blog pages.
+- Animations kept but re-tinted: no default neon glow.
+- Update `index.html` theme-color meta to the new background hex.
+
+---
+
+## Technical notes
+
+- Framer Motion for page transitions and pill/indicator animations. If not already installed, add `framer-motion`.
+- No database, no auth, no content changes. Resume URL, blog table, Supabase client untouched.
+- `useReveal` hook reused for grid stagger; ChapterLayout mounts once so scroll reveals still fire per route via a `key={pathname}` on the motion wrapper.
+- Accessibility: pill has `aria-label`, dots have `aria-current`, keyboard nav ignores modifier keys and typing contexts.
+
+## Out of scope
+
+- No copy/content rewrites beyond the tiny Lens intro line.
+- No changes to Supabase schema, blogs, or SEO JSON-LD beyond retinting.
