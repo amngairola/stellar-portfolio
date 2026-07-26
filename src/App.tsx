@@ -3,11 +3,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
+import Home from "./pages/Home.tsx";
+import Work from "./pages/Work.tsx";
+import Journey from "./pages/Journey.tsx";
+import Lens from "./pages/Lens.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import { ThemeProvider } from "@/hooks/useTheme";
+import { ChapterLayout } from "@/components/portfolio/ChapterLayout";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +24,13 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route element={<ChapterLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/journey" element={<Journey />} />
+              <Route path="/lens" element={<Lens />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Route>
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/:category" element={<Blogs />} />
             <Route path="/blogs/:category/:slug" element={<BlogPost />} />
