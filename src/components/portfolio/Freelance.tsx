@@ -47,48 +47,71 @@ export const Freelance = () => (
               <Briefcase className="w-3 h-3" /> Founder & Developer
             </span>
           </div>
-          <div>
-            <h3 className="font-display font-bold text-2xl md:text-3xl mb-2">
-              {karigari.name}
-            </h3>
-            <div className="text-muted-foreground">{karigari.tagline}</div>
-          </div>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-3xl">
-            {karigari.description}
-          </p>
-          <div className="rounded-xl border border-border bg-surface/60 p-5 max-w-2xl">
-            <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3">
-              What I offer
+          <div className="grid lg:grid-cols-2 gap-6 items-start">
+            <div className="space-y-5">
+              <div>
+                <h3 className="font-display font-bold text-2xl md:text-3xl mb-2">
+                  {karigari.name}
+                </h3>
+                <div className="text-muted-foreground">{karigari.tagline}</div>
+              </div>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                {karigari.description}
+              </p>
+              <div className="rounded-xl border border-border bg-surface/60 p-5">
+                <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3">
+                  What I offer
+                </div>
+                <ul className="space-y-2 text-sm">
+                  {karigari.offerings.map((o) => (
+                    <li key={o} className="flex gap-2 text-muted-foreground">
+                      <span className="text-secondary mt-1">▸</span>
+                      <span>{o}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {karigari.stack.map((t) => (
+                  <span
+                    key={t}
+                    className="text-xs font-mono px-2.5 py-1 rounded-md bg-secondary/10 text-secondary border border-secondary/20"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-3 pt-1">
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-gradient-primary text-primary-foreground hover:brightness-110 transition"
+                >
+                  <a href={karigari.live} target="_blank" rel="noreferrer">
+                    <ExternalLink className="w-4 h-4 mr-1.5" /> Visit
+                  </a>
+                </Button>
+              </div>
             </div>
-            <ul className="space-y-2 text-sm">
-              {karigari.offerings.map((o) => (
-                <li key={o} className="flex gap-2 text-muted-foreground">
-                  <span className="text-secondary mt-1">▸</span>
-                  <span>{o}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {karigari.stack.map((t) => (
-              <span
-                key={t}
-                className="text-xs font-mono px-2.5 py-1 rounded-md bg-secondary/10 text-secondary border border-secondary/20"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-          <div className="flex gap-3 pt-1">
-            <Button
-              asChild
-              size="sm"
-              className="bg-gradient-primary text-primary-foreground hover:brightness-110 transition"
-            >
-              <a href={karigari.live} target="_blank" rel="noreferrer">
-                <ExternalLink className="w-4 h-4 mr-1.5" /> Visit
-              </a>
-            </Button>
+
+            <div className="reveal overflow-hidden rounded-2xl border border-border bg-card shadow-elevated">
+              <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-3">
+                <span className="h-3 w-3 rounded-full bg-red-400/80" />
+                <span className="h-3 w-3 rounded-full bg-yellow-400/80" />
+                <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+                <div className="ml-3 flex-1 truncate rounded-md bg-background/60 px-3 py-1 text-center text-xs font-mono text-muted-foreground">
+                  {karigari.live}
+                </div>
+              </div>
+              <div className="relative aspect-[16/10] bg-surface">
+                <img
+                  src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt={`${karigari.name} website preview`}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

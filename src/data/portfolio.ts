@@ -134,13 +134,9 @@ export const projects: Project[] = [
     ],
     features: [
       "Google OAuth authentication with persistent sessions",
-      "Current location auto-detection, address autocomplete, pickup & drop selection",
-      "Distance-based automated fare estimation",
-      "Booking history, status tracking, and OTP verification",
-      "Role-based admin dashboard with user management, booking filters, and status updates",
-      "Revenue analytics, booking trends, and service performance charts",
+      "Distance-based automated fare estimation & live status tracking",
+      "Role-based admin dashboard with revenue analytics and booking trends",
       "Real-time booking notifications and live dashboard sync via Supabase Realtime",
-      "Booking status workflow: Pending → Accepted → In Progress → Completed / Cancelled",
     ],
     challenges: [
       "Implemented Supabase Realtime subscriptions for instant booking updates without page refresh",
@@ -170,8 +166,7 @@ export const projects: Project[] = [
     features: [
       "~45% fewer redundant API calls via TanStack Query caching + background refetch",
       "~70% reduction in live search API calls via 300ms debounced input",
-      "6+ routes code-split via React.lazy + Suspense — reduced initial bundle size",
-      "Skeleton loaders across all data-heavy views — zero layout shift on data arrival",
+      "6+ routes code-split via React.lazy + Suspense",
       "Dual-role UI (Admin / Member) rendered dynamically from JWT-decoded role claim",
     ],
     challenges: [
@@ -202,7 +197,6 @@ export const projects: Project[] = [
       "~60% reduction in unnecessary re-renders via React.memo + useMemo + useCallback",
       "<50ms average Socket.io event round-trip latency",
       "10+ concurrent users supported per room",
-      "Room lifecycle (join → sync → disconnect → cleanup) completes in <200ms",
       "Debounced Monaco editor handlers prevent event flooding under rapid input",
     ],
     challenges: [
@@ -231,11 +225,10 @@ export const projects: Project[] = [
       "React Context API",
     ],
     features: [
-      "~40% reduction in redundant API calls via memoization + DSA sheet response caching",
-      "Hybrid auth: JWT (email/password) + Google OAuth 2.0 — dual-path login",
+      "~40% reduction in redundant API calls via memoization + caching",
+      "Hybrid auth: JWT (email/password) + Google OAuth 2.0",
       "HTTP-only cookies + Axios interceptors handle token refresh silently",
-      "Lazy-loaded routes + skeleton screens reduce initial TTI significantly",
-      "Guest → Authenticated state transition via React Context — zero page reload",
+      "GitHub-style activity heatmap with streak-based engagement",
     ],
     challenges: [
       "Client-side memoization + caching cut ~40% redundant API calls on revisit",
@@ -267,7 +260,6 @@ export const projects: Project[] = [
       "Sub-100ms message delivery via Socket.io",
       "Live online/offline presence updates via socket events — zero polling",
       "Cloudinary CDN integration for optimized image delivery",
-      "Real-time UI state sync — new messages append without manual refresh",
       "JWT-secured API with HTTP-only cookie session management",
     ],
     challenges: [
@@ -325,10 +317,5 @@ export const certifications = [
     title: "Data Structures & Algorithms in Java",
     issuer: "Coursera Specialization",
     desc: "Hands-on implementation of core algorithms and data structures.",
-  },
-  {
-    title: "Diploma in IT — Distinction",
-    issuer: "Government Polytechnic Gauchar",
-    desc: "Graduated with 9.0 CGPA, top of academic cohort.",
   },
 ];

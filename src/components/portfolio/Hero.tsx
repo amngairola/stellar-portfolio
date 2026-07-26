@@ -15,11 +15,6 @@ export const Hero = () => {
 
       <div className="container relative">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card/50 backdrop-blur-sm text-xs font-mono text-muted-foreground mb-6">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Open to Software Engineer roles · 2026
-          </div>
-
           <h1 className="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight">
             Hi, I'm <span className="gradient-text">{personal.name}.</span>
           </h1>

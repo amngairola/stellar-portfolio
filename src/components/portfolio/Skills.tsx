@@ -7,7 +7,7 @@ const icons = [Code, Palette, Server, Database, Wrench, Brain];
 export const Skills = () => (
   <section id="skills" className="py-24 md:py-32 bg-surface/50 relative">
     <div className="container">
-      <SectionHeading eyebrow="02 — Skills" title="A toolkit built for full-stack velocity." desc="Languages, frameworks, and concepts I reach for to ship reliable, performant products." />
+      <SectionHeading eyebrow="01 — Tools" title="A toolkit built for full-stack velocity." desc="Languages, frameworks, and concepts I reach for to ship reliable, performant products." />
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {skills.map((s, i) => {
           const Icon = icons[i];

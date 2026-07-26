@@ -8,8 +8,8 @@ const Work = () => {
   return (
     <div className="pt-24">
       <Skills />
-      <Projects />
       <Achievements />
+      <Projects />
     </div>
   );
 };
