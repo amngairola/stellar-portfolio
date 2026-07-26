@@ -10,7 +10,6 @@ const chapters = [
   { to: "/work", label: "Work" },
   { to: "/journey", label: "Journey" },
   { to: "/lens", label: "Lens" },
-  { to: "/blogs", label: "Blogs" },
 ];
 
 export const Navbar = () => {

@@ -22,15 +22,6 @@ const full = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=1920`;
 
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-// Bento pattern: irregular spans for visual rhythm across 12 photos.
-// Each entry is [colSpan, rowSpan] on lg, falls back to 1x1 on smaller.
-const BENTO: Array<[number, number]> = [
-  [2, 2], [1, 1], [1, 1],
-  [1, 1], [2, 1], [1, 2],
-  [1, 1], [1, 1], [2, 2],
-  [1, 1], [1, 1], [2, 1],
-];
-
 export const Photography = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const len = PHOTO_URLS.length;
@@ -69,36 +60,30 @@ export const Photography = () => {
           </p>
         </div>
 
-        {/* Bento masonry grid */}
-        <div className="reveal grid grid-cols-2 lg:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
-          {PHOTO_URLS.map((url, i) => {
-            const [colSpan, rowSpan] = BENTO[i] ?? [1, 1];
-            return (
-              <button
-                key={url}
-                onClick={() => setLightbox(i)}
-                aria-label={`Open photo ${i + 1}`}
-                className="group relative overflow-hidden rounded-xl border border-border bg-card break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.01]"
-                style={{
-                  gridColumn: `span ${colSpan}`,
-                  gridRow: `span ${rowSpan}`,
-                  animation: "fade-in 0.5s ease-out both",
-                  animationDelay: `${i * 50}ms`,
-                }}
-              >
-                <img
-                  src={thumb(url)}
-                  alt={`Photograph ${i + 1}`}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors" />
-                <div className="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] text-foreground/0 group-hover:text-foreground/60 transition-colors">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-              </button>
-            );
-          })}
+        <div className="reveal columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 [column-fill:_balance]">
+          {PHOTO_URLS.map((url, i) => (
+            <button
+              key={url}
+              onClick={() => setLightbox(i)}
+              aria-label={`Open photo ${i + 1}`}
+              className="group relative block w-full mb-3 md:mb-4 overflow-hidden rounded-xl border border-border bg-card break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-transform duration-300 hover:-translate-y-1"
+              style={{
+                animation: "fade-in 0.5s ease-out both",
+                animationDelay: `${i * 50}ms`,
+              }}
+            >
+              <img
+                src={thumb(url)}
+                alt={`Photograph ${i + 1}`}
+                loading="lazy"
+                className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors" />
+              <div className="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] text-foreground/0 group-hover:text-foreground/60 transition-colors">
+                {String(i + 1).padStart(2, "0")}
+              </div>
+            </button>
+          ))}
         </div>
 
         <div className="reveal mt-14 flex justify-center">
@@ -121,7 +106,7 @@ export const Photography = () => {
 
       {lightbox !== null && (
         <div
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center animate-fade-in"
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center"
           onClick={close}
           role="dialog"
           aria-modal="true"
@@ -151,7 +136,8 @@ export const Photography = () => {
             src={full(PHOTO_URLS[lightbox])}
             alt={`Photograph ${lightbox + 1}`}
             onClick={e => e.stopPropagation()}
-            className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg animate-scale-in"
+            className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg"
+            style={{ animation: "scale-in 0.25s var(--transition-smooth) both" }}
           />
         </div>
       )}

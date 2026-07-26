@@ -4,7 +4,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { personal } from "@/data/portfolio";
 
 export const Footer = () => (
-  <footer className="border-t border-border py-10">
+  <footer className="border-t border-border py-10 pb-28 md:pb-32 relative z-20">
     <div className="container flex flex-col sm:flex-row items-center justify-between gap-4">
       <div className="text-sm text-muted-foreground">
         Built by{" "}

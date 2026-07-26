@@ -1,7 +1,6 @@
 import { ExternalLink, Briefcase, Sparkles } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
-import { ProjectPreview } from "./ProjectPreview";
 
 const karigari = {
   name: "Shilp",
@@ -30,7 +29,7 @@ export const Freelance = () => (
     />
     <div className="container">
       <SectionHeading
-        eyebrow="04 — Freelance"
+        eyebrow="02 — Freelance"
         title="Ventures I run."
         desc="Live businesses I've founded and ship under my own brand."
       />
@@ -39,70 +38,57 @@ export const Freelance = () => (
           aria-hidden
           className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-secondary/10 blur-3xl"
         />
-        <div className="relative grid lg:grid-cols-10 gap-8">
-          <div className="lg:col-span-6 space-y-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-secondary/15 text-secondary border border-secondary/30">
-                <Sparkles className="w-3 h-3" /> Live Business
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-                <Briefcase className="w-3 h-3" /> Founder & Developer
-              </span>
-            </div>
-            <div>
-              <h3 className="font-display font-bold text-2xl md:text-3xl mb-2">
-                {karigari.name}
-              </h3>
-              <div className="text-muted-foreground">{karigari.tagline}</div>
-            </div>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              {karigari.description}
-            </p>
-            <div className="rounded-xl border border-border bg-surface/60 p-5">
-              <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3">
-                What I offer
-              </div>
-              <ul className="space-y-2 text-sm">
-                {karigari.offerings.map((o) => (
-                  <li key={o} className="flex gap-2 text-muted-foreground">
-                    <span className="text-secondary mt-1">▸</span>
-                    <span>{o}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {karigari.stack.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs font-mono px-2.5 py-1 rounded-md bg-secondary/10 text-secondary border border-secondary/20"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            <div className="flex gap-3 pt-1">
-              <Button
-                asChild
-                size="sm"
-                className="bg-gradient-primary text-primary-foreground hover:opacity-90"
-              >
-                <a href={karigari.live} target="_blank" rel="noreferrer">
-                  <ExternalLink className="w-4 h-4 mr-1.5" /> Visit
-                </a>
-              </Button>
-            </div>
+        <div className="relative space-y-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-secondary/15 text-secondary border border-secondary/30">
+              <Sparkles className="w-3 h-3" /> Live Business
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/25">
+              <Briefcase className="w-3 h-3" /> Founder & Developer
+            </span>
           </div>
-          <div className="lg:col-span-4">
-            <a
-              href={karigari.live}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open Karigari in a new tab"
-              className="block cursor-pointer transition-transform hover:scale-[1.02]"
+          <div>
+            <h3 className="font-display font-bold text-2xl md:text-3xl mb-2">
+              {karigari.name}
+            </h3>
+            <div className="text-muted-foreground">{karigari.tagline}</div>
+          </div>
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-3xl">
+            {karigari.description}
+          </p>
+          <div className="rounded-xl border border-border bg-surface/60 p-5 max-w-2xl">
+            <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3">
+              What I offer
+            </div>
+            <ul className="space-y-2 text-sm">
+              {karigari.offerings.map((o) => (
+                <li key={o} className="flex gap-2 text-muted-foreground">
+                  <span className="text-secondary mt-1">▸</span>
+                  <span>{o}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {karigari.stack.map((t) => (
+              <span
+                key={t}
+                className="text-xs font-mono px-2.5 py-1 rounded-md bg-secondary/10 text-secondary border border-secondary/20"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-3 pt-1">
+            <Button
+              asChild
+              size="sm"
+              className="bg-gradient-primary text-primary-foreground hover:brightness-110 transition"
             >
-              <ProjectPreview url={karigari.live.replace(/^https?:\/\//, "")} label={karigari.name} />
-            </a>
+              <a href={karigari.live} target="_blank" rel="noreferrer">
+                <ExternalLink className="w-4 h-4 mr-1.5" /> Visit
+              </a>
+            </Button>
           </div>
         </div>
       </div>

@@ -58,15 +58,14 @@ export const ChapterLayout = () => {
       onTouchEnd={onTouchEnd}
     >
       <Navbar />
-      <main key={location.pathname} className="animate-page-in">
+      <main>
         <Outlet />
       </main>
 
       <Footer />
 
-      {/* Floating page indicator + next pill — sits above footer, no overlap */}
-      <div className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-30 flex items-center gap-3 animate-fade-in">
-        <div className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-full bg-card/70 backdrop-blur-md border border-border">
+      <div className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 flex items-center gap-3">
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-full bg-card/80 backdrop-blur-md border border-border">
           {CHAPTERS.map((c, i) => (
             <span
               key={c.path}
@@ -83,7 +82,7 @@ export const ChapterLayout = () => {
         <button
           onClick={() => navigate(next.path)}
           aria-label={`Go to ${next.label}`}
-          className="group inline-flex items-center gap-2 pl-4 pr-3 py-2.5 rounded-full bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity"
+          className="group inline-flex items-center gap-2 pl-4 pr-3 py-2.5 rounded-full bg-primary text-primary-foreground font-medium text-sm hover:brightness-110 transition"
         >
           <span>{next.label}</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
