@@ -1,7 +1,7 @@
 import { ExternalLink, Briefcase, Sparkles } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
-import { BrowserMockup } from "./BrowserMockup";
+import { ProjectPreview } from "./ProjectPreview";
 
 const karigari = {
   name: "Shilp",
@@ -101,15 +101,7 @@ export const Freelance = () => (
               aria-label="Open Karigari in a new tab"
               className="block cursor-pointer transition-transform hover:scale-[1.02]"
             >
-              <BrowserMockup
-                sites={[
-                  {
-                    url: karigari.live.replace(/^https?:\/\//, ""),
-                    src: karigari.live,
-                    label: karigari.name,
-                  },
-                ]}
-              />
+              <ProjectPreview url={karigari.live.replace(/^https?:\/\//, "")} label={karigari.name} />
             </a>
           </div>
         </div>

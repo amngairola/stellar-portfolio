@@ -1,6 +1,6 @@
 import { Skills } from "@/components/portfolio/Skills";
 import { Projects } from "@/components/portfolio/Projects";
-import { CompetitiveProgramming } from "@/components/portfolio/CompetitiveProgramming";
+import { Achievements } from "@/components/portfolio/Achievements";
 import { useReveal } from "@/hooks/useReveal";
 
 const Work = () => {
@@ -9,7 +9,7 @@ const Work = () => {
     <div className="pt-24">
       <Skills />
       <Projects />
-      <CompetitiveProgramming />
+      <Achievements />
     </div>
   );
 };

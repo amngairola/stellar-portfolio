@@ -1,17 +1,17 @@
-import { ArrowRight, Download, Mail, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { personal, projects } from "@/data/portfolio";
 import { TypingText } from "./TypingText";
-import { BrowserMockup } from "./BrowserMockup";
+import { ProjectPreview } from "./ProjectPreview";
 
 export const Hero = () => {
   const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <section id="home" className="relative min-h-[100svh] flex items-center pt-24 pb-16 overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-60" />
+      <div className="absolute inset-0 grid-bg opacity-40" />
       <div className="absolute inset-0 bg-gradient-hero" />
-      <div className="blob bg-primary/20 w-[420px] h-[420px] -top-20 -left-20" />
+      <div className="blob bg-primary/15 w-[420px] h-[420px] -top-20 -left-20" />
       <div className="blob bg-primary/10 w-[480px] h-[480px] bottom-0 right-0" style={{ animationDelay: "4s" }} />
 
       <div className="container relative">
@@ -34,19 +34,14 @@ export const Hero = () => {
             {personal.tagline}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-mono animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <span className="inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {personal.location}</span>
-            <span className="inline-flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-primary" /> B.Tech CSE '26</span>
-          </div>
-
           <div className="mt-10 flex flex-wrap gap-3 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <Button size="lg" onClick={() => go("projects")} className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow group">
+            <Button size="lg" onClick={() => go("projects")} className="bg-gradient-primary text-primary-foreground hover:opacity-90 group">
               View Projects <ArrowRight className="ml-1.5 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button size="lg" variant="outline" asChild className="border-primary/40 hover:border-primary hover:bg-primary/5">
               <a href={personal.resumeUrl} download><Download className="mr-1.5 w-4 h-4" /> Download Resume</a>
             </Button>
-            <Button size="lg" variant="ghost" onClick={() => go("contact")}>
+            <Button size="lg" variant="ghost" onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}>
               <Mail className="mr-1.5 w-4 h-4" /> Contact Me
             </Button>
           </div>
@@ -66,12 +61,9 @@ export const Hero = () => {
           </div>
 
           <div className="lg:col-span-5 animate-fade-in" style={{ animationDelay: "0.35s" }}>
-            <BrowserMockup
-              sites={projects.map((p) => ({
-                url: p.live.replace(/^https?:\/\//, ""),
-                src: p.live,
-                label: p.name,
-              }))}
+            <ProjectPreview
+              url={projects[0].live.replace(/^https?:\/\//, "")}
+              label={projects[0].name}
             />
           </div>
         </div>

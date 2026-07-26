@@ -7,7 +7,6 @@ import Home from "./pages/Home.tsx";
 import Work from "./pages/Work.tsx";
 import Journey from "./pages/Journey.tsx";
 import Lens from "./pages/Lens.tsx";
-import ContactPage from "./pages/ContactPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
@@ -29,7 +28,6 @@ const App = () => (
               <Route path="/work" element={<Work />} />
               <Route path="/journey" element={<Journey />} />
               <Route path="/lens" element={<Lens />} />
-              <Route path="/contact" element={<ContactPage />} />
             </Route>
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/:category" element={<Blogs />} />

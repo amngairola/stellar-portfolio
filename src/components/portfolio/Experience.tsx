@@ -5,7 +5,7 @@ import { SectionHeading } from "./SectionHeading";
 export const Experience = () => (
   <section id="experience" className="py-24 md:py-32 bg-surface/50 relative">
     <div className="container">
-      <SectionHeading eyebrow="04 — Experience" title="Where I've shipped." />
+      <SectionHeading eyebrow="01 — Experience" title="Where I've shipped." />
       <div className="grid lg:grid-cols-3 gap-10">
         <div className="lg:col-span-2">
           <div className="relative pl-8 border-l-2 border-border space-y-10">

@@ -35,7 +35,7 @@ const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
 export const Achievements = () => (
   <section id="achievements" className="py-24 md:py-32 relative">
     <div className="container">
-      <SectionHeading eyebrow="05 — Achievements" title="Proof of work." />
+      <SectionHeading eyebrow="03 — Competitive Programming" title="Proof of work." />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
         {achievements.map(a => (

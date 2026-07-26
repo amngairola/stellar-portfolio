@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const PHOTO_URLS = [
@@ -22,19 +22,27 @@ const full = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=1920`;
 
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-export const Photography = () => {
-  const [center, setCenter] = useState(0);
-  const [lightbox, setLightbox] = useState(false);
-  const touchStartX = useRef<number | null>(null);
+// Bento pattern: irregular spans for visual rhythm across 12 photos.
+// Each entry is [colSpan, rowSpan] on lg, falls back to 1x1 on smaller.
+const BENTO: Array<[number, number]> = [
+  [2, 2], [1, 1], [1, 1],
+  [1, 1], [2, 1], [1, 2],
+  [1, 1], [1, 1], [2, 2],
+  [1, 1], [1, 1], [2, 1],
+];
 
+export const Photography = () => {
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const len = PHOTO_URLS.length;
-  const next = useCallback(() => setCenter(c => mod(c + 1, len)), [len]);
-  const prev = useCallback(() => setCenter(c => mod(c - 1, len)), [len]);
+
+  const close = useCallback(() => setLightbox(null), []);
+  const next = useCallback(() => setLightbox(i => (i === null ? 0 : mod(i + 1, len))), [len]);
+  const prev = useCallback(() => setLightbox(i => (i === null ? 0 : mod(i - 1, len))), [len]);
 
   useEffect(() => {
-    if (!lightbox) return;
+    if (lightbox === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(false);
+      if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
@@ -44,165 +52,53 @@ export const Photography = () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [lightbox, prev, next]);
-
-  // Offset -2,-1,0,1,2 relative to center
-  const slots = [-2, -1, 0, 1, 2];
-
-  const styleForOffset = (o: number): React.CSSProperties => {
-    const abs = Math.abs(o);
-    const isCenter = abs === 0;
-    const w = isCenter ? "var(--ph-c-w)" : "var(--ph-w)";
-    const h = isCenter ? "var(--ph-c-h)" : "var(--ph-h)";
-    const opacity = abs === 0 ? 1 : abs === 1 ? 0.55 : 0.35;
-    const scale = abs === 0 ? 1 : abs === 1 ? 0.92 : 0.82;
-    const gapMid = "calc((var(--ph-c-w) + var(--ph-w)) / 2 + 16px)";
-    const gapOuter = "calc(var(--ph-w) + 24px)";
-    let tx = "0px";
-    if (o === -1) tx = `calc(-1 * ${gapMid})`;
-    else if (o === 1) tx = gapMid;
-    else if (o === -2) tx = `calc(-1 * ${gapMid} - ${gapOuter})`;
-    else if (o === 2) tx = `calc(${gapMid} + ${gapOuter})`;
-    return {
-      width: w,
-      height: h,
-      borderRadius: "8px",
-      opacity,
-      transform: `translate(-50%, -50%) translateX(${tx}) scale(${scale})`,
-      zIndex: 10 - abs,
-    };
-  };
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
-    touchStartX.current = null;
-  };
+  }, [lightbox, close, prev, next]);
 
   return (
-    <section
-      id="photography"
-      className="relative py-24 md:py-32 overflow-hidden bg-surface"
-    >
-      {/* Film grain overlay */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-overlay z-[1]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
-        }}
-      />
-
-      <div className="container relative z-[2]">
-        <div className="reveal max-w-2xl mb-14 md:mb-16 text-center mx-auto">
+    <section id="photography" className="relative py-24 md:py-32 bg-surface">
+      <div className="container">
+        <div className="reveal max-w-2xl mb-14 md:mb-16">
           <div className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-3">
             Through My Lens
           </div>
           <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground">
-            Through My Lens
+            Uttarakhand, and elsewhere
           </h2>
           <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-            Frames from home — Uttarakhand and beyond. Streets, mountains, moments.
+            Frames from home — streets, mountains, moments. Twelve shots, no carousel, just the roll.
           </p>
         </div>
 
-        <div
-          className="reveal relative mx-auto select-none"
-          style={{
-            // Responsive sizes via CSS vars (portrait 3:4 cards)
-            ["--ph-c-w" as any]: "min(380px, 60vw)",
-            ["--ph-c-h" as any]: "min(500px, 80vw)",
-            ["--ph-w" as any]: "min(200px, 32vw)",
-            ["--ph-h" as any]: "min(270px, 43vw)",
-            height: "min(540px, 86vw)",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
-            maskImage:
-              "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
-          }}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          {slots.map(o => {
-            const idx = mod(center + o, len);
-            const isCenter = o === 0;
+        {/* Bento masonry grid */}
+        <div className="reveal grid grid-cols-2 lg:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
+          {PHOTO_URLS.map((url, i) => {
+            const [colSpan, rowSpan] = BENTO[i] ?? [1, 1];
             return (
               <button
-                key={o}
-                onClick={() => {
-                  if (isCenter) setLightbox(true);
-                  else if (o < 0) prev();
-                  else next();
-                }}
-                aria-label={isCenter ? "Open photo fullscreen" : o < 0 ? "Previous" : "Next"}
-                className="absolute top-1/2 left-1/2 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                style={{
-                  ...styleForOffset(o),
-                  transition:
-                    "transform 400ms ease-in-out, opacity 400ms ease-in-out, width 400ms ease-in-out, height 400ms ease-in-out, box-shadow 400ms ease-in-out",
-                  boxShadow: isCenter
-                    ? "0 20px 60px hsl(var(--primary) / 0.22), 0 0 0 1px hsl(var(--border))"
-                    : "0 8px 24px rgba(0,0,0,0.4)",
-                  cursor: isCenter ? "zoom-in" : "pointer",
-                }}
-              >
-                <img
-                  src={thumb(PHOTO_URLS[idx])}
-                  alt={`Photograph ${idx + 1}`}
-                  draggable={false}
-                  className="w-full h-full object-cover"
-                />
-              </button>
-            );
-          })}
-
-          {/* Arrows */}
-          <button
-            onClick={prev}
-            aria-label="Previous photo"
-            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
-          >
-            <ChevronLeft className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.25} />
-          </button>
-          <button
-            onClick={next}
-            aria-label="Next photo"
-            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
-          >
-            <ChevronRight className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.25} />
-          </button>
-        </div>
-
-        {/* Masonry gallery */}
-        <div className="reveal mt-20 md:mt-28">
-          <div className="mb-8 text-center">
-            <div className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-2">The full roll</div>
-            <h3 className="font-display font-semibold text-2xl md:text-3xl text-foreground">Uttarakhand, and elsewhere</h3>
-          </div>
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-            {PHOTO_URLS.map((url, i) => (
-              <button
                 key={url}
-                onClick={() => { setCenter(i); setLightbox(true); }}
-                className="group relative mb-4 block w-full overflow-hidden rounded-xl border border-border bg-card break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                style={{ animation: `fade-in 0.6s var(--transition-smooth) both`, animationDelay: `${i * 60}ms` }}
+                onClick={() => setLightbox(i)}
                 aria-label={`Open photo ${i + 1}`}
+                className="group relative overflow-hidden rounded-xl border border-border bg-card break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.01]"
+                style={{
+                  gridColumn: `span ${colSpan}`,
+                  gridRow: `span ${rowSpan}`,
+                  animation: "fade-in 0.5s ease-out both",
+                  animationDelay: `${i * 50}ms`,
+                }}
               >
                 <img
                   src={thumb(url)}
                   alt={`Photograph ${i + 1}`}
                   loading="lazy"
-                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors" />
+                <div className="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] text-foreground/0 group-hover:text-foreground/60 transition-colors">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
         <div className="reveal mt-14 flex justify-center">
@@ -223,15 +119,15 @@ export const Photography = () => {
         </div>
       </div>
 
-      {lightbox && (
+      {lightbox !== null && (
         <div
           className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center animate-fade-in"
-          onClick={() => setLightbox(false)}
+          onClick={close}
           role="dialog"
           aria-modal="true"
         >
           <button
-            onClick={e => { e.stopPropagation(); setLightbox(false); }}
+            onClick={e => { e.stopPropagation(); close(); }}
             className="absolute top-4 right-4 md:top-6 md:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
             aria-label="Close"
           >
@@ -252,10 +148,10 @@ export const Photography = () => {
             <ChevronRight className="w-6 h-6" />
           </button>
           <img
-            src={full(PHOTO_URLS[center])}
-            alt={`Photograph ${center + 1}`}
+            src={full(PHOTO_URLS[lightbox])}
+            alt={`Photograph ${lightbox + 1}`}
             onClick={e => e.stopPropagation()}
-            className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl animate-scale-in"
+            className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg animate-scale-in"
           />
         </div>
       )}

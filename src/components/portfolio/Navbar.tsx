@@ -10,7 +10,6 @@ const chapters = [
   { to: "/work", label: "Work" },
   { to: "/journey", label: "Journey" },
   { to: "/lens", label: "Lens" },
-  { to: "/contact", label: "Contact" },
   { to: "/blogs", label: "Blogs" },
 ];
 

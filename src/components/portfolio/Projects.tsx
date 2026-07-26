@@ -1,14 +1,14 @@
-import { useRef, MouseEvent } from "react";
-import { ExternalLink, Github, Star, Zap } from "lucide-react";
+import { useRef, MouseEvent, useState } from "react";
+import { ExternalLink, Github, Star, Zap, X } from "lucide-react";
 import { projects } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
-import { BrowserMockup } from "./BrowserMockup";
+import { ProjectPreview } from "./ProjectPreview";
 
 export const Projects = () => (
   <section id="projects" className="py-24 md:py-32 relative">
     <div className="container">
-      <SectionHeading eyebrow="03 — Projects" title="Things I've built." desc="Selected work showcasing real-time systems, scalable backends, and product-led design." />
+      <SectionHeading eyebrow="02 — Projects" title="Things I've built." desc="Selected work showcasing real-time systems, scalable backends, and product-led design." />
       <div className="space-y-8">
         {projects.map((p, i) => (
           <ProjectCard key={p.name} project={p} index={i} />
@@ -20,6 +20,7 @@ export const Projects = () => (
 
 const ProjectCard = ({ project, index }: { project: typeof projects[number]; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
   const onMove = (e: MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
@@ -27,6 +28,8 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
     el.style.setProperty("--mx", `${e.clientX - r.left}px`);
     el.style.setProperty("--my", `${e.clientY - r.top}px`);
   };
+  const host = project.live.replace(/^https?:\/\//, "");
+
   return (
     <div
       ref={ref}
@@ -37,7 +40,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
         className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "radial-gradient(400px circle at var(--mx) var(--my), hsl(var(--primary) / 0.12), transparent 60%)",
+            "radial-gradient(400px circle at var(--mx) var(--my), hsl(var(--primary) / 0.10), transparent 60%)",
         }}
       />
       <div className="relative grid lg:grid-cols-10 gap-8">
@@ -56,7 +59,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
               </span>
             ))}
           </div>
-          <div className="flex gap-3 mb-2">
+          <div className="flex flex-wrap gap-3 mb-2">
             <Button asChild size="sm" className="bg-gradient-primary text-primary-foreground hover:opacity-90">
               <a href={project.live} target="_blank" rel="noreferrer">
                 <ExternalLink className="w-4 h-4 mr-1.5" /> Live Demo
@@ -67,34 +70,14 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
                 <Github className="w-4 h-4 mr-1.5" /> GitHub
               </a>
             </Button>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-border bg-surface/60 p-5">
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary mb-3">
-              <Zap className="w-3.5 h-3.5" /> Key Features
-            </div>
-            <ul className="space-y-2 text-sm">
-              {project.features.map(f => (
-                <li key={f} className="flex gap-2 text-muted-foreground">
-                  <span className="text-primary mt-1">▸</span>
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-xl border border-border bg-surface/60 p-5">
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-secondary mb-3">
-              <Star className="w-3.5 h-3.5" /> Challenges Solved
-            </div>
-            <ul className="space-y-2 text-sm">
-              {project.challenges.map(c => (
-                <li key={c} className="flex gap-2 text-muted-foreground">
-                  <span className="text-secondary mt-1">▸</span>
-                  <span>{c}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setFeaturesOpen(true)}
+              className="border-primary/30 hover:border-primary hover:bg-primary/5"
+            >
+              <Zap className="w-4 h-4 mr-1.5 text-primary" /> Key features
+            </Button>
           </div>
         </div>
 
@@ -107,13 +90,44 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
               aria-label={`Open ${project.name} in a new tab`}
               className="block cursor-pointer transition-transform hover:scale-[1.02]"
             >
-              <BrowserMockup
-                sites={[{ url: project.live.replace(/^https?:\/\//, ""), src: project.live, label: project.name }]}
-              />
+              <ProjectPreview url={host} label={project.name} />
             </a>
           </div>
         </div>
       </div>
+
+      {featuresOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          onClick={() => setFeaturesOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-fade-in" />
+          <div
+            className="relative w-full max-w-lg rounded-2xl border border-border bg-card p-6 md:p-8 shadow-elevated"
+            onClick={e => e.stopPropagation()}
+            style={{ animation: "scale-in 0.25s var(--transition-smooth) both" }}
+          >
+            <button
+              onClick={() => setFeaturesOpen(false)}
+              aria-label="Close"
+              className="absolute top-4 right-4 w-8 h-8 rounded-lg border border-border hover:border-primary/60 hover:text-primary flex items-center justify-center transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary mb-4">
+              <Zap className="w-3.5 h-3.5" /> Key Features · {project.name}
+            </div>
+            <ul className="space-y-3 text-sm">
+              {project.features.map(f => (
+                <li key={f} className="flex gap-2 text-muted-foreground">
+                  <span className="text-primary mt-1 shrink-0">▸</span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
