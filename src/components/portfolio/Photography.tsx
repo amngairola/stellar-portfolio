@@ -9,6 +9,12 @@ const PHOTO_URLS = [
   "https://images.pexels.com/photos/33016619/pexels-photo-33016619.jpeg",
   "https://images.pexels.com/photos/35408532/pexels-photo-35408532.jpeg",
   "https://images.pexels.com/photos/33638021/pexels-photo-33638021.jpeg",
+  "https://images.pexels.com/photos/38665212/pexels-photo-38665212.jpeg",
+  "https://images.pexels.com/photos/33638020/pexels-photo-33638020.jpeg",
+  "https://images.pexels.com/photos/35408529/pexels-photo-35408529.jpeg",
+  "https://images.pexels.com/photos/33638024/pexels-photo-33638024.jpeg",
+  "https://images.pexels.com/photos/32441931/pexels-photo-32441931.jpeg",
+  "https://images.pexels.com/photos/32441921/pexels-photo-32441921.jpeg",
 ];
 
 const thumb = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=800`;
@@ -80,8 +86,7 @@ export const Photography = () => {
   return (
     <section
       id="photography"
-      className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: "#0a0a0a" }}
+      className="relative py-24 md:py-32 overflow-hidden bg-surface"
     >
       {/* Film grain overlay */}
       <div
@@ -98,11 +103,11 @@ export const Photography = () => {
           <div className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-3">
             Through My Lens
           </div>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground">
             Through My Lens
           </h2>
-          <p className="mt-4 text-white/60 text-base md:text-lg leading-relaxed">
-            Streets. Nature. Moments.
+          <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+            Frames from home — Uttarakhand and beyond. Streets, mountains, moments.
           </p>
         </div>
 
@@ -141,7 +146,7 @@ export const Photography = () => {
                   transition:
                     "transform 400ms ease-in-out, opacity 400ms ease-in-out, width 400ms ease-in-out, height 400ms ease-in-out, box-shadow 400ms ease-in-out",
                   boxShadow: isCenter
-                    ? "0 20px 60px rgba(255,180,50,0.15), 0 0 0 1px rgba(255,255,255,0.06)"
+                    ? "0 20px 60px hsl(var(--primary) / 0.22), 0 0 0 1px hsl(var(--border))"
                     : "0 8px 24px rgba(0,0,0,0.4)",
                   cursor: isCenter ? "zoom-in" : "pointer",
                 }}
@@ -160,17 +165,44 @@ export const Photography = () => {
           <button
             onClick={prev}
             aria-label="Previous photo"
-            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 rounded-full text-white/70 hover:text-white hover:bg-white/5 transition-colors flex items-center justify-center"
+            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
           >
             <ChevronLeft className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.25} />
           </button>
           <button
             onClick={next}
             aria-label="Next photo"
-            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 rounded-full text-white/70 hover:text-white hover:bg-white/5 transition-colors flex items-center justify-center"
+            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
           >
             <ChevronRight className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.25} />
           </button>
+        </div>
+
+        {/* Masonry gallery */}
+        <div className="reveal mt-20 md:mt-28">
+          <div className="mb-8 text-center">
+            <div className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-2">The full roll</div>
+            <h3 className="font-display font-semibold text-2xl md:text-3xl text-foreground">Uttarakhand, and elsewhere</h3>
+          </div>
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+            {PHOTO_URLS.map((url, i) => (
+              <button
+                key={url}
+                onClick={() => { setCenter(i); setLightbox(true); }}
+                className="group relative mb-4 block w-full overflow-hidden rounded-xl border border-border bg-card break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                style={{ animation: `fade-in 0.6s var(--transition-smooth) both`, animationDelay: `${i * 60}ms` }}
+                aria-label={`Open photo ${i + 1}`}
+              >
+                <img
+                  src={thumb(url)}
+                  alt={`Photograph ${i + 1}`}
+                  loading="lazy"
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors" />
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="reveal mt-14 flex justify-center">
@@ -178,7 +210,7 @@ export const Photography = () => {
             asChild
             variant="ghost"
             size="lg"
-            className="text-white/80 hover:text-white hover:bg-white/5 border border-white/15"
+            className="text-foreground/80 hover:text-foreground hover:bg-muted border border-border"
           >
             <a
               href="https://www.pexels.com/@amangairola/"
