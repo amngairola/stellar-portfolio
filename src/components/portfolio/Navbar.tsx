@@ -1,56 +1,33 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Moon, Sun, Download } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
 import { personal } from "@/data/portfolio";
 
-const links = [
-  { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
-  { id: "achievements", label: "Achievements" },
-  { id: "photography", label: "Photography" },
-  { id: "contact", label: "Contact" },
+const chapters = [
+  { to: "/", label: "Home" },
+  { to: "/work", label: "Work" },
+  { to: "/journey", label: "Journey" },
+  { to: "/lens", label: "Lens" },
+  { to: "/contact", label: "Contact" },
+  { to: "/blogs", label: "Blogs" },
 ];
 
 export const Navbar = () => {
   const { theme, toggle } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("");
   const location = useLocation();
-  const navigate = useNavigate();
-  const onHome = location.pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const sections = links.map(l => document.getElementById(l.id));
-      const y = window.scrollY + 120;
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const s = sections[i];
-        if (s && s.offsetTop <= y) {
-          setActive(links[i].id);
-          break;
-        }
-      }
-    };
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const go = (id: string) => {
-    setOpen(false);
-    if (!onHome) {
-      navigate("/", { state: { scrollTo: id } });
-      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
-      return;
-    }
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  useEffect(() => setOpen(false), [location.pathname]);
 
   return (
     <header
@@ -61,40 +38,30 @@ export const Navbar = () => {
       <nav className="container flex items-center justify-between h-16 md:h-20">
         <Link
           to="/"
-          onClick={() => onHome && window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2 group"
           aria-label="Home"
         >
-          <span className="w-9 h-9 rounded-lg bg-gradient-primary flex items-center justify-center font-display font-bold text-primary-foreground shadow-glow group-hover:scale-110 transition-transform">
+          <span className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center font-display font-bold text-primary-foreground group-hover:scale-105 transition-transform">
             {personal.initials}
           </span>
           <span className="hidden sm:block font-display font-semibold">{personal.name}</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-1">
-          {links.map(l => (
-            <button
-              key={l.id}
-              onClick={() => go(l.id)}
-              className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                onHome && active === l.id
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+          {chapters.map((c) => (
+            <NavLink
+              key={c.to}
+              to={c.to}
+              end={c.to === "/"}
+              className={({ isActive }) =>
+                `relative px-3 py-2 text-sm rounded-md transition-colors ${
+                  isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                }`
+              }
             >
-              {l.label}
-            </button>
+              {c.label}
+            </NavLink>
           ))}
-          <Link
-            to="/blogs"
-            className={`px-3 py-2 text-sm rounded-md transition-colors ${
-              location.pathname.startsWith("/blogs")
-                ? "text-primary"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Blogs
-          </Link>
         </div>
 
         <div className="flex items-center gap-2">
@@ -105,7 +72,7 @@ export const Navbar = () => {
           >
             {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
-          <Button asChild size="sm" className="hidden sm:inline-flex bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow">
+          <Button asChild size="sm" className="hidden sm:inline-flex bg-primary text-primary-foreground hover:opacity-90">
             <a href={personal.resumeUrl} download>
               <Download className="w-4 h-4 mr-1.5" /> Resume
             </a>
@@ -123,26 +90,20 @@ export const Navbar = () => {
       {open && (
         <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
           <div className="container py-4 flex flex-col gap-1">
-            {links.map(l => (
-              <button
-                key={l.id}
-                onClick={() => go(l.id)}
-                className={`text-left px-3 py-3 rounded-md ${
-                  onHome && active === l.id ? "text-primary bg-muted" : "text-muted-foreground"
-                }`}
+            {chapters.map((c) => (
+              <NavLink
+                key={c.to}
+                to={c.to}
+                end={c.to === "/"}
+                className={({ isActive }) =>
+                  `text-left px-3 py-3 rounded-md ${
+                    isActive ? "text-primary bg-muted" : "text-muted-foreground"
+                  }`
+                }
               >
-                {l.label}
-              </button>
+                {c.label}
+              </NavLink>
             ))}
-            <Link
-              to="/blogs"
-              onClick={() => setOpen(false)}
-              className={`text-left px-3 py-3 rounded-md ${
-                location.pathname.startsWith("/blogs") ? "text-primary bg-muted" : "text-muted-foreground"
-              }`}
-            >
-              Blogs
-            </Link>
           </div>
         </div>
       )}
