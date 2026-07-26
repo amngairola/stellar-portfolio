@@ -11,8 +11,8 @@ export const Hero = () => {
     <section id="home" className="relative min-h-[100svh] flex items-center pt-24 pb-16 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-60" />
       <div className="absolute inset-0 bg-gradient-hero" />
-      <div className="blob bg-primary/40 w-[420px] h-[420px] -top-20 -left-20" />
-      <div className="blob bg-secondary/40 w-[480px] h-[480px] bottom-0 right-0" style={{ animationDelay: "4s" }} />
+      <div className="blob bg-primary/20 w-[420px] h-[420px] -top-20 -left-20" />
+      <div className="blob bg-primary/10 w-[480px] h-[480px] bottom-0 right-0" style={{ animationDelay: "4s" }} />
 
       <div className="container relative">
         <div className="grid items-center gap-12 lg:grid-cols-12">
