@@ -40,3 +40,21 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Container for the masonry layout */
+.masonry-grid {
+  display: flex;
+  margin-left: -16px; /* Offset the padding of the columns to align with container */
+  width: auto;
+}
+
+/* Individual columns */
+.masonry-col {
+  padding-left: 16px; /* Horizontal gap between columns */
+  background-clip: padding-box;
+}
+
+/* Individual items within the columns */
+.masonry-item {
+  margin-bottom: 16px; /* Vertical gap between items */
+}
