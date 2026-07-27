@@ -12,11 +12,11 @@ export const HoverFeaturesLink = ({ text, features }: HoverFeaturesLinkProps) =>
   const [isHovered, setIsHovered] = useState(false);
   const [mounted, setMounted] = useState(false);
   
-  // Ensure we only use createPortal on the client-side
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Track exact cursor coordinates without manual offsets here
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -25,8 +25,8 @@ export const HoverFeaturesLink = ({ text, features }: HoverFeaturesLinkProps) =>
   const springY = useSpring(y, springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
-    x.set(e.clientX + 20);
-    y.set(e.clientY + 20);
+    x.set(e.clientX);
+    y.set(e.clientY);
   };
 
   return (
@@ -40,22 +40,23 @@ export const HoverFeaturesLink = ({ text, features }: HoverFeaturesLinkProps) =>
         {text}
       </span>
 
-      {/* Break the floating box out of the parent container using a Portal */}
       {mounted && createPortal(
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
+              // x: "-50%" perfectly centers the box horizontally under the cursor
+              // y: 24 pushes it 24px below the cursor so it doesn't block the link text
+              initial={{ opacity: 0, scale: 0.8, rotate: -5, x: "-50%", y: 24 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0, x: "-50%", y: 24 }}
+              exit={{ opacity: 0, scale: 0.8, rotate: 5, x: "-50%", y: 24 }}
               transition={{ type: "spring", bounce: 0.4, duration: 0.4 }}
               style={{
                 position: "fixed",
                 left: springX,
                 top: springY,
-                zIndex: 9999, // Guaranteed to stay on top
+                zIndex: 9999,
               }}
-              className="pointer-events-none w-[320px] max-w-[85vw] overflow-hidden rounded-2xl border border-border bg-card/90 backdrop-blur-md p-5 shadow-elevated"
+              className="pointer-events-none w-[320px] max-w-[85vw] overflow-hidden rounded-2xl border border-border bg-card/95 backdrop-blur-md p-5 shadow-elevated"
             >
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary mb-3">
                 <Zap className="w-3.5 h-3.5" /> Key Features
