@@ -105,7 +105,7 @@ export const Freelance = () => (
               </div>
               <div className="relative aspect-[16/10] bg-surface">
                 <img
-                  src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="https://res.cloudinary.com/dwr8n8zpl/image/upload/v1785079418/qxjp08zwh7v6tpkak7xx.png"
                   alt={`${karigari.name} website preview`}
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover"

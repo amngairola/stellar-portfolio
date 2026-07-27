@@ -22,6 +22,21 @@ const full = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=1920`;
 
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
+const BENTO_SPANS = [
+  "md:col-span-2 md:row-span-2",
+  "",
+  "",
+  "md:col-span-2",
+  "md:row-span-2",
+  "",
+  "",
+  "md:col-span-2",
+  "",
+  "md:row-span-2",
+  "",
+  "md:col-span-2",
+];
+
 export const Photography = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const len = PHOTO_URLS.length;
@@ -60,13 +75,13 @@ export const Photography = () => {
           </p>
         </div>
 
-        <div className="reveal columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 [column-fill:_balance]">
+        <div className="reveal grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 [grid-auto-flow:dense] [grid-auto-rows:180px] md:[grid-auto-rows:220px]">
           {PHOTO_URLS.map((url, i) => (
             <button
               key={url}
               onClick={() => setLightbox(i)}
               aria-label={`Open photo ${i + 1}`}
-              className="group relative block w-full mb-3 md:mb-4 overflow-hidden rounded-xl border border-border bg-card break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-transform duration-300 hover:-translate-y-1"
+              className={`group relative overflow-hidden rounded-xl border border-border bg-card focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-transform duration-300 hover:-translate-y-1 ${BENTO_SPANS[i]}`}
               style={{
                 animation: "fade-in 0.5s ease-out both",
                 animationDelay: `${i * 50}ms`,
@@ -76,7 +91,7 @@ export const Photography = () => {
                 src={thumb(url)}
                 alt={`Photograph ${i + 1}`}
                 loading="lazy"
-                className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
               <div className="pointer-events-none absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors" />
               <div className="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] text-foreground/0 group-hover:text-foreground/60 transition-colors">

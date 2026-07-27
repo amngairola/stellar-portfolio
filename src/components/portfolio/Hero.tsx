@@ -1,11 +1,9 @@
-import { ArrowRight, Download, Mail } from "lucide-react";
+import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { personal } from "@/data/portfolio";
 import { TypingText } from "./TypingText";
 
 export const Hero = () => {
-  const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
   return (
     <section id="home" className="relative min-h-[100svh] flex items-center pt-24 pb-16 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-40" />
@@ -28,14 +26,8 @@ export const Hero = () => {
           </p>
 
           <div className="mt-10 flex flex-wrap gap-3">
-            <Button size="lg" onClick={() => go("projects")} className="bg-gradient-primary text-primary-foreground hover:brightness-110 transition group">
-              View Projects <ArrowRight className="ml-1.5 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
             <Button size="lg" variant="outline" asChild className="border-primary/40 hover:border-primary hover:bg-primary/10">
               <a href={personal.resumeUrl} download><Download className="mr-1.5 w-4 h-4" /> Download Resume</a>
-            </Button>
-            <Button size="lg" variant="ghost" onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}>
-              <Mail className="mr-1.5 w-4 h-4" /> Contact Me
             </Button>
           </div>
 

@@ -311,11 +311,3 @@ export const achievements = [
   { value: 21, suffix: "", label: "Contests Attended" },
   { value: 9, suffix: ".7%", label: "Top Global Percentile" },
 ];
-
-export const certifications = [
-  {
-    title: "Data Structures & Algorithms in Java",
-    issuer: "Coursera Specialization",
-    desc: "Hands-on implementation of core algorithms and data structures.",
-  },
-];
