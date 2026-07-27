@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
+import Masonry from "react-masonry-css";
 import { X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -45,15 +47,29 @@ const useGalleryImages = () =>
     gcTime: 1000 * 60 * 60 * 24,
   });
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+};
+
 const StatsRow = () => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 max-w-md">
-    <Card className="p-4 flex flex-col gap-1">
-      <span className="font-display font-bold text-2xl text-foreground">506k+</span>
-      <span className="text-xs text-muted-foreground">Total Views</span>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 max-w-lg">
+    <Card className="p-5 flex items-center gap-4 border-border shadow-sm">
+      <span className="font-display font-bold text-3xl gradient-text leading-none">506k+</span>
+      <span className="text-sm text-muted-foreground leading-tight">Total Views</span>
     </Card>
-    <Card className="p-4 flex flex-col gap-1">
-      <span className="text-xs text-muted-foreground mb-0.5">Featured In</span>
-      <div className="flex flex-wrap gap-x-3 gap-y-1">
+    <Card className="p-5 flex flex-col gap-2 border-border shadow-sm">
+      <span className="text-sm text-muted-foreground">Featured In</span>
+      <div className="flex flex-wrap gap-x-4 gap-y-1.5">
         <a
           href="https://www.ndtv.com/travel/webstories/uttarakhand-s-hidden-gems-where-you-can-escape-the-crowds-51971"
           target="_blank"
@@ -100,6 +116,13 @@ export const Photography = () => {
     };
   }, [lightbox, close, prev, next]);
 
+  const breakpointConfig = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
+
   return (
     <section id="photography" className="relative py-20 md:py-24 bg-surface">
       <div className="container">
@@ -117,32 +140,46 @@ export const Photography = () => {
 
         <StatsRow />
 
-        <div className="reveal columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 [column-fill:_balance]">
-          {urls.map((url, i) => (
-            <Card
-              key={url}
-              className="group relative overflow-hidden rounded-xl border-border mb-3 md:mb-4 break-inside-avoid p-0 cursor-pointer hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
-              onClick={() => setLightbox(i)}
-              style={{
-                animation: "fade-in 0.4s ease-out both",
-                animationDelay: `${i * 40}ms`,
-              }}
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={thumb(url)}
-                  alt={`Photograph ${i + 1}`}
-                  loading="lazy"
-                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] text-foreground/0 group-hover:text-foreground/70 transition-colors duration-300">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          layout
+        >
+          <Masonry
+            breakpointCols={breakpointConfig}
+            className="flex gap-5 md:gap-6"
+            columnClassName="flex flex-col gap-5 md:gap-6"
+          >
+            {urls.map((url, i) => (
+              <motion.div
+                key={url}
+                variants={cardVariants}
+                layout
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <Card
+                  className="group relative overflow-hidden rounded-xl border-border p-0 cursor-pointer shadow-sm hover:shadow-glow transition-shadow duration-300"
+                  onClick={() => setLightbox(i)}
+                >
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={thumb(url)}
+                      alt={`Photograph ${i + 1}`}
+                      loading="lazy"
+                      className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] text-foreground/0 group-hover:text-foreground/70 transition-colors duration-300">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </Masonry>
+        </motion.div>
 
         <div className="reveal mt-12 flex justify-center">
           <Button
