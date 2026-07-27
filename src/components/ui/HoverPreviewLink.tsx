@@ -1,46 +1,38 @@
 import { useState } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import { Zap } from "lucide-react";
 
-interface HoverPreviewLinkProps {
+interface HoverFeaturesLinkProps {
   text: string;
-  href: string;
-  imageSrc: string;
+  features: string[];
 }
 
-export const HoverPreviewLink = ({ text, href, imageSrc }: HoverPreviewLinkProps) => {
+export const HoverFeaturesLink = ({ text, features }: HoverFeaturesLinkProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
-  // Framer Motion values to track the cursor's exact X and Y coordinates
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Apply a spring physics effect to make the movement fluid instead of robotic
   const springConfig = { damping: 20, stiffness: 250, mass: 0.5 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
-  // Update the coordinates whenever the mouse moves inside the link
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // We add a slight offset (e.g., +20px) so the image doesn't block the mouse cursor
+  const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
     x.set(e.clientX + 20);
     y.set(e.clientY + 20);
   };
 
   return (
     <>
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative inline-block font-semibold text-primary underline decoration-primary/50 decoration-dashed underline-offset-4 transition-colors hover:text-primary-glow hover:decoration-primary-glow"
+      <span
+        className="relative inline-block font-semibold text-primary underline decoration-primary/50 decoration-dashed underline-offset-4 transition-colors hover:text-primary-glow hover:decoration-primary-glow cursor-help"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={handleMouseMove}
       >
         {text}
-      </a>
+      </span>
 
-      {/* The Floating Image */}
       <AnimatePresence>
         {isHovered && (
           <motion.div
@@ -52,16 +44,21 @@ export const HoverPreviewLink = ({ text, href, imageSrc }: HoverPreviewLinkProps
               position: "fixed",
               left: springX,
               top: springY,
-              zIndex: 100, // Ensures it floats above everything
+              zIndex: 100,
             }}
-            // pointer-events-none is CRUCIAL so the image doesn't steal hover state from the link
-            className="pointer-events-none overflow-hidden rounded-xl border-2 border-border bg-card shadow-elevated"
+            className="pointer-events-none w-[320px] max-w-[85vw] overflow-hidden rounded-2xl border border-border bg-popover p-5 shadow-elevated"
           >
-            <img
-              src={imageSrc}
-              alt={`${text} preview`}
-              className="w-64 h-auto block object-cover"
-            />
+            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary mb-3">
+              <Zap className="w-3.5 h-3.5" /> Key Features
+            </div>
+            <ul className="space-y-2.5 text-sm">
+              {features.map((feature, i) => (
+                <li key={i} className="flex gap-2 text-muted-foreground">
+                  <span className="text-primary mt-0.5 shrink-0">▸</span>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
