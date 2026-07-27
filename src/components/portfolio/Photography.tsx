@@ -26,6 +26,12 @@ const mod = (n: number, m: number) => ((n % m) + m) % m;
 
 const BREAKPOINTS = { default: 4, 1024: 3, 640: 2, 480: 1 };
 
+// Deliberate aspect-ratio variety so cards stagger visually like a real
+// Pinterest feed, even when the source photos are similarly cropped.
+// Cycles through a mix of portrait, square, and landscape ratios.
+const ASPECT_RATIOS = ["3/4", "1/1", "4/5", "1/1", "5/4", "3/4", "4/3", "1/1"];
+const getCardAspect = (i: number) => ASPECT_RATIOS[i % ASPECT_RATIOS.length];
+
 const useGalleryImages = () =>
   useQuery({
     queryKey: ["gallery-images"],
@@ -72,7 +78,7 @@ const StatsRow = () => (
         Featured In
       </span>
       <div className="flex items-center gap-4">
-        <a
+        
           href="https://www.ndtv.com/travel/webstories/uttarakhand-s-hidden-gems-where-you-can-escape-the-crowds-51971"
           target="_blank"
           rel="noopener noreferrer"
@@ -81,7 +87,7 @@ const StatsRow = () => (
           ndtv.com <ExternalLink className="w-3 h-3" />
         </a>
         <span className="w-px h-3.5 bg-border" />
-        <a
+        
           href="https://www.india.com/hindi-news/gallery-hindi/uttar-pradesh-facts-which-river-flow-near-ghaziabad-know-the-shocking-name-that-even-residence-dont-know-the-correct-answer-8074716/"
           target="_blank"
           rel="noopener noreferrer"
@@ -155,7 +161,11 @@ export const Photography = () => {
               ...
             </div>
           Each column is a flex column — cards stack at natural height.
-          We must NOT put display:grid or align-items:stretch on any parent.
+          Card height is controlled by the wrapper's aspect-ratio (see
+          getCardAspect), not the image's native size — this guarantees
+          visible stagger across columns even with similarly-shaped source
+          photos. We must NOT put display:grid or align-items:stretch on
+          any parent.
         */}
         <Masonry
           breakpointCols={BREAKPOINTS}
@@ -174,13 +184,15 @@ export const Photography = () => {
               className="masonry-item"
               onClick={() => setLightbox(i)}
             >
-              <div className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm cursor-pointer">
-                {/* img has NO fixed height, NO aspect-ratio, NO object-fit:cover — natural proportions */}
+              <div
+                className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm cursor-pointer"
+                style={{ aspectRatio: getCardAspect(i) }}
+              >
                 <img
                   src={thumb(url)}
                   alt={`Photograph ${i + 1}`}
                   loading="lazy"
-                  style={{ display: "block", width: "100%", height: "auto" }}
+                  className="w-full h-full object-cover"
                 />
                 {/* Hover overlay */}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -199,7 +211,7 @@ export const Photography = () => {
             size="lg"
             className="text-foreground/80 hover:text-foreground hover:bg-muted border border-border"
           >
-            <a
+            
               href="https://www.pexels.com/@amangairola/"
               target="_blank"
               rel="noopener noreferrer"
