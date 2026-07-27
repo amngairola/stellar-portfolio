@@ -108,7 +108,8 @@
     color: hsl(var(--foreground));
   }
 
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  /* Slimmer, sleeker scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: hsl(var(--background)); }
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--muted));
@@ -133,10 +134,12 @@
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
   }
 
+  /* Enhanced Glassmorphism with top edge highlight */
   .glass {
     background: hsl(var(--card) / 0.7);
     backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--border));
+    box-shadow: inset 0 1px 0 0 hsl(var(--foreground) / 0.05);
   }
 
   .glow-border {
@@ -168,11 +171,12 @@
     transform: translateY(0);
   }
 
+  /* Refined blob with deeper blur and lower opacity */
   .blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.3;
+    filter: blur(120px);
+    opacity: 0.15;
     pointer-events: none;
     animation: blob 18s ease-in-out infinite;
   }
@@ -212,23 +216,25 @@
 /* ── Masonry gallery ─────────────────────────────────────────── */
 /* react-masonry-css outputs a flex row of column divs.          */
 /* These classes must NOT use display:grid or align-items:stretch */
+/* Container for the masonry layout */
 .masonry-grid {
   display: flex;
+  margin-left: -16px; /* Offset to align correctly */
   width: auto;
-  gap: 20px;
-}
-.masonry-col {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex: 1 1 0;
-  min-width: 0;
-}
-.masonry-item {
-  width: 100%;
-  break-inside: avoid;
 }
 
+/* Individual columns */
+.masonry-col {
+  padding-left: 16px; /* Gap between columns */
+  background-clip: padding-box;
+}
+
+/* Individual items within the columns */
+.masonry-item {
+  margin-bottom: 16px; /* Gap between rows */
+}
+
+/* ── Prose & Markdown Styling ────────────────────────────────── */
 .prose-editorial {
   color: hsl(var(--foreground));
   font-size: 1.125rem;
