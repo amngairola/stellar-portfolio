@@ -64,6 +64,16 @@ const ACCENTS: AccentOption[] = [
     glowL: "60",
     swatch: "#4FB39E",
   },
+  {
+    name: "Sunset",
+    h: "26",
+    s: "72",
+    l: "58",
+    glowH: "20",
+    glowS: "80",
+    glowL: "62",
+    swatch: "#E07040",
+  },
 ];
 
 const STORAGE_KEY = "accent-color";

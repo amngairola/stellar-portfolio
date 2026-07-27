@@ -209,6 +209,26 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* ── Masonry gallery ─────────────────────────────────────────── */
+/* react-masonry-css outputs a flex row of column divs.          */
+/* These classes must NOT use display:grid or align-items:stretch */
+.masonry-grid {
+  display: flex;
+  width: auto;
+  gap: 20px;
+}
+.masonry-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.masonry-item {
+  width: 100%;
+  break-inside: avoid;
+}
+
 .prose-editorial {
   color: hsl(var(--foreground));
   font-size: 1.125rem;
