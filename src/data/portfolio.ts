@@ -16,7 +16,7 @@ export const personal = {
     "Software Engineer",
   ],
   tagline:
-    "I build fast, scalable web products — from real-time collaborative tools to gamified platforms used by hundreds.",
+    "I build fast, scalable web products.",
   x: "Aman Gairola",
   xUrl: "https://x.com/amanngairola",
 };

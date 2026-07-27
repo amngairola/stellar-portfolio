@@ -6,7 +6,7 @@ import { useReveal } from "@/hooks/useReveal";
 const Work = () => {
   useReveal();
   return (
-    <div className="pt-24">
+    <div>
       <Skills />
       <Achievements />
       <Projects />

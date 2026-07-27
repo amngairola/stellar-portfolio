@@ -5,7 +5,7 @@ import { useReveal } from "@/hooks/useReveal";
 const Journey = () => {
   useReveal();
   return (
-    <div className="pt-24">
+    <div>
       <Experience />
       <Freelance />
     </div>

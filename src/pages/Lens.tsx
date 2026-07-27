@@ -4,7 +4,7 @@ import { useReveal } from "@/hooks/useReveal";
 const Lens = () => {
   useReveal();
   return (
-    <div className="pt-20">
+    <div>
       <Photography />
     </div>
   );

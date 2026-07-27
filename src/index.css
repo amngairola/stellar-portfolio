@@ -160,8 +160,8 @@
 
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s var(--transition-smooth), transform 0.7s var(--transition-smooth);
+    transform: translateY(6px);
+    transition: opacity 80ms ease-out, transform 80ms ease-out;
   }
   .reveal.in-view {
     opacity: 1;
@@ -187,6 +187,16 @@
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .cursor-blink::after {
