@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import Masonry from "react-masonry-css";
@@ -25,12 +25,6 @@ const full = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=1920`;
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
 const BREAKPOINTS = { default: 4, 1024: 3, 640: 2, 480: 1 };
-
-// Deliberate aspect-ratio variety so cards stagger visually like a real
-// Pinterest feed, even when the source photos are similarly cropped.
-// Cycles through a mix of portrait, square, and landscape ratios.
-const ASPECT_RATIOS = ["3/4", "1/1", "4/5", "1/1", "5/4", "3/4", "4/3", "1/1"];
-const getCardAspect = (i: number) => ASPECT_RATIOS[i % ASPECT_RATIOS.length];
 
 const useGalleryImages = () =>
   useQuery({
@@ -78,7 +72,7 @@ const StatsRow = () => (
         Featured In
       </span>
       <div className="flex items-center gap-4">
-        
+        <a
           href="https://www.ndtv.com/travel/webstories/uttarakhand-s-hidden-gems-where-you-can-escape-the-crowds-51971"
           target="_blank"
           rel="noopener noreferrer"
@@ -87,7 +81,7 @@ const StatsRow = () => (
           ndtv.com <ExternalLink className="w-3 h-3" />
         </a>
         <span className="w-px h-3.5 bg-border" />
-        
+        <a
           href="https://www.india.com/hindi-news/gallery-hindi/uttar-pradesh-facts-which-river-flow-near-ghaziabad-know-the-shocking-name-that-even-residence-dont-know-the-correct-answer-8074716/"
           target="_blank"
           rel="noopener noreferrer"
@@ -149,24 +143,7 @@ export const Photography = () => {
 
         <StatsRow />
 
-        {/*
-          react-masonry-css renders:
-            <div class="masonry-grid">        ← flex container (NOT grid)
-              <div class="masonry-col">       ← column 1
-                card, card, card...
-              </div>
-              <div class="masonry-col">       ← column 2
-                card, card, card...
-              </div>
-              ...
-            </div>
-          Each column is a flex column — cards stack at natural height.
-          Card height is controlled by the wrapper's aspect-ratio (see
-          getCardAspect), not the image's native size — this guarantees
-          visible stagger across columns even with similarly-shaped source
-          photos. We must NOT put display:grid or align-items:stretch on
-          any parent.
-        */}
+        {/* Pinterest Style Grid */}
         <Masonry
           breakpointCols={BREAKPOINTS}
           className="masonry-grid"
@@ -179,24 +156,21 @@ export const Photography = () => {
               variants={cardVariants}
               initial="hidden"
               animate="visible"
-              whileHover={{ y: -6, scale: 1.02 }}
+              whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="masonry-item"
               onClick={() => setLightbox(i)}
             >
-              <div
-                className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm cursor-pointer"
-                style={{ aspectRatio: getCardAspect(i) }}
-              >
+              <div className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer">
                 <img
                   src={thumb(url)}
                   alt={`Photograph ${i + 1}`}
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="block w-full h-auto"
                 />
                 {/* Hover overlay */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/60 transition-colors duration-300">
+                <div className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/80 transition-colors duration-300">
                   {String(i + 1).padStart(2, "0")}
                 </div>
               </div>
@@ -211,7 +185,7 @@ export const Photography = () => {
             size="lg"
             className="text-foreground/80 hover:text-foreground hover:bg-muted border border-border"
           >
-            
+            <a
               href="https://www.pexels.com/@amangairola/"
               target="_blank"
               rel="noopener noreferrer"
@@ -237,21 +211,30 @@ export const Photography = () => {
             aria-modal="true"
           >
             <button
-              onClick={(e) => { e.stopPropagation(); close(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                close();
+              }}
               className="absolute top-4 right-4 md:top-6 md:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
             <button
-              onClick={(e) => { e.stopPropagation(); prev(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                prev();
+              }}
               className="absolute left-3 md:left-6 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
               aria-label="Previous"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
-              onClick={(e) => { e.stopPropagation(); next(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                next();
+              }}
               className="absolute right-3 md:right-6 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
               aria-label="Next"
             >
