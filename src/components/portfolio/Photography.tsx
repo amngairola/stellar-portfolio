@@ -139,37 +139,45 @@ export const Photography = () => {
 
         {/* NATIVE TAILWIND PINTEREST GRID */}
         {/* columns-1 for mobile, 2 for sm, 3 for lg, 4 for xl screens */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 md:gap-6 mx-auto">
-          {urls.map((url, i) => (
-            <motion.div
-              key={url}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-              // break-inside-avoid prevents photos from splitting across columns
-              className="mb-4 md:mb-6 break-inside-avoid"
-            >
-              {/* Inner wrapper for hover scaling to prevent CSS column glitches */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer block"
-                onClick={() => setLightbox(i)}
+       {/* BULLETPROOF PINTEREST GRID */}
+        <div className="block w-full">
+          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 md:gap-6 mx-auto">
+            {urls.map((url, i) => (
+              /* 
+                CRITICAL FIX: 
+                1. 'inline-block' and 'w-full' force the browser to treat this as a solid chunk.
+                2. 'break-inside-avoid' prevents the image from splitting across columns.
+                3. We removed Framer Motion from this outer shell to prevent CSS conflicts.
+              */
+              <div 
+                key={url} 
+                className="break-inside-avoid inline-block w-full mb-4 md:mb-6"
               >
-                <img
-                  src={thumb(url)}
-                  alt={`Photograph ${i + 1}`}
-                  loading="lazy"
-                  className="w-full h-auto block"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/80 transition-colors duration-300">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-              </motion.div>
-            </motion.div>
-          ))}
+                <motion.div
+                  custom={i}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer block w-full"
+                  onClick={() => setLightbox(i)}
+                >
+                  <img
+                    src={thumb(url)}
+                    alt={`Photograph ${i + 1}`}
+                    loading="lazy"
+                    className="block w-full h-auto object-cover"
+                  />
+                  {/* Hover overlay */}
+                  <div className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/80 transition-colors duration-300">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="reveal mt-12 flex justify-center">
