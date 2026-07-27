@@ -16,7 +16,6 @@ export const HoverFeaturesLink = ({ text, features }: HoverFeaturesLinkProps) =>
     setMounted(true);
   }, []);
 
-  // Track exact cursor coordinates without manual offsets here
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -24,28 +23,32 @@ export const HoverFeaturesLink = ({ text, features }: HoverFeaturesLinkProps) =>
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     x.set(e.clientX);
     y.set(e.clientY);
   };
 
   return (
     <>
-      <span
-        className="relative inline-block font-semibold text-primary underline decoration-primary/50 decoration-dashed underline-offset-4 transition-colors hover:text-primary-glow hover:decoration-primary-glow cursor-help"
+      {/* 
+        Upgraded from a plain <span> to a styled button.
+        It uses your primary colors and has a subtle hover background fill. 
+      */}
+      <button
+        type="button"
+        className="inline-flex items-center justify-center rounded-md border border-primary/40 bg-transparent px-3 py-1.5 text-sm font-medium text-foreground/80 shadow-sm transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary cursor-help h-9"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={handleMouseMove}
       >
+        <Zap className="w-4 h-4 mr-1.5 text-primary" />
         {text}
-      </span>
+      </button>
 
       {mounted && createPortal(
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              // x: "-50%" perfectly centers the box horizontally under the cursor
-              // y: 24 pushes it 24px below the cursor so it doesn't block the link text
               initial={{ opacity: 0, scale: 0.8, rotate: -5, x: "-50%", y: 24 }}
               animate={{ opacity: 1, scale: 1, rotate: 0, x: "-50%", y: 24 }}
               exit={{ opacity: 0, scale: 0.8, rotate: 5, x: "-50%", y: 24 }}
