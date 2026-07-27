@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import Masonry from "react-masonry-css";
 import { X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -23,8 +22,6 @@ const PHOTO_URLS = [
 const thumb = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=600`;
 const full = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=1920`;
 const mod = (n: number, m: number) => ((n % m) + m) % m;
-
-const BREAKPOINTS = { default: 4, 1024: 3, 640: 2, 480: 1 };
 
 const useGalleryImages = () =>
   useQuery({
@@ -58,7 +55,6 @@ const cardVariants = {
 
 const StatsRow = () => (
   <div className="flex flex-wrap gap-4 mb-12">
-    {/* Total Views badge */}
     <div className="flex items-baseline gap-2 rounded-xl border border-border bg-card px-5 py-4 shadow-sm">
       <span className="font-display font-bold text-[2rem] leading-none tracking-tight text-foreground">
         506k+
@@ -66,7 +62,6 @@ const StatsRow = () => (
       <span className="text-sm text-muted-foreground">Total Views</span>
     </div>
 
-    {/* Featured In badge */}
     <div className="flex flex-col gap-2 rounded-xl border border-border bg-card px-5 py-4 shadow-sm">
       <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
         Featured In
@@ -128,7 +123,6 @@ export const Photography = () => {
   return (
     <section id="photography" className="relative py-20 md:py-24 bg-surface">
       <div className="container">
-        {/* Header */}
         <div className="reveal max-w-2xl mb-10">
           <div className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-3">
             Through My Lens
@@ -143,12 +137,9 @@ export const Photography = () => {
 
         <StatsRow />
 
-        {/* Pinterest Style Grid */}
-        <Masonry
-          breakpointCols={BREAKPOINTS}
-          className="masonry-grid"
-          columnClassName="masonry-col"
-        >
+        {/* NATIVE TAILWIND PINTEREST GRID */}
+        {/* columns-1 for mobile, 2 for sm, 3 for lg, 4 for xl screens */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 md:gap-6 mx-auto">
           {urls.map((url, i) => (
             <motion.div
               key={url}
@@ -156,27 +147,30 @@ export const Photography = () => {
               variants={cardVariants}
               initial="hidden"
               animate="visible"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="masonry-item"
-              onClick={() => setLightbox(i)}
+              // break-inside-avoid prevents photos from splitting across columns
+              className="mb-4 md:mb-6 break-inside-avoid"
             >
-              <div className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer">
+              {/* Inner wrapper for hover scaling to prevent CSS column glitches */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer block"
+                onClick={() => setLightbox(i)}
+              >
                 <img
                   src={thumb(url)}
                   alt={`Photograph ${i + 1}`}
                   loading="lazy"
-                  className="block w-full h-auto"
+                  className="w-full h-auto block"
                 />
-                {/* Hover overlay */}
                 <div className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/80 transition-colors duration-300">
                   {String(i + 1).padStart(2, "0")}
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
-        </Masonry>
+        </div>
 
         <div className="reveal mt-12 flex justify-center">
           <Button
