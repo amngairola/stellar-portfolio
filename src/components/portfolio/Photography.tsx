@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { X, ChevronLeft, ChevronRight, ExternalLink, TrendingUp, Award } from "lucide-react";
+// ... your other imports
 
 const PHOTO_URLS = [
   "https://images.pexels.com/photos/32441908/pexels-photo-32441908.jpeg",
@@ -57,38 +59,67 @@ const cardVariants = {
 };
 
 const StatsRow = () => (
-  <div className="flex flex-wrap gap-4 mb-12">
-    <div className="flex items-baseline gap-2 rounded-xl border border-border bg-card px-5 py-4 shadow-sm">
-      <span className="font-display font-bold text-[2rem] leading-none tracking-tight text-foreground">
-        506k+
-      </span>
-      <span className="text-sm text-muted-foreground">Total Views</span>
-    </div>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+    {/* Card 1: Views Metric */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      className="group relative flex flex-col justify-center rounded-2xl border border-border bg-card/40 backdrop-blur-md px-6 py-6 shadow-sm transition-all duration-300 hover:bg-card/80 hover:border-primary/40 hover:shadow-glow"
+    >
+      <div className="flex items-center gap-2 mb-3 text-primary">
+        <TrendingUp className="w-4 h-4" />
+        <span className="text-xs font-mono uppercase tracking-[0.15em] font-semibold">
+          Global Reach
+        </span>
+      </div>
+      <div className="flex items-baseline gap-1.5">
+        <span className="font-display font-bold text-4xl md:text-5xl tracking-tight text-foreground group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-primary-glow transition-all duration-500">
+          506K+
+        </span>
+        <span className="text-sm text-muted-foreground font-medium">views</span>
+      </div>
+    </motion.div>
 
-    <div className="flex flex-col gap-2 rounded-xl border border-border bg-card px-5 py-4 shadow-sm">
-      <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-        Featured In
-      </span>
-      <div className="flex items-center gap-4">
+    {/* Card 2: Featured In (Spans 2 columns on desktop) */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: 0.1 }}
+      className="md:col-span-2 relative flex flex-col justify-center rounded-2xl border border-border bg-card/40 backdrop-blur-md px-6 py-6 shadow-sm transition-all duration-300 hover:bg-card/80 hover:border-primary/40"
+    >
+      <div className="flex items-center gap-2 mb-4 text-primary">
+        <Award className="w-4 h-4" />
+        <span className="text-xs font-mono uppercase tracking-[0.15em] font-semibold">
+          Published & Recognized
+        </span>
+      </div>
+      
+      <div className="flex flex-wrap items-center gap-3">
+        {/* Interactive Link Pill 1 */}
         <a
           href="https://www.ndtv.com/travel/webstories/uttarakhand-s-hidden-gems-where-you-can-escape-the-crowds-51971"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:opacity-75 transition-opacity"
+          className="group/link inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-border text-sm font-medium text-foreground/80 hover:text-foreground hover:border-primary/60 hover:bg-primary/5 transition-all duration-300"
         >
-          ndtv.com <ExternalLink className="w-3 h-3" />
+          <span>NDTV Travel</span>
+          <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover/link:text-primary transition-colors" />
         </a>
-        <span className="w-px h-3.5 bg-border" />
+        
+        {/* Interactive Link Pill 2 */}
         <a
           href="https://www.india.com/hindi-news/gallery-hindi/uttar-pradesh-facts-which-river-flow-near-ghaziabad-know-the-shocking-name-that-even-residence-dont-know-the-correct-answer-8074716/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:opacity-75 transition-opacity"
+          className="group/link inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-border text-sm font-medium text-foreground/80 hover:text-foreground hover:border-primary/60 hover:bg-primary/5 transition-all duration-300"
         >
-          india.com <ExternalLink className="w-3 h-3" />
+          <span>India.com</span>
+          <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover/link:text-primary transition-colors" />
         </a>
       </div>
-    </div>
+    </motion.div>
   </div>
 );
 
