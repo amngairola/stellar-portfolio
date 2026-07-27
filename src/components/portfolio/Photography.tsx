@@ -5,18 +5,21 @@ import { X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const PHOTO_URLS = [
-  "https://images.pexels.com/photos/32441917/pexels-photo-32441917.jpeg",
-  "https://images.pexels.com/photos/30948494/pexels-photo-30948494.jpeg",
-  "https://images.pexels.com/photos/30948466/pexels-photo-30948466.jpeg",
-  "https://images.pexels.com/photos/33016619/pexels-photo-33016619.jpeg",
-  "https://images.pexels.com/photos/35408532/pexels-photo-35408532.jpeg",
+  "https://images.pexels.com/photos/32441908/pexels-photo-32441908.jpeg",
+  "https://images.pexels.com/photos/33638024/pexels-photo-33638024.jpeg",
+  "https://images.pexels.com/photos/32441927/pexels-photo-32441927.jpeg",
+  "https://images.pexels.com/photos/32441921/pexels-photo-32441921.jpeg",
   "https://images.pexels.com/photos/33638021/pexels-photo-33638021.jpeg",
-  "https://images.pexels.com/photos/38665212/pexels-photo-38665212.jpeg",
   "https://images.pexels.com/photos/33638020/pexels-photo-33638020.jpeg",
   "https://images.pexels.com/photos/35408529/pexels-photo-35408529.jpeg",
-  "https://images.pexels.com/photos/33638024/pexels-photo-33638024.jpeg",
+  "https://images.pexels.com/photos/32441917/pexels-photo-32441917.jpeg",
   "https://images.pexels.com/photos/32441931/pexels-photo-32441931.jpeg",
-  "https://images.pexels.com/photos/32441921/pexels-photo-32441921.jpeg",
+  "https://images.pexels.com/photos/38431412/pexels-photo-38431412.jpeg",
+  "https://images.pexels.com/photos/38665212/pexels-photo-38665212.jpeg",
+  "https://images.pexels.com/photos/35542972/pexels-photo-35542972.jpeg",
+  "https://images.pexels.com/photos/35408532/pexels-photo-35408532.jpeg",
+  "https://images.pexels.com/photos/33939424/pexels-photo-33939424.jpeg",
+  "https://images.pexels.com/photos/30948442/pexels-photo-30948442.jpeg",
 ];
 
 const thumb = (url: string) => `${url}?auto=compress&cs=tinysrgb&w=600`;
@@ -89,11 +92,33 @@ const StatsRow = () => (
   </div>
 );
 
+// Custom hook to handle responsive column counting in React
+const useMasonryCols = () => {
+  const [cols, setCols] = useState(3);
+
+  useEffect(() => {
+    const updateCols = () => {
+      if (window.innerWidth < 640) setCols(1);
+      else if (window.innerWidth < 1024) setCols(2);
+      else if (window.innerWidth < 1280) setCols(3);
+      else setCols(4);
+    };
+    
+    updateCols(); // Initial check
+    window.addEventListener("resize", updateCols);
+    return () => window.removeEventListener("resize", updateCols);
+  }, []);
+
+  return cols;
+};
+
 export const Photography = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const { data: cachedUrls } = useGalleryImages();
   const urls = cachedUrls ?? PHOTO_URLS;
   const len = urls.length;
+  
+  const colCount = useMasonryCols();
 
   const close = useCallback(() => setLightbox(null), []);
   const next = useCallback(
@@ -120,6 +145,12 @@ export const Photography = () => {
     };
   }, [lightbox, close, prev, next]);
 
+  // Programmatically split the images into columns
+  const columns = Array.from({ length: colCount }, () => [] as string[]);
+  urls.forEach((url, i) => {
+    columns[i % colCount].push(url);
+  });
+
   return (
     <section id="photography" className="relative py-20 md:py-24 bg-surface">
       <div className="container">
@@ -137,47 +168,42 @@ export const Photography = () => {
 
         <StatsRow />
 
-        {/* NATIVE TAILWIND PINTEREST GRID */}
-        {/* columns-1 for mobile, 2 for sm, 3 for lg, 4 for xl screens */}
-       {/* BULLETPROOF PINTEREST GRID */}
-        <div className="block w-full">
-          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 md:gap-6 mx-auto">
-            {urls.map((url, i) => (
-              /* 
-                CRITICAL FIX: 
-                1. 'inline-block' and 'w-full' force the browser to treat this as a solid chunk.
-                2. 'break-inside-avoid' prevents the image from splitting across columns.
-                3. We removed Framer Motion from this outer shell to prevent CSS conflicts.
-              */
-              <div 
-                key={url} 
-                className="break-inside-avoid inline-block w-full mb-4 md:mb-6"
-              >
-                <motion.div
-                  custom={i}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer block w-full"
-                  onClick={() => setLightbox(i)}
-                >
-                  <img
-                    src={thumb(url)}
-                    alt={`Photograph ${i + 1}`}
-                    loading="lazy"
-                    className="block w-full h-auto object-cover"
-                  />
-                  {/* Hover overlay */}
-                  <div className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/80 transition-colors duration-300">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                </motion.div>
-              </div>
-            ))}
-          </div>
+        {/* BULLETPROOF REACT MASONRY GRID */}
+        <div className="flex w-full gap-4 md:gap-6 justify-center mx-auto">
+          {columns.map((col, colIndex) => (
+            <div key={colIndex} className="flex flex-col gap-4 md:gap-6 flex-1 min-w-0">
+              {col.map((url) => {
+                // Find original index for the lightbox tracking
+                const originalIndex = urls.indexOf(url);
+                
+                return (
+                  <motion.div
+                    key={url}
+                    custom={originalIndex}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer w-full"
+                    onClick={() => setLightbox(originalIndex)}
+                  >
+                    <img
+                      src={thumb(url)}
+                      alt={`Photograph ${originalIndex + 1}`}
+                      loading="lazy"
+                      className="w-full h-auto block object-cover"
+                    />
+                    {/* Hover overlay */}
+                    <div className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/80 transition-colors duration-300">
+                      {String(originalIndex + 1).padStart(2, "0")}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          ))}
         </div>
 
         <div className="reveal mt-12 flex justify-center">
