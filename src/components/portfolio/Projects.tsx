@@ -3,7 +3,7 @@ import { ExternalLink, Github, Star } from "lucide-react";
 import { projects } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
-import { HoverPreviewLink } from "@/components/ui/HoverPreviewLink";
+import { HoverFeaturesLink } from "@/components/ui/HoverFeaturesLink";
 
 export const Projects = () => (
   <section id="projects" className="py-24 md:py-32 relative">
