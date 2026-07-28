@@ -1,5 +1,6 @@
 import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
+import { Tooltip } from "@/components/ui/tooltip-card";
 
 import { personal } from "@/data/portfolio";
 
@@ -19,33 +20,50 @@ export const Footer = () => (
         >
           <Mail className="w-4 h-4" />
         </a>
-        <a
-          href={personal.linkedin}
-          target="_blank"
-          rel="noreferrer"
-          className="w-9 h-9 rounded-lg border border-border hover:border-primary/60 hover:text-primary flex items-center justify-center transition-colors"
-          aria-label="LinkedIn"
+        <Tooltip
+          containerClassName="text-neutral-600 dark:text-neutral-400"
+          content={<img src="\../public/lkdn-aman.png" />}
         >
-          <Linkedin className="w-4 h-4" />
-        </a>
-        <a
-          href={personal.xUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="x.com"
-          className="grid h-10 w-10 place-items-center rounded-full border border-border  text-muted-foreground transition-colors hover:text-foreground"
+          <a
+            href={personal.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="w-9 h-9 rounded-lg border border-border hover:border-primary/60 hover:text-primary flex items-center justify-center transition-colors"
+            aria-label="LinkedIn"
+          >
+            <Linkedin className="w-4 h-4" />
+          </a>
+        </Tooltip>
+
+        <Tooltip
+          containerClassName="text-neutral-600 dark:text-neutral-400"
+          content={<img src="\../public/x-aman.png" />}
         >
-          <FaXTwitter className="w-5 h-5" />
-        </a>
-        <a
-          href={personal.github}
-          target="_blank"
-          rel="noreferrer"
-          className="w-9 h-9 rounded-lg border border-border hover:border-primary/60 hover:text-primary flex items-center justify-center transition-colors"
-          aria-label="GitHub"
+          <a
+            href={personal.xUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="x.com"
+            className="grid h-10 w-10 place-items-center rounded-full border border-border  text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <FaXTwitter className="w-5 h-5" />
+          </a>
+        </Tooltip>
+
+        <Tooltip
+          containerClassName="text-neutral-600 dark:text-neutral-400"
+          content={<img src="\../public/profile-git.png" />}
         >
-          <Github className="w-4 h-4" />
-        </a>
+          <a
+            href={personal.github}
+            target="_blank"
+            rel="noreferrer"
+            className="w-9 h-9 rounded-lg border border-border hover:border-primary/60 hover:text-primary flex items-center justify-center transition-colors"
+            aria-label="GitHub"
+          >
+            <Github className="w-4 h-4" />
+          </a>
+        </Tooltip>
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="w-9 h-9 rounded-lg bg-gradient-primary text-primary-foreground hover:opacity-90 flex items-center justify-center transition-opacity"

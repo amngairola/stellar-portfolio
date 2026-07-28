@@ -1,9 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { Tooltip } from "@/components/ui/tooltip-card";
 import { Button } from "@/components/ui/button";
-import { X, ChevronLeft, ChevronRight, ExternalLink, TrendingUp, Award } from "lucide-react";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  TrendingUp,
+  Award,
+} from "lucide-react";
 // ... your other imports
 
 const PHOTO_URLS = [
@@ -61,26 +68,32 @@ const cardVariants = {
 const StatsRow = () => (
   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
     {/* Card 1: Views Metric */}
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      className="group relative flex flex-col justify-center rounded-2xl border border-border bg-card/40 backdrop-blur-md px-6 py-6 shadow-sm transition-all duration-300 hover:bg-card/80 hover:border-primary/40 hover:shadow-glow"
+    <Tooltip
+      containerClassName="text-neutral-600 dark:text-neutral-400"
+      content={<img src="\../public/pexl.png" />}
     >
-      <div className="flex items-center gap-2 mb-3 text-primary">
-        <TrendingUp className="w-4 h-4" />
-        <span className="text-xs font-mono uppercase tracking-[0.15em] font-semibold">
-          Global Reach
-        </span>
-      </div>
-      <div className="flex items-baseline gap-1.5">
-        <span className="font-display font-bold text-4xl md:text-5xl tracking-tight text-foreground group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-primary-glow transition-all duration-500">
-          506K+
-        </span>
-        <span className="text-sm text-muted-foreground font-medium">views</span>
-      </div>
-    </motion.div>
-
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        className="group relative flex flex-col justify-center rounded-2xl border border-border bg-card/40 backdrop-blur-md px-6 py-6 shadow-sm transition-all duration-300 hover:bg-card/80 hover:border-primary/40 hover:shadow-glow"
+      >
+        <div className="flex items-center gap-2 mb-3 text-primary">
+          <TrendingUp className="w-4 h-4" />
+          <span className="text-xs font-mono uppercase tracking-[0.15em] font-semibold">
+            Global Reach
+          </span>
+        </div>
+        <div className="flex items-baseline gap-1.5">
+          <span className="font-display font-bold text-4xl md:text-5xl tracking-tight text-foreground group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-primary-glow transition-all duration-500">
+            506K+
+          </span>
+          <span className="text-sm text-muted-foreground font-medium">
+            views
+          </span>
+        </div>
+      </motion.div>
+    </Tooltip>
     {/* Card 2: Featured In (Spans 2 columns on desktop) */}
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -95,7 +108,7 @@ const StatsRow = () => (
           Published & Recognized
         </span>
       </div>
-      
+
       <div className="flex flex-wrap items-center gap-3">
         {/* Interactive Link Pill 1 */}
         <a
@@ -107,7 +120,7 @@ const StatsRow = () => (
           <span>NDTV Travel</span>
           <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover/link:text-primary transition-colors" />
         </a>
-        
+
         {/* Interactive Link Pill 2 */}
         <a
           href="https://www.india.com/hindi-news/gallery-hindi/uttar-pradesh-facts-which-river-flow-near-ghaziabad-know-the-shocking-name-that-even-residence-dont-know-the-correct-answer-8074716/"
@@ -134,7 +147,7 @@ const useMasonryCols = () => {
       else if (window.innerWidth < 1280) setCols(3);
       else setCols(4);
     };
-    
+
     updateCols(); // Initial check
     window.addEventListener("resize", updateCols);
     return () => window.removeEventListener("resize", updateCols);
@@ -148,7 +161,7 @@ export const Photography = () => {
   const { data: cachedUrls } = useGalleryImages();
   const urls = cachedUrls ?? PHOTO_URLS;
   const len = urls.length;
-  
+
   const colCount = useMasonryCols();
 
   const close = useCallback(() => setLightbox(null), []);
@@ -202,11 +215,14 @@ export const Photography = () => {
         {/* BULLETPROOF REACT MASONRY GRID */}
         <div className="flex w-full gap-4 md:gap-6 justify-center mx-auto">
           {columns.map((col, colIndex) => (
-            <div key={colIndex} className="flex flex-col gap-4 md:gap-6 flex-1 min-w-0">
+            <div
+              key={colIndex}
+              className="flex flex-col gap-4 md:gap-6 flex-1 min-w-0"
+            >
               {col.map((url) => {
                 // Find original index for the lightbox tracking
                 const originalIndex = urls.indexOf(url);
-                
+
                 return (
                   <motion.div
                     key={url}
