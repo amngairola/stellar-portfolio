@@ -9,45 +9,46 @@ export const personal = {
   leetcode: "https://leetcode.com/u/amangairola/",
   resumeUrl:
     "https://drive.google.com/file/d/1FgC_hTxQFHcDLgBMljTvcKrmz5mJ6i_Q/view?usp=sharing",
-  roles: [
-    "Full Stack Developer",
-    "I Build Things People See",
-    "Turning Ideas Into Interfaces",
-    "Software Engineer",
-  ],
+ roles: [
+  "Full Stack Developer",
+  "I Think in Products, Not Just Code",
+  "Turning Ideas Into Interfaces",
+  "Software Engineer Who Ships",
+],
   tagline:
-    "I build fast, scalable web products.",
+    "I solve product problems with thoughtful engineerin",
   x: "Aman Gairola",
   xUrl: "https://x.com/amanngairola",
 };
 
 export const about = {
   summary:
-    "Full-stack developer with a frontend-first instinct. I work with the MERN stack — React, Node.js, MongoDB, Express — and care deeply about what happens between a user's click and the server's response. Performance, architecture, and experience aren't tradeoffs. They're the same thing.",
+    "I don't chase trendy tech — I solve product problems with thoughtful engineering Full-stack developer building modern web applications where performance, architecture, and user experience actually work together.",
+  
   highlight:
     "As a Software Engineering Intern at VerveGen Tech, I shipped 15+ reusable React components, cut feature delivery time by two weeks, and pushed Lighthouse scores up by 30 points. I've since built and deployed five production-grade products — from a real-time collaborative code editor to a hyperlocal delivery platform with live booking sync.",
   stats: [
     { value: "5+", label: "Production apps shipped" },
     { value: "300+", label: "DSA problems solved" },
     { value: "1761", label: "LeetCode rating" },
-    { value: "30pt", label: "Lighthouse improvement" },
+    { value: "+30pt", label: "Lighthouse improvement" },
   ],
   values: [
-    {
-      title: "Performance first",
-      desc: "Lazy loading, bundle hygiene, sub-200ms targets.",
+     {
+      title: "Fast by default",
+      desc: "Sub-200ms isn't a target, it's a floor. Lazy loading and lean bundles aren't optimizations — they're table stakes.",
     },
     {
-      title: "Clean architecture",
-      desc: "Modular code, clear boundaries, scalable patterns.",
+      title: "Architecture over shortcuts",
+      desc: "Every shortcut is a future bug with a delayed timer. I build for the version six months from now.",
     },
     {
-      title: "Product thinking",
-      desc: "Frictionless flows, PLG design, user empathy.",
+      title: "Product before pixels",
+      desc: "A beautiful UI on a confusing flow is still a confusing flow. I design for the decision, not just the screen.",
     },
     {
-      title: "Always learning",
-      desc: "New stacks, OSS contributions, consistent reps.",
+      title: "Compounding curiosity",
+      desc: "New stacks, open-source reading, consistent reps — the goal isn't to know everything, it's to never plateau.",
     },
   ],
 };
@@ -88,7 +89,7 @@ export const skills = [
   },
   {
     category: "Databases",
-    items: ["MongoDB", "Firebase", "MySQL", "PostgreSQL"],
+    items: ["MongoDB", "Firebase", "MySQL", "PostgreSQL" ,"supabase"],
   },
   {
     category: "Tools & Platforms",
@@ -96,7 +97,7 @@ export const skills = [
   },
   {
     category: "Core CS",
-    items: ["DSA", "OOP", "System Design", "TDD", "Agile"],
+    items: ["DSA", "OOP", "System Design","Computer Networks", "TDD", "Agile"],
   },
 ];
 
