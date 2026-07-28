@@ -11,6 +11,7 @@ import {
   TrendingUp,
   Award,
 } from "lucide-react";
+import { images } from "@/data/images";
 // ... your other imports
 
 const PHOTO_URLS = [
@@ -70,7 +71,7 @@ const StatsRow = () => (
     {/* Card 1: Views Metric */}
     <Tooltip
       containerClassName="text-neutral-600 dark:text-neutral-400"
-      content={<img src="\../public/pexl.png" />}
+      content={<img src={images.pexels} />}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}

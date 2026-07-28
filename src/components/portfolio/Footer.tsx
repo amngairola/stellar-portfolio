@@ -3,6 +3,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Tooltip } from "@/components/ui/tooltip-card";
 
 import { personal } from "@/data/portfolio";
+import { images } from "@/data/images";
 
 export const Footer = () => (
   <footer className="border-t border-border py-10 pb-28 md:pb-32 relative z-20">
@@ -22,7 +23,7 @@ export const Footer = () => (
         </a>
         <Tooltip
           containerClassName="text-neutral-600 dark:text-neutral-400"
-          content={<img src="\../public/lkdn-aman.png" />}
+          content={<img src={images.linkdin} />}
         >
           <a
             href={personal.linkedin}
@@ -37,7 +38,7 @@ export const Footer = () => (
 
         <Tooltip
           containerClassName="text-neutral-600 dark:text-neutral-400"
-          content={<img src="\../public/x-aman.png" />}
+          content={<img src={images.x} />}
         >
           <a
             href={personal.xUrl}
@@ -52,7 +53,7 @@ export const Footer = () => (
 
         <Tooltip
           containerClassName="text-neutral-600 dark:text-neutral-400"
-          content={<img src="\../public/profile-git.png" />}
+          content={<img src={images.git} />}
         >
           <a
             href={personal.github}

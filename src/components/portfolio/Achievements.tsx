@@ -4,6 +4,7 @@ import { achievements, personal } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Tooltip } from "@/components/ui/tooltip-card";
+import { images } from "@/data/images";
 const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
   const [n, setN] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -60,7 +61,7 @@ export const Achievements = () => (
       <div className="reveal flex flex-wrap gap-3">
         <Tooltip
           containerClassName="text-neutral-600 dark:text-neutral-400"
-          content={<img src="\../public/le.png" />}
+          content={<img src={images.lc} />}
         >
           <Button
             asChild
@@ -74,7 +75,7 @@ export const Achievements = () => (
         </Tooltip>
         <Tooltip
           containerClassName="text-neutral-600 dark:text-neutral-400"
-          content={<img src="\../public/profile-git.png" />}
+          content={<img src={images.git} />}
         >
           <Button
             asChild
