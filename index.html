@@ -111,8 +111,17 @@
         ]
       }
     </script>
+    <!-- Apply stored theme before first paint (no flash) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme") || "dark";
+          document.documentElement.classList.toggle("dark", t === "dark");
+          document.documentElement.style.colorScheme = t;
+        } catch (e) {}
+      })();
+    </script>
   </head>
-
 
   <body>
     <div id="root"></div>
