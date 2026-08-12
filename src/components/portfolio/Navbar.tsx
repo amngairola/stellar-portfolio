@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Download, Settings, Check } from "lucide-react";
+import { Menu, X, Download, Settings, Check, Sun, Moon, CalendarDays } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { personal } from "@/data/portfolio";
+import { siteConfig } from "@/config/site";
+import { useTheme } from "@/hooks/useTheme";
 
 const chapters = [
   { to: "/", label: "Home" },
@@ -83,6 +85,7 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [accentIdx, setAccentIdx] = useState(0);
   const location = useLocation();
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -95,12 +98,20 @@ export const Navbar = () => {
   useEffect(() => {
     const a = ACCENTS[accentIdx];
     const root = document.documentElement;
-    root.style.setProperty("--primary", `${a.h} ${a.s}% ${a.l}%`);
-    root.style.setProperty("--primary-glow", `${a.glowH} ${a.glowS}% ${a.glowL}%`);
-    root.style.setProperty("--accent", `${a.h} ${a.s}% ${a.l}%`);
-    root.style.setProperty("--ring", `${a.h} ${a.s}% ${a.l}%`);
+    // Light theme needs darker, lower-saturation accents for contrast on off-white.
+    const dim = (l: string, by: number) => Math.max(28, Number(l) - by);
+    const desat = (s: string, by: number) => Math.max(5, Number(s) - by);
+    const isLight = theme === "light";
+    const l = isLight ? dim(a.l, 20) : a.l;
+    const s = isLight ? desat(a.s, 25) : a.s;
+    const gl = isLight ? dim(a.glowL, 16) : a.glowL;
+    const gs = isLight ? desat(a.glowS, 25) : a.glowS;
+    root.style.setProperty("--primary", `${a.h} ${s}% ${l}%`);
+    root.style.setProperty("--primary-glow", `${a.glowH} ${gs}% ${gl}%`);
+    root.style.setProperty("--accent", `${a.h} ${s}% ${l}%`);
+    root.style.setProperty("--ring", `${a.h} ${s}% ${l}%`);
     localStorage.setItem(STORAGE_KEY, a.name);
-  }, [accentIdx]);
+  }, [accentIdx, theme]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -145,11 +156,19 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={toggle}
+            aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+            className="icon-action w-11 h-11 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/60 flex items-center justify-center"
+          >
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+
           <Popover>
             <PopoverTrigger asChild>
               <button
                 aria-label="Color settings"
-                className="w-10 h-10 rounded-lg border border-border hover:border-primary/60 flex items-center justify-center transition-colors"
+                className="icon-action w-11 h-11 rounded-lg border border-border hover:border-primary/60 hover:text-primary flex items-center justify-center"
               >
                 <Settings className="w-4 h-4" />
               </button>
@@ -163,7 +182,7 @@ export const Navbar = () => {
                   <button
                     key={a.name}
                     onClick={() => setAccentIdx(i)}
-                    className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 text-sm transition-colors ${
+                    className={`flex min-h-[44px] items-center gap-2 rounded-lg border px-2.5 py-2 text-sm transition-all duration-200 active:scale-95 ${
                       accentIdx === i
                         ? "border-primary bg-primary/10 text-foreground"
                         : "border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
@@ -181,7 +200,22 @@ export const Navbar = () => {
             </PopoverContent>
           </Popover>
 
-          <Button asChild size="sm" className="hidden sm:inline-flex bg-primary text-primary-foreground hover:opacity-90">
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className="hidden sm:inline-flex min-h-[44px] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-primary/10 hover:text-primary active:scale-95"
+          >
+            <a href={siteConfig.meetingUrl} target="_blank" rel="noreferrer">
+              <CalendarDays className="w-4 h-4 mr-1.5" /> {siteConfig.meetingLabel}
+            </a>
+          </Button>
+
+          <Button
+            asChild
+            size="sm"
+            className="hidden sm:inline-flex min-h-[44px] bg-primary text-primary-foreground transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
+          >
             <a href={personal.resumeUrl} download>
               <Download className="w-4 h-4 mr-1.5" /> Resume
             </a>
@@ -189,7 +223,7 @@ export const Navbar = () => {
           <button
             onClick={() => setOpen((o) => !o)}
             aria-label="Menu"
-            className="md:hidden w-10 h-10 rounded-lg border border-border flex items-center justify-center"
+            className="icon-action md:hidden w-11 h-11 rounded-lg border border-border flex items-center justify-center"
           >
             {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
@@ -205,7 +239,7 @@ export const Navbar = () => {
                 to={c.to}
                 end={c.to === "/"}
                 className={({ isActive }) =>
-                  `text-left px-3 py-3 rounded-md ${
+                  `min-h-[44px] flex items-center text-left px-3 py-3 rounded-md transition-colors duration-200 active:bg-muted ${
                     isActive ? "text-primary bg-muted" : "text-muted-foreground"
                   }`
                 }
@@ -213,6 +247,23 @@ export const Navbar = () => {
                 {c.label}
               </NavLink>
             ))}
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <a
+                href={siteConfig.meetingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="icon-action min-h-[44px] flex items-center justify-center gap-1.5 rounded-md border border-border text-sm text-foreground"
+              >
+                <CalendarDays className="w-4 h-4" /> {siteConfig.meetingLabel}
+              </a>
+              <a
+                href={personal.resumeUrl}
+                download
+                className="icon-action min-h-[44px] flex items-center justify-center gap-1.5 rounded-md bg-primary text-primary-foreground text-sm"
+              >
+                <Download className="w-4 h-4" /> Resume
+              </a>
+            </div>
           </div>
         </div>
       )}

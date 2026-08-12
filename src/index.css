@@ -4,45 +4,46 @@
 
 @layer base {
   :root {
-    --background: 240 6% 4%;
-    --foreground: 0 0% 100%;
+    /* Light theme — soft warm off-white, muted low-saturation accents */
+    --background: 45 20% 97%;
+    --foreground: 240 8% 14%;
 
-    --card: 240 5% 7%;
-    --card-foreground: 0 0% 100%;
+    --card: 45 25% 99%;
+    --card-foreground: 240 8% 14%;
 
-    --popover: 240 5% 7%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 45 25% 99%;
+    --popover-foreground: 240 8% 14%;
 
-    --primary: 225 100% 65%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 234 100% 68%;
+    --primary: 228 42% 46%;
+    --primary-foreground: 45 25% 99%;
+    --primary-glow: 232 40% 54%;
 
-    --secondary: 240 5% 26%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 40 12% 90%;
+    --secondary-foreground: 240 8% 20%;
 
-    --muted: 240 3% 16%;
-    --muted-foreground: 240 4% 46%;
+    --muted: 42 14% 92%;
+    --muted-foreground: 240 5% 42%;
 
-    --accent: 225 100% 65%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 228 42% 46%;
+    --accent-foreground: 45 25% 99%;
 
-    --destructive: 0 60% 52%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 56% 48%;
+    --destructive-foreground: 45 25% 99%;
 
-    --border: 240 3% 16%;
-    --input: 240 5% 7%;
-    --ring: 225 100% 65%;
+    --border: 40 10% 87%;
+    --input: 45 25% 99%;
+    --ring: 228 42% 46%;
 
-    --surface: 240 6% 4%;
-    --surface-elevated: 240 5% 9%;
+    --surface: 45 20% 97%;
+    --surface-elevated: 44 22% 94%;
 
     --radius: 0.75rem;
 
-    --gradient-primary: linear-gradient(to right, #4F7CFF, #5B6CFF, #7C5CFF);
-    --gradient-hero: radial-gradient(ellipse at top, hsl(225 100% 65% / 0.06), transparent 60%),
-                     radial-gradient(ellipse at bottom right, hsl(234 100% 68% / 0.04), transparent 60%);
-    --shadow-glow: 0 0 24px -4px hsl(225 100% 65% / 0.35);
-    --shadow-elevated: 0 16px 40px -20px hsl(0 0% 0% / 0.6);
+    --gradient-primary: linear-gradient(to right, hsl(228 42% 46%), hsl(232 38% 52%), hsl(255 30% 52%));
+    --gradient-hero: radial-gradient(ellipse at top, hsl(228 42% 46% / 0.07), transparent 60%),
+                     radial-gradient(ellipse at bottom right, hsl(35 45% 55% / 0.06), transparent 60%);
+    --shadow-glow: 0 0 24px -6px hsl(228 42% 46% / 0.25);
+    --shadow-elevated: 0 16px 40px -24px hsl(240 10% 20% / 0.25);
 
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -90,6 +91,12 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    transition: background-color 250ms var(--transition-smooth), color 250ms var(--transition-smooth);
+  }
+
+  /* Prevent transition flash when switching themes on first paint */
+  html.theme-init * {
+    transition: none !important;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -124,6 +131,50 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Keyword highlight — works in both themes */
+  .kw {
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    background: hsl(var(--primary) / 0.10);
+    border-bottom: 1px solid hsl(var(--primary) / 0.45);
+    border-radius: 0.25rem;
+    padding: 0.05em 0.3em;
+    white-space: nowrap;
+  }
+
+  /* Underline-reveal link interaction */
+  .link-underline {
+    position: relative;
+    transition: color 180ms var(--transition-smooth);
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: hsl(var(--primary));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 180ms var(--transition-smooth);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after { transform: scaleX(1); }
+
+  /* Icon action buttons: smooth hover + real tap feedback on touch */
+  .icon-action {
+    transition: color 180ms var(--transition-smooth),
+                border-color 180ms var(--transition-smooth),
+                background-color 180ms var(--transition-smooth),
+                transform 180ms var(--transition-smooth);
+  }
+  .icon-action:hover { transform: translateY(-1px); }
+  .icon-action:active { transform: scale(0.94); background: hsl(var(--primary) / 0.12); }
+  @media (hover: none) {
+    .icon-action:hover { transform: none; }
   }
 
   .grid-bg {

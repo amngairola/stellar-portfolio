@@ -3,6 +3,7 @@ import { Zap, ExternalLink, Github, Star } from "lucide-react";
 import { projects } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
+import { Keywords } from "./Keywords";
 import { HoverFeaturesLink } from "@/components/ui/HoverFeaturesLink";
 import { Tooltip } from "@/components/ui/tooltip-card";
 
@@ -67,10 +68,10 @@ const ProjectCard = ({
           )}
         </h3>
 
-        <div className="text-muted-foreground">{project.tagline}</div>
+        <div className="text-muted-foreground"><Keywords text={project.tagline} /></div>
 
         <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-3xl">
-          {project.description}
+          <Keywords text={project.description} />
         </p>
 
         <div className="flex flex-wrap gap-2">
@@ -88,14 +89,19 @@ const ProjectCard = ({
           <Button
             asChild
             size="sm"
-            className="bg-gradient-primary text-primary-foreground hover:brightness-110 transition"
+            className="min-h-[44px] bg-gradient-primary text-primary-foreground transition-all duration-200 hover:brightness-110 hover:-translate-y-0.5 active:scale-95 active:brightness-95"
           >
             <a href={project.live} target="_blank" rel="noreferrer">
               <ExternalLink className="w-4 h-4 mr-1.5" /> Live Demo
             </a>
           </Button>
 
-          <Button asChild size="sm" variant="outline">
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className="min-h-[44px] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-primary/10 active:scale-95"
+          >
             <a href={project.github} target="_blank" rel="noreferrer">
               <Github className="w-4 h-4 mr-1.5" /> GitHub
             </a>
@@ -132,7 +138,7 @@ const ProjectCard = ({
               {/* We can also apply the button styling here so it matches Live Demo & GitHub */}
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-md border border-primary/40 bg-transparent px-3 py-1.5 text-sm font-medium text-foreground/80 shadow-sm transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary cursor-help h-9"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-primary/40 bg-transparent px-3 py-1.5 text-sm font-medium text-foreground/80 shadow-sm transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:text-primary active:scale-95 cursor-help"
               >
                 <Zap className="w-4 h-4 mr-1.5 text-primary" />
                 View Key Features
