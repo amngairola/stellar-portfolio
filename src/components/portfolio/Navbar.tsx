@@ -23,68 +23,86 @@ type AccentOption = {
   glowS: string;
   glowL: string;
   swatch: string;
+  homeGlow: [string, string, string];
 };
 
 const ACCENTS: AccentOption[] = [
   {
     name: "Porcelain",
-    h: "240",
+    h: "30",
     s: "8",
-    l: "88",
-    glowH: "240",
-    glowS: "6",
-    glowL: "80",
-    swatch: "#E2E2E7",
+    l: "90",
+    glowH: "30",
+    glowS: "8",
+    glowL: "86",
+    swatch: "#E8E6E3",
+    homeGlow: ["30 8% 86%", "30 6% 80%", "40 10% 90%"],
   },
   {
-    name: "Slate Blue",
-    h: "222",
-    s: "38",
-    l: "68",
-    glowH: "228",
-    glowS: "34",
-    glowL: "72",
-    swatch: "#8FA3C8",
+    name: "Sky Blue",
+    h: "214",
+    s: "100",
+    l: "74",
+    glowH: "214",
+    glowS: "88",
+    glowL: "70",
+    swatch: "#7DB7FF",
+    homeGlow: ["214 80% 60%", "214 70% 54%", "210 30% 78%"],
   },
   {
-    name: "Gray",
-    h: "240",
-    s: "5",
-    l: "65",
-    glowH: "240",
-    glowS: "5",
+    name: "Violet",
+    h: "258",
+    s: "90",
+    l: "76",
+    glowH: "258",
+    glowS: "82",
     glowL: "72",
-    swatch: "#A1A1AA",
+    swatch: "#A78BFA",
+    homeGlow: ["258 70% 66%", "258 60% 60%", "250 30% 78%"],
   },
   {
     name: "Orange",
     h: "28",
-    s: "58",
-    l: "62",
-    glowH: "22",
-    glowS: "56",
-    glowL: "64",
-    swatch: "#D98E5A",
+    s: "88",
+    l: "64",
+    glowH: "28",
+    glowS: "84",
+    glowL: "62",
+    swatch: "#F59A52",
+    homeGlow: ["28 70% 55%", "32 60% 50%", "40 30% 78%"],
   },
   {
-    name: "Sage",
-    h: "152",
-    s: "26",
-    l: "60",
+    name: "Mint",
+    h: "160",
+    s: "50",
+    l: "66",
     glowH: "160",
-    glowS: "28",
-    glowL: "64",
-    swatch: "#88AEA2",
+    glowS: "46",
+    glowL: "62",
+    swatch: "#7DD3B0",
+    homeGlow: ["160 50% 56%", "160 44% 52%", "160 28% 80%"],
   },
   {
-    name: "Sunset",
-    h: "26",
-    s: "48",
-    l: "62",
-    glowH: "20",
-    glowS: "52",
-    glowL: "64",
-    swatch: "#CE8A6A",
+    name: "Coral",
+    h: "12",
+    s: "80",
+    l: "70",
+    glowH: "12",
+    glowS: "74",
+    glowL: "66",
+    swatch: "#F28C72",
+    homeGlow: ["12 70% 60%", "14 60% 56%", "20 28% 78%"],
+  },
+  {
+    name: "Amber",
+    h: "44",
+    s: "87",
+    l: "66",
+    glowH: "44",
+    glowS: "80",
+    glowL: "62",
+    swatch: "#F4C95D",
+    homeGlow: ["44 80% 58%", "40 70% 52%", "36 28% 80%"],
   },
 ];
 
@@ -94,15 +112,20 @@ const ORANGE_INDEX = ACCENTS.findIndex((a) => a.name === "Orange");
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [accentIdx, setAccentIdx] = useState(() => ORANGE_INDEX);
+  const [accentIdx, setAccentIdx] = useState(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    const aliases: Record<string, string> = {
+      "Slate Blue": "Sky Blue",
+      Gray: "Porcelain",
+      Sage: "Mint",
+      Sunset: "Coral",
+    };
+    const savedName = stored ? aliases[stored] ?? stored : "";
+    const idx = savedName ? ACCENTS.findIndex((a) => a.name === savedName) : -1;
+    return idx >= 0 ? idx : ORANGE_INDEX;
+  });
   const location = useLocation();
   const { theme, toggle } = useTheme();
-
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    const idx = stored ? ACCENTS.findIndex((a) => a.name === stored) : -1;
-    setAccentIdx(idx >= 0 ? idx : ORANGE_INDEX);
-  }, []);
 
   useEffect(() => {
     const a = ACCENTS[accentIdx];
@@ -119,6 +142,9 @@ export const Navbar = () => {
     root.style.setProperty("--primary-glow", `${a.glowH} ${gs}% ${gl}%`);
     root.style.setProperty("--accent", `${a.h} ${s}% ${l}%`);
     root.style.setProperty("--ring", `${a.h} ${s}% ${l}%`);
+    root.style.setProperty("--home-glow-1", a.homeGlow[0]);
+    root.style.setProperty("--home-glow-2", a.homeGlow[1]);
+    root.style.setProperty("--home-glow-3", a.homeGlow[2]);
     localStorage.setItem(STORAGE_KEY, a.name);
   }, [accentIdx, theme]);
 

@@ -45,6 +45,11 @@
     --shadow-glow: 0 0 24px -6px hsl(228 42% 46% / 0.25);
     --shadow-elevated: 0 16px 40px -24px hsl(240 10% 20% / 0.25);
 
+    /* Home ambient glow — warm orange default (dark mode only, overridden per-accent) */
+    --home-glow-1: 28 70% 55%;
+    --home-glow-2: 32 60% 50%;
+    --home-glow-3: 40 30% 78%;
+
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -77,6 +82,11 @@
                      radial-gradient(ellipse at bottom right, hsl(240 6% 70% / 0.03), transparent 62%);
     --shadow-glow: 0 0 24px -6px hsl(240 8% 80% / 0.18);
     --shadow-elevated: 0 16px 40px -20px hsl(0 0% 0% / 0.6);
+
+    /* Home ambient glow — warm orange default (overridden per-accent in JS) */
+    --home-glow-1: 28 70% 55%;
+    --home-glow-2: 32 60% 50%;
+    --home-glow-3: 40 30% 78%;
   }
 }
 
@@ -213,25 +223,25 @@
   }
   .glow-border:hover::before { opacity: 1; }
 
-  /* Ambient warm glow — Home page only, dark mode only */
+  /* Ambient warm glow — Home page only, dark mode only, accent-aware */
   .home-ambient-glow {
     opacity: 0;
-    transition: opacity 600ms var(--transition-smooth);
+    transition: opacity 800ms var(--transition-smooth);
   }
   .dark .home-ambient-glow {
     opacity: 1;
     background:
-      radial-gradient(60% 50% at 50% 0%, hsl(28 58% 62% / 0.14), transparent 70%),
-      radial-gradient(45% 38% at 35% 6%, hsl(32 50% 58% / 0.10), transparent 72%),
-      radial-gradient(40% 34% at 72% 10%, hsl(24 45% 52% / 0.08), transparent 74%);
-    filter: blur(40px);
-    animation: home-glow-breathe 22s ease-in-out infinite;
+      radial-gradient(70% 45% at 50% 0%, hsl(var(--home-glow-1) / 0.13), transparent 70%),
+      radial-gradient(45% 30% at 45% 10%, hsl(var(--home-glow-2) / 0.07), transparent 75%),
+      radial-gradient(60% 35% at 55% 5%, hsl(var(--home-glow-3) / 0.045), transparent 70%);
+    filter: blur(60px);
+    animation: home-glow-breathe 24s ease-in-out infinite;
   }
   @media (prefers-reduced-motion: reduce) {
     .dark .home-ambient-glow { animation: none; }
   }
   @media (max-width: 640px) {
-    .dark .home-ambient-glow { filter: blur(28px); }
+    .dark .home-ambient-glow { filter: blur(40px); }
   }
 
   .reveal {
