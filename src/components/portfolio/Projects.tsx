@@ -89,7 +89,8 @@ const ProjectCard = ({
           <Button
             asChild
             size="sm"
-            className="min-h-[44px] bg-gradient-primary text-primary-foreground transition-all duration-200 hover:brightness-110 hover:-translate-y-0.5 active:scale-95 active:brightness-95"
+            variant="outline"
+            className="min-h-[44px] bg-transparent backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-primary/10 active:scale-95"
           >
             <a href={project.live} target="_blank" rel="noreferrer">
               <ExternalLink className="w-4 h-4 mr-1.5" /> Live Demo
