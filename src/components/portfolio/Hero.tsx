@@ -2,9 +2,10 @@ import { personal } from "@/data/portfolio";
 
 export const Hero = () => {
   return (
-    <section id="home" className="relative flex items-center pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
+    <section id="home" className="relative flex items-center pt-20 pb-8 sm:pt-24 md:pt-28 md:pb-12 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-30" />
       <div className="absolute inset-0 bg-gradient-hero" />
+      <div className="hero-glow" />
       <div className="blob bg-primary/10 w-[420px] h-[420px] -top-24 -left-24" />
 
       <div className="container relative">

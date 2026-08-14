@@ -55,19 +55,19 @@ const Skeleton = () => (
 );
 
 const EmptyState = ({ category }: { category?: string }) => (
-  <div className="container py-40 text-center reveal in-view">
-    <div className="mx-auto w-24 h-24 rounded-2xl bg-gradient-primary/10 border border-primary/20 flex items-center justify-center mb-8 shadow-glow">
-      <Newspaper className="w-10 h-10 text-primary" />
+  <div className="container py-32 reveal in-view">
+    <div className="w-12 h-12 rounded-xl border border-border flex items-center justify-center mb-6">
+      <Newspaper className="w-5 h-5 text-muted-foreground" />
     </div>
-    <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+    <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">
       {category ? `Nothing in ${category} — yet.` : "The presses are warming up."}
     </h2>
-    <p className="text-muted-foreground max-w-md mx-auto mb-8">
+    <p className="text-muted-foreground max-w-md mb-8">
       I'm drafting something worth your time. Check back soon, or read what's already published.
     </p>
     <Link
       to="/blogs"
-      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-primary text-primary-foreground font-medium shadow-glow hover:opacity-90 transition"
+      className="inline-flex items-center gap-2 text-sm text-primary link-underline"
     >
       Back to all posts <ArrowRight className="w-4 h-4" />
     </Link>
@@ -136,7 +136,7 @@ const CategoryPills = ({
             );
           })}
           <div
-            className="absolute bottom-0 h-[2px] bg-gradient-primary rounded-full transition-all duration-500 ease-out"
+            className="absolute bottom-0 h-[2px] bg-primary rounded-full transition-all duration-500 ease-out"
             style={{
               left: indicator.left,
               width: indicator.width,
@@ -152,41 +152,40 @@ const CategoryPills = ({
 const FeaturedPost = ({ post }: { post: Blog }) => (
   <Link
     to={`/blogs/${slugify(post.category)}/${post.slug}`}
-    className="reveal group container grid lg:grid-cols-5 gap-8 lg:gap-14 items-center pt-16 md:pt-24 pb-16"
+    className="reveal group container grid lg:grid-cols-5 gap-8 lg:gap-14 items-center pt-12 md:pt-16 pb-12 border-b border-border"
   >
-    <div className="lg:col-span-3 relative overflow-hidden rounded-2xl aspect-[16/10] bg-muted">
+    <div className="lg:col-span-3 relative overflow-hidden rounded-xl aspect-[16/10] bg-muted">
       {post.cover_image ? (
         <img
           src={post.cover_image}
           alt={post.title}
-          className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.03]"
           loading="eager"
         />
       ) : (
-        <div className="w-full h-full bg-gradient-primary/20" />
+        <div className="w-full h-full bg-muted" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-tr from-background/60 via-transparent to-transparent" />
-      <div className="absolute top-5 left-5 px-3 py-1 rounded-full bg-background/70 backdrop-blur-md border border-border font-mono text-xs uppercase tracking-widest text-primary">
+      <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-background/70 backdrop-blur-md border border-border font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
         Featured
       </div>
     </div>
-    <div className="lg:col-span-2 space-y-5">
+    <div className="lg:col-span-2 space-y-4">
       <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-muted-foreground">
         <span className="text-primary">{post.category}</span>
         <span>·</span>
         <span>{formatDate(post.created_at)}</span>
       </div>
-      <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight group-hover:text-primary transition-colors">
+      <h2 className="font-display font-bold text-3xl md:text-4xl leading-[1.1] tracking-tight group-hover:text-primary transition-colors">
         {post.title}
-      </h1>
+      </h2>
       {post.excerpt && (
-        <p className="text-lg text-muted-foreground leading-relaxed">{post.excerpt}</p>
+        <p className="text-base text-muted-foreground leading-relaxed">{post.excerpt}</p>
       )}
-      <div className="flex items-center gap-4 pt-2 text-sm text-muted-foreground">
+      <div className="flex items-center gap-4 pt-1 text-sm text-muted-foreground">
         <span className="inline-flex items-center gap-1.5">
           <Clock className="w-4 h-4" /> {post.read_time ?? 5} min read
         </span>
-        <span className="inline-flex items-center gap-1 text-primary font-medium">
+        <span className="inline-flex items-center gap-1 text-primary">
           Read story <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </span>
       </div>
@@ -195,86 +194,64 @@ const FeaturedPost = ({ post }: { post: Blog }) => (
 );
 
 const AsymmetricGrid = ({ posts }: { posts: Blog[] }) => {
-  // Repeating asymmetric pattern via col-span variations
-  const patterns = ["md:col-span-4", "md:col-span-2", "md:col-span-2", "md:col-span-4", "md:col-span-3", "md:col-span-3"];
   return (
-    <div className="container pb-32">
-      <div className="grid md:grid-cols-6 gap-8 md:gap-10">
-        {posts.map((post, i) => {
-          const span = patterns[i % patterns.length];
-          const isWide = span.includes("col-span-4") || span.includes("col-span-3");
-          return (
-            <Link
-              key={post.id}
-              to={`/blogs/${slugify(post.category)}/${post.slug}`}
-              className={`reveal group ${span}`}
-              style={{ transitionDelay: `${(i % 4) * 80}ms` }}
-            >
-              <div
-                className={`relative overflow-hidden rounded-xl bg-muted mb-5 ${
-                  isWide ? "aspect-[16/9]" : "aspect-[4/5]"
-                }`}
-              >
-                {post.cover_image ? (
-                  <img
-                    src={post.cover_image}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-primary/10" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-2">
-                <span className="text-primary">{post.category}</span>
-                <span>·</span>
-                <span>{formatDate(post.created_at)}</span>
-                <span>·</span>
-                <span>{post.read_time ?? 5} min</span>
-              </div>
-              <h3
-                className={`font-display font-bold leading-tight tracking-tight group-hover:text-primary transition-colors ${
-                  isWide ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"
-                }`}
-              >
+    <div className="container pb-28">
+      <div className="divide-y divide-border">
+        {posts.map((post, i) => (
+          <Link
+            key={post.id}
+            to={`/blogs/${slugify(post.category)}/${post.slug}`}
+            className="reveal group flex flex-col md:flex-row md:items-start gap-4 md:gap-10 py-8"
+            style={{ transitionDelay: `${(i % 4) * 60}ms` }}
+          >
+            <div className="md:w-44 shrink-0 flex md:flex-col flex-wrap items-center md:items-start gap-x-3 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-muted-foreground">
+              <span className="text-primary">{post.category}</span>
+              <span>{formatDate(post.created_at)}</span>
+              <span className="inline-flex items-center gap-1">
+                <Clock className="w-3 h-3" /> {post.read_time ?? 5} min
+              </span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-display font-semibold text-xl md:text-2xl leading-snug tracking-tight group-hover:text-primary transition-colors">
                 {post.title}
               </h3>
-              {post.excerpt && isWide && (
-                <p className="mt-3 text-muted-foreground line-clamp-2">{post.excerpt}</p>
+              {post.excerpt && (
+                <p className="mt-2 text-muted-foreground leading-relaxed line-clamp-2">
+                  {post.excerpt}
+                </p>
               )}
-            </Link>
-          );
-        })}
+            </div>
+            <ArrowRight className="hidden md:block w-4 h-4 mt-2 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+          </Link>
+        ))}
       </div>
     </div>
   );
 };
 
 const CategoryHeader = ({ category, count }: { category: string; count: number }) => (
-  <div className="container pt-32 md:pt-40 pb-10 reveal">
-    <div className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-4">
+  <div className="container pt-28 md:pt-32 pb-8 reveal">
+    <div className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">
       Category · {count} {count === 1 ? "post" : "posts"}
     </div>
-    <h1 className="font-display font-bold text-5xl md:text-7xl lg:text-8xl tracking-tight mb-6 gradient-text inline-block">
+    <h1 className="font-display font-bold text-4xl md:text-5xl tracking-tight mb-4">
       {category}
     </h1>
-    <p className="max-w-xl text-lg text-muted-foreground">
+    <p className="max-w-xl text-base md:text-lg text-muted-foreground">
       {CATEGORY_DESCRIPTIONS[category] ?? `Everything I've written under ${category}.`}
     </p>
   </div>
 );
 
 const AllHeader = () => (
-  <div className="container pt-32 md:pt-40 pb-6 reveal">
-    <div className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-4">
-      The Journal
+  <div className="container pt-28 md:pt-32 pb-6 reveal">
+    <div className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">
+      Writing
     </div>
-    <h1 className="font-display font-bold text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[1] mb-6">
-      Notes from <span className="gradient-text">the build</span>.
+    <h1 className="font-display font-bold text-4xl md:text-5xl tracking-tight leading-[1.05] mb-4">
+      Notes from the build.
     </h1>
-    <p className="max-w-xl text-lg text-muted-foreground">
+    <p className="max-w-xl text-base md:text-lg text-muted-foreground">
       Long-form writing on engineering, design, and the parts of the craft that don't fit in a tweet.
     </p>
   </div>

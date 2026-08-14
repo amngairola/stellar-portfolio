@@ -42,7 +42,7 @@ const ReadingProgress = () => {
   return (
     <div className="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-transparent">
       <div
-        className="h-full bg-gradient-primary transition-[width] duration-100 shadow-glow"
+        className="h-full bg-primary transition-[width] duration-100"
         style={{ width: `${progress}%` }}
       />
     </div>
@@ -118,7 +118,7 @@ const BlogPost = () => {
           <p className="text-muted-foreground mb-8">This story may have moved or isn't published yet.</p>
           <Link
             to="/blogs"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-primary text-primary-foreground font-medium shadow-glow"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm hover:border-primary hover:text-primary transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back to journal
           </Link>
@@ -157,7 +157,7 @@ const BlogPost = () => {
       <Navbar />
 
       {/* Full-bleed cover */}
-      <header className="relative w-full h-[70vh] min-h-[520px] overflow-hidden">
+      <header className="relative w-full h-[52vh] min-h-[380px] md:min-h-[440px] overflow-hidden">
         {post.cover_image ? (
           <img
             src={post.cover_image}
@@ -165,33 +165,39 @@ const BlogPost = () => {
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
-          <div className="absolute inset-0 bg-gradient-primary/20" />
+          <div className="absolute inset-0 bg-muted" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/50 to-background" />
-        <div className="relative h-full container flex flex-col justify-end pb-16 md:pb-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/60 to-background" />
+        <div className="relative h-full container flex flex-col justify-end pb-12 md:pb-16">
           <Link
             to={`/blogs/${slugify(post.category)}`}
-            className="inline-flex items-center gap-2 self-start mb-6 px-3 py-1 rounded-full bg-background/60 backdrop-blur-md border border-border font-mono text-xs uppercase tracking-widest text-primary hover:border-primary/60 transition"
+            className="inline-flex items-center gap-2 self-start mb-5 px-3 py-1 rounded-full bg-background/60 backdrop-blur-md border border-border font-mono text-xs uppercase tracking-widest text-primary hover:border-primary/60 transition"
           >
             {post.category}
           </Link>
           <h1
-            className="font-display font-bold text-4xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05] max-w-4xl"
+            className="font-display font-bold text-3xl md:text-5xl tracking-tight leading-[1.08] max-w-3xl"
             style={{ textShadow: "0 4px 24px hsl(var(--background) / 0.6)" }}
           >
             {post.title}
           </h1>
-          <div className="mt-8 flex items-center gap-5 text-sm text-muted-foreground">
+          <div className="mt-6 flex items-center gap-5 text-sm text-muted-foreground">
             <span>{formatDate(post.created_at)}</span>
             <span className="opacity-40">·</span>
             <span className="inline-flex items-center gap-1.5">
               <Clock className="w-4 h-4" /> {post.read_time ?? 5} min read
             </span>
           </div>
+          <Link
+            to="/blogs"
+            className="mt-6 inline-flex items-center gap-2 self-start text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" /> All writing
+          </Link>
         </div>
       </header>
 
-      <article className="mx-auto max-w-[680px] px-6 py-20 md:py-28">
+      <article className="mx-auto max-w-[700px] px-6 py-16 md:py-24">
         {post.excerpt && (
           <p className="text-xl md:text-2xl leading-relaxed text-muted-foreground font-light mb-14 pb-14 border-b border-border">
             {post.excerpt}
