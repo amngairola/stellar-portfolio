@@ -49,33 +49,33 @@
   }
 
   .dark {
-    /* Warm espresso charcoal — soft cream text, no neon */
-    --background: 30 6% 6%;
-    --foreground: 40 22% 92%;
-    --card: 30 5% 9%;
-    --card-foreground: 40 22% 92%;
-    --popover: 30 5% 9%;
-    --popover-foreground: 40 22% 92%;
-    --primary: 36 34% 74%;
-    --primary-foreground: 30 8% 8%;
-    --primary-glow: 32 32% 68%;
-    --secondary: 30 5% 18%;
-    --secondary-foreground: 40 20% 90%;
-    --muted: 30 4% 14%;
-    --muted-foreground: 36 8% 62%;
-    --accent: 36 34% 74%;
-    --accent-foreground: 30 8% 8%;
-    --destructive: 6 52% 48%;
-    --destructive-foreground: 40 22% 94%;
-    --border: 30 5% 16%;
-    --input: 30 5% 9%;
-    --ring: 36 34% 74%;
-    --surface: 30 6% 6%;
-    --surface-elevated: 30 5% 10%;
-    --gradient-primary: linear-gradient(to right, hsl(40 26% 88%), hsl(36 30% 78%), hsl(30 24% 70%));
-    --gradient-hero: radial-gradient(ellipse at top, hsl(36 30% 70% / 0.05), transparent 62%),
-                     radial-gradient(ellipse at bottom right, hsl(28 24% 60% / 0.04), transparent 62%);
-    --shadow-glow: 0 0 24px -6px hsl(36 30% 70% / 0.2);
+    /* Neutral charcoal — no warm tint, no neon */
+    --background: 240 6% 7%;
+    --foreground: 240 8% 94%;
+    --card: 240 6% 10%;
+    --card-foreground: 240 8% 94%;
+    --popover: 240 6% 10%;
+    --popover-foreground: 240 8% 94%;
+    --primary: 240 8% 88%;
+    --primary-foreground: 240 8% 9%;
+    --primary-glow: 240 6% 78%;
+    --secondary: 240 5% 18%;
+    --secondary-foreground: 240 8% 92%;
+    --muted: 240 5% 14%;
+    --muted-foreground: 240 5% 62%;
+    --accent: 240 8% 88%;
+    --accent-foreground: 240 8% 9%;
+    --destructive: 0 52% 48%;
+    --destructive-foreground: 240 8% 96%;
+    --border: 240 5% 17%;
+    --input: 240 6% 10%;
+    --ring: 240 8% 88%;
+    --surface: 240 6% 7%;
+    --surface-elevated: 240 6% 11%;
+    --gradient-primary: linear-gradient(to right, hsl(240 8% 94%), hsl(240 6% 84%), hsl(240 5% 74%));
+    --gradient-hero: radial-gradient(ellipse at top, hsl(240 8% 80% / 0.05), transparent 62%),
+                     radial-gradient(ellipse at bottom right, hsl(240 6% 70% / 0.03), transparent 62%);
+    --shadow-glow: 0 0 24px -6px hsl(240 8% 80% / 0.18);
     --shadow-elevated: 0 16px 40px -20px hsl(0 0% 0% / 0.6);
   }
 }
