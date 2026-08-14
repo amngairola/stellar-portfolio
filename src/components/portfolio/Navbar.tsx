@@ -89,20 +89,19 @@ const ACCENTS: AccentOption[] = [
 ];
 
 const STORAGE_KEY = "accent-color";
+const ORANGE_INDEX = ACCENTS.findIndex((a) => a.name === "Orange");
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [accentIdx, setAccentIdx] = useState(0);
+  const [accentIdx, setAccentIdx] = useState(() => ORANGE_INDEX);
   const location = useLocation();
   const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const idx = ACCENTS.findIndex((a) => a.name === stored);
-      if (idx >= 0) setAccentIdx(idx);
-    }
+    const idx = stored ? ACCENTS.findIndex((a) => a.name === stored) : -1;
+    setAccentIdx(idx >= 0 ? idx : ORANGE_INDEX);
   }, []);
 
   useEffect(() => {
@@ -183,7 +182,7 @@ export const Navbar = () => {
                 <Settings className="w-4 h-4" />
               </button>
             </PopoverTrigger>
-            <PopoverContent align="end" className="w-56 p-3">
+            <PopoverContent align="end" className="w-60 p-3">
               <div className="text-xs font-medium text-muted-foreground mb-3 px-1">
                 Accent color
               </div>
@@ -194,12 +193,12 @@ export const Navbar = () => {
                     onClick={() => setAccentIdx(i)}
                     className={`flex min-h-[44px] items-center gap-2 rounded-lg border px-2.5 py-2 text-sm transition-all duration-200 active:scale-95 ${
                       accentIdx === i
-                        ? "border-primary bg-primary/10 text-foreground"
-                        : "border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
+                        ? "border-primary/80 bg-primary/15 text-foreground"
+                        : "border-border text-foreground/75 hover:text-foreground hover:border-primary/40"
                     }`}
                   >
                     <span
-                      className="w-4 h-4 rounded-full shrink-0"
+                      className="w-4 h-4 rounded-full shrink-0 ring-1 ring-black/10"
                       style={{ background: a.swatch }}
                     />
                     {a.name}
