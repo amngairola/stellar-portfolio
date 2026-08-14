@@ -12,6 +12,7 @@ const chapters = [
   { to: "/work", label: "Work" },
   { to: "/journey", label: "Journey" },
   { to: "/lens", label: "Lens" },
+  { to: "/blogs", label: "Blogs" },
 ];
 
 type AccentOption = {
@@ -27,14 +28,14 @@ type AccentOption = {
 
 const ACCENTS: AccentOption[] = [
   {
-    name: "Cream",
-    h: "38",
-    s: "30",
-    l: "78",
-    glowH: "34",
-    glowS: "28",
-    glowL: "72",
-    swatch: "#E4D8C3",
+    name: "Porcelain",
+    h: "240",
+    s: "8",
+    l: "88",
+    glowH: "240",
+    glowS: "6",
+    glowL: "80",
+    swatch: "#E2E2E7",
   },
   {
     name: "Slate Blue",
@@ -213,17 +214,6 @@ export const Navbar = () => {
           <Button
             asChild
             size="sm"
-            variant="outline"
-            className="hidden sm:inline-flex min-h-[44px] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-primary/10 hover:text-primary active:scale-95"
-          >
-            <a href={siteConfig.meetingUrl} target="_blank" rel="noreferrer">
-              <CalendarDays className="w-4 h-4 mr-1.5" /> {siteConfig.meetingLabel}
-            </a>
-          </Button>
-
-          <Button
-            asChild
-            size="sm"
             className="hidden sm:inline-flex min-h-[44px] bg-primary text-primary-foreground transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
           >
             <a href={personal.resumeUrl} download>
@@ -257,15 +247,7 @@ export const Navbar = () => {
                 {c.label}
               </NavLink>
             ))}
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <a
-                href={siteConfig.meetingUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="icon-action min-h-[44px] flex items-center justify-center gap-1.5 rounded-md border border-border text-sm text-foreground"
-              >
-                <CalendarDays className="w-4 h-4" /> {siteConfig.meetingLabel}
-              </a>
+            <div className="mt-2">
               <a
                 href={personal.resumeUrl}
                 download
