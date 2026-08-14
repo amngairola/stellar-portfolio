@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Download, Settings, Check, Sun, Moon } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { personal } from "@/data/portfolio";
 import { useTheme } from "@/hooks/useTheme";
+import { prefetchBlogList } from "@/hooks/useBlogs";
 
 const chapters = [
   { to: "/", label: "Home" },
@@ -110,6 +112,7 @@ const STORAGE_KEY = "accent-color";
 const ORANGE_INDEX = ACCENTS.findIndex((a) => a.name === "Orange");
 
 export const Navbar = () => {
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [accentIdx, setAccentIdx] = useState(() => {
@@ -179,6 +182,9 @@ export const Navbar = () => {
               key={c.to}
               to={c.to}
               end={c.to === "/"}
+              onMouseEnter={() => {
+                if (c.to === "/blogs") prefetchBlogList(queryClient);
+              }}
               className={({ isActive }) =>
                 `relative px-3 py-2 text-sm rounded-md transition-colors ${
                   isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
