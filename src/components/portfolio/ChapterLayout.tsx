@@ -9,6 +9,7 @@ export const CHAPTERS = [
   { path: "/work", label: "Work" },
   { path: "/journey", label: "Journey" },
   { path: "/lens", label: "Lens" },
+  { path: "/blogs", label: "Blogs" },
 ] as const;
 
 export const ChapterLayout = () => {
@@ -17,8 +18,12 @@ export const ChapterLayout = () => {
   const touchX = useRef<number | null>(null);
 
   const idx = useMemo(() => {
-    const i = CHAPTERS.findIndex((c) => c.path === location.pathname);
-    return i === -1 ? 0 : i;
+    const exact = CHAPTERS.findIndex((c) => c.path === location.pathname);
+    if (exact !== -1) return exact;
+    if (location.pathname.startsWith("/blogs")) {
+      return CHAPTERS.findIndex((c) => c.path === "/blogs");
+    }
+    return 0;
   }, [location.pathname]);
 
   const next = CHAPTERS[(idx + 1) % CHAPTERS.length];

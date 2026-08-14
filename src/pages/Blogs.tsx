@@ -2,20 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, Clock, Newspaper } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { Navbar } from "@/components/portfolio/Navbar";
-import { Footer } from "@/components/portfolio/Footer";
+import { useBlogList, slugify, type BlogSummary } from "@/hooks/useBlogs";
 
-type Blog = {
-  id: string;
-  title: string;
-  slug: string;
-  category: string;
-  excerpt: string | null;
-  cover_image: string | null;
-  read_time: number | null;
-  created_at: string;
-};
+type Blog = BlogSummary;
 
 const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   Engineering: "Deep dives on architecture, performance, and the craft of shipping.",
@@ -24,8 +13,6 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   Design: "How things look, how they feel, and why that matters.",
   Life: "Everything outside the terminal.",
 };
-
-const slugify = (c: string) => c.toLowerCase().replace(/\s+/g, "-");
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -259,25 +246,7 @@ const AllHeader = () => (
 
 const Blogs = () => {
   const { category: categoryParam } = useParams();
-  const [posts, setPosts] = useState<Blog[] | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-    supabase
-      .from("blogs")
-      .select("id,title,slug,category,excerpt,cover_image,read_time,created_at")
-      .eq("published", true)
-      .order("created_at", { ascending: false })
-      .then(({ data, error }) => {
-        if (!mounted) return;
-        console.log("[Blogs] supabase response:", { data, error });
-        if (error) console.error("[Blogs] fetch error:", error);
-        setPosts((data as Blog[] | null) ?? []);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const { data: posts, isLoading } = useBlogList();
 
   const categories = useMemo(() => {
     if (!posts) return ["All"];
@@ -315,9 +284,8 @@ const Blogs = () => {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={desc} />
       </Helmet>
-      <Navbar />
       <main>
-        {posts === null ? (
+        {isLoading && posts === undefined ? (
           <Skeleton />
         ) : (
           <>
@@ -338,7 +306,6 @@ const Blogs = () => {
           </>
         )}
       </main>
-      <Footer />
     </div>
   );
 };

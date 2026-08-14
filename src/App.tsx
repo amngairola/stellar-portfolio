@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -9,11 +10,21 @@ import Journey from "./pages/Journey.tsx";
 import Lens from "./pages/Lens.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Blogs from "./pages/Blogs.tsx";
-import BlogPost from "./pages/BlogPost.tsx";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { ChapterLayout } from "@/components/portfolio/ChapterLayout";
 
-const queryClient = new QueryClient();
+const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -28,10 +39,17 @@ const App = () => (
               <Route path="/work" element={<Work />} />
               <Route path="/journey" element={<Journey />} />
               <Route path="/lens" element={<Lens />} />
+              <Route path="/blogs" element={<Blogs />} />
+              <Route path="/blogs/:category" element={<Blogs />} />
             </Route>
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/blogs/:category" element={<Blogs />} />
-            <Route path="/blogs/:category/:slug" element={<BlogPost />} />
+            <Route
+              path="/blogs/:category/:slug"
+              element={
+                <Suspense fallback={null}>
+                  <BlogPost />
+                </Suspense>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

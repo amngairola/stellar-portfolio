@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ReactMarkdown from "react-markdown";
@@ -6,23 +6,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
 import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { Navbar } from "@/components/portfolio/Navbar";
-import { Footer } from "@/components/portfolio/Footer";
-
-type Blog = {
-  id: string;
-  title: string;
-  slug: string;
-  category: string;
-  excerpt: string | null;
-  content: string | null;
-  cover_image: string | null;
-  read_time: number | null;
-  created_at: string;
-};
-
-const slugify = (c: string) => c.toLowerCase().replace(/\s+/g, "-");
+import { useBlogDetail, useBlogList, slugify, type BlogSummary } from "@/hooks/useBlogs";
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
@@ -65,45 +49,23 @@ const Skeleton = () => (
 
 const BlogPost = () => {
   const { category, slug } = useParams();
-  const [post, setPost] = useState<Blog | null | undefined>(undefined);
-  const [related, setRelated] = useState<Blog[]>([]);
+  const { data: post, isLoading } = useBlogDetail(slug);
+  const { data: allPosts } = useBlogList();
 
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      const { data } = await supabase
-        .from("blogs")
-        .select("*")
-        .eq("slug", slug!)
-        .eq("published", true)
-        .maybeSingle();
-      if (!mounted) return;
-      setPost((data as Blog | null) ?? null);
-      if (data) {
-        const { data: more } = await supabase
-          .from("blogs")
-          .select("id,title,slug,category,excerpt,cover_image,read_time,created_at,content")
-          .eq("published", true)
-          .eq("category", (data as Blog).category)
-          .neq("id", (data as Blog).id)
-          .order("created_at", { ascending: false })
-          .limit(3);
-        if (mounted) setRelated((more as Blog[] | null) ?? []);
-      }
-    })();
-    return () => {
-      mounted = false;
-    };
-  }, [slug]);
+  const related = useMemo(() => {
+    if (!post || !allPosts) return [];
+    return allPosts
+      .filter((p) => p.category === post.category && p.id !== post.id)
+      .slice(0, 3);
+  }, [post, allPosts]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [slug]);
 
-  if (post === undefined) {
+  if (isLoading && post === undefined) {
     return (
       <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
         <Skeleton />
       </div>
     );
@@ -112,7 +74,6 @@ const BlogPost = () => {
   if (post === null) {
     return (
       <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
         <div className="container py-40 text-center">
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">Post not found</h1>
           <p className="text-muted-foreground mb-8">This story may have moved or isn't published yet.</p>
@@ -123,7 +84,6 @@ const BlogPost = () => {
             <ArrowLeft className="w-4 h-4" /> Back to journal
           </Link>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -154,7 +114,6 @@ const BlogPost = () => {
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
       <ReadingProgress />
-      <Navbar />
 
       {/* Full-bleed cover */}
       <header className="relative w-full h-[52vh] min-h-[380px] md:min-h-[440px] overflow-hidden">
@@ -233,7 +192,7 @@ const BlogPost = () => {
             <p className="text-muted-foreground">This is the only story in {post.category} — for now.</p>
           ) : (
             <div className="grid md:grid-cols-3 gap-8">
-              {related.map((r) => (
+              {related.map((r: BlogSummary) => (
                 <Link
                   key={r.id}
                   to={`/blogs/${slugify(r.category)}/${r.slug}`}
@@ -262,8 +221,6 @@ const BlogPost = () => {
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
