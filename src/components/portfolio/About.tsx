@@ -6,7 +6,7 @@ import { Keywords } from "./Keywords";
 const icons = [Rocket, Layers, Code2, BookOpen];
 
 export const About = () => (
-  <section id="about" className="py-24 md:py-32 relative">
+  <section id="about" className="pt-4 pb-24 md:pt-8 md:pb-32 relative">
     <div className="container">
       <SectionHeading eyebrow="01 — About" title="I build things that work and feel good to use." />
       <div className="grid lg:grid-cols-5 gap-10 lg:gap-16">
