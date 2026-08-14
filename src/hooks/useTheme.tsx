@@ -7,10 +7,10 @@ const ThemeContext = createContext<Ctx | null>(null);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "dark";
+    if (typeof window === "undefined") return "light";
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored) return stored;
-    return "dark";
+    return "light";
   });
 
   useEffect(() => {
