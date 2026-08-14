@@ -55,19 +55,19 @@ const Skeleton = () => (
 );
 
 const EmptyState = ({ category }: { category?: string }) => (
-  <div className="container py-40 text-center reveal in-view">
-    <div className="mx-auto w-24 h-24 rounded-2xl bg-gradient-primary/10 border border-primary/20 flex items-center justify-center mb-8 shadow-glow">
-      <Newspaper className="w-10 h-10 text-primary" />
+  <div className="container py-32 reveal in-view">
+    <div className="w-12 h-12 rounded-xl border border-border flex items-center justify-center mb-6">
+      <Newspaper className="w-5 h-5 text-muted-foreground" />
     </div>
-    <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+    <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">
       {category ? `Nothing in ${category} — yet.` : "The presses are warming up."}
     </h2>
-    <p className="text-muted-foreground max-w-md mx-auto mb-8">
+    <p className="text-muted-foreground max-w-md mb-8">
       I'm drafting something worth your time. Check back soon, or read what's already published.
     </p>
     <Link
       to="/blogs"
-      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-primary text-primary-foreground font-medium shadow-glow hover:opacity-90 transition"
+      className="inline-flex items-center gap-2 text-sm text-primary link-underline"
     >
       Back to all posts <ArrowRight className="w-4 h-4" />
     </Link>
@@ -136,7 +136,7 @@ const CategoryPills = ({
             );
           })}
           <div
-            className="absolute bottom-0 h-[2px] bg-gradient-primary rounded-full transition-all duration-500 ease-out"
+            className="absolute bottom-0 h-[2px] bg-primary rounded-full transition-all duration-500 ease-out"
             style={{
               left: indicator.left,
               width: indicator.width,

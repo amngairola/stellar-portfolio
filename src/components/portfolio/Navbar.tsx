@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Download, Settings, Check, Sun, Moon, CalendarDays } from "lucide-react";
+import { Menu, X, Download, Settings, Check, Sun, Moon } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { personal } from "@/data/portfolio";
-import { siteConfig } from "@/config/site";
 import { useTheme } from "@/hooks/useTheme";
 
 const chapters = [
