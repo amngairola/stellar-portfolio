@@ -7,7 +7,6 @@ export type BlogSummary = {
   slug: string;
   category: string;
   excerpt: string | null;
-  cover_image: string | null;
   read_time: number | null;
   created_at: string;
 };
@@ -25,7 +24,7 @@ export const blogKeys = {
 };
 
 const LIST_SELECT =
-  "id,title,slug,category,excerpt,cover_image,read_time,created_at";
+  "id,title,slug,category,excerpt,read_time,created_at";
 
 const fetchBlogList = async (): Promise<BlogSummary[]> => {
   const { data, error } = await supabase
@@ -54,8 +53,9 @@ export const useBlogList = () =>
   useQuery<BlogSummary[]>({
     queryKey: blogKeys.list(),
     queryFn: fetchBlogList,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 60 * 1000,
     gcTime: 30 * 60 * 1000,
+    refetchOnWindowFocus: true,
     placeholderData: keepPreviousData,
   });
 
@@ -72,7 +72,7 @@ export const prefetchBlogList = (queryClient: import("@tanstack/react-query").Qu
   void queryClient.prefetchQuery({
     queryKey: blogKeys.list(),
     queryFn: fetchBlogList,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 60 * 1000,
   });
 };
 

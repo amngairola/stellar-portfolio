@@ -198,16 +198,6 @@ const BlogPost = () => {
                   to={`/blogs/${slugify(r.category)}/${r.slug}`}
                   className="group"
                 >
-                  <div className="aspect-[16/10] overflow-hidden rounded-xl bg-muted mb-4">
-                    {r.cover_image && (
-                      <img
-                        src={r.cover_image}
-                        alt={r.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
                   <h3 className="font-display font-semibold text-xl leading-snug group-hover:text-primary transition-colors">
                     {r.title}
                   </h3>

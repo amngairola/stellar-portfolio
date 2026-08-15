@@ -159,6 +159,7 @@ const useMasonryCols = () => {
 
 export const Photography = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
   const { data: cachedUrls } = useGalleryImages();
   const urls = cachedUrls ?? PHOTO_URLS;
   const len = urls.length;
@@ -221,8 +222,9 @@ export const Photography = () => {
               className="flex flex-col gap-4 md:gap-6 flex-1 min-w-0"
             >
               {col.map((url) => {
-                // Find original index for the lightbox tracking
                 const originalIndex = urls.indexOf(url);
+                const isHovered = hovered === originalIndex;
+                const isDimmed = hovered !== null && !isHovered;
 
                 return (
                   <motion.div
@@ -231,9 +233,18 @@ export const Photography = () => {
                     variants={cardVariants}
                     initial="hidden"
                     animate="visible"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer w-full"
+                    onMouseEnter={() => setHovered(originalIndex)}
+                    onMouseLeave={() =>
+                      setHovered((h) => (h === originalIndex ? null : h))
+                    }
+                    whileHover={{ scale: 1.06 }}
+                    transition={{ duration: 0.22, ease: "easeOut" }}
+                    style={{ zIndex: isHovered ? 10 : undefined }}
+                    className={`group relative overflow-hidden rounded-2xl bg-muted shadow-sm cursor-pointer w-full transition-all duration-300 ${
+                      isDimmed
+                        ? "opacity-40 blur-[5px]"
+                        : "opacity-100 blur-0"
+                    }`}
                     onClick={() => setLightbox(originalIndex)}
                   >
                     <img
