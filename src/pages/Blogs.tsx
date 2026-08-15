@@ -18,26 +18,14 @@ const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 const Skeleton = () => (
-  <div className="container py-32 space-y-16 animate-pulse">
-    <div className="grid lg:grid-cols-5 gap-10">
-      <div className="lg:col-span-3 aspect-[16/10] rounded-2xl bg-muted" />
-      <div className="lg:col-span-2 space-y-4">
-        <div className="h-4 w-24 bg-muted rounded" />
-        <div className="h-14 bg-muted rounded" />
-        <div className="h-14 bg-muted rounded w-3/4" />
-        <div className="h-4 bg-muted rounded" />
-        <div className="h-4 bg-muted rounded w-2/3" />
+  <div className="container py-32 space-y-6 animate-pulse">
+    {[...Array(5)].map((_, i) => (
+      <div key={i} className="space-y-3 py-6 border-b border-border">
+        <div className="h-3 w-40 bg-muted rounded" />
+        <div className="h-6 bg-muted rounded w-3/5" />
+        <div className="h-4 bg-muted rounded w-2/5" />
       </div>
-    </div>
-    <div className="grid md:grid-cols-6 gap-8">
-      {[...Array(4)].map((_, i) => (
-        <div key={i} className={`space-y-3 ${i % 2 === 0 ? "md:col-span-4" : "md:col-span-2"}`}>
-          <div className="aspect-video bg-muted rounded-xl" />
-          <div className="h-6 bg-muted rounded w-4/5" />
-          <div className="h-4 bg-muted rounded w-2/3" />
-        </div>
-      ))}
-    </div>
+    ))}
   </div>
 );
 
@@ -136,85 +124,38 @@ const CategoryPills = ({
   );
 };
 
-const FeaturedPost = ({ post }: { post: Blog }) => (
-  <Link
-    to={`/blogs/${slugify(post.category)}/${post.slug}`}
-    className="reveal group container grid lg:grid-cols-5 gap-8 lg:gap-14 items-center pt-12 md:pt-16 pb-12 border-b border-border"
-  >
-    <div className="lg:col-span-3 relative overflow-hidden rounded-xl aspect-[16/10] bg-muted">
-      {post.cover_image ? (
-        <img
-          src={post.cover_image}
-          alt={post.title}
-          className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.03]"
-          loading="eager"
-        />
-      ) : (
-        <div className="w-full h-full bg-muted" />
-      )}
-      <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-background/70 backdrop-blur-md border border-border font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-        Featured
-      </div>
+const PostList = ({ posts }: { posts: Blog[] }) => (
+  <div className="container pb-28 pt-4">
+    <div className="divide-y divide-border">
+      {posts.map((post, i) => (
+        <Link
+          key={post.id}
+          to={`/blogs/${slugify(post.category)}/${post.slug}`}
+          className="reveal group flex flex-col md:flex-row md:items-baseline gap-3 md:gap-10 py-7"
+          style={{ transitionDelay: `${(i % 5) * 50}ms` }}
+        >
+          <div className="md:w-52 shrink-0 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-muted-foreground">
+            <span className="text-primary">{post.category}</span>
+            <span aria-hidden>·</span>
+            <span>{formatDate(post.created_at)}</span>
+            <span className="inline-flex items-center gap-1">
+              <Clock className="w-3 h-3" /> {post.read_time ?? 5} min
+            </span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-display font-semibold text-xl md:text-2xl leading-snug tracking-tight group-hover:text-primary transition-colors">
+              {post.title}
+            </h3>
+          </div>
+          <span className="inline-flex items-center gap-1.5 text-sm text-primary shrink-0">
+            Read story
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </Link>
+      ))}
     </div>
-    <div className="lg:col-span-2 space-y-4">
-      <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-muted-foreground">
-        <span className="text-primary">{post.category}</span>
-        <span>·</span>
-        <span>{formatDate(post.created_at)}</span>
-      </div>
-      <h2 className="font-display font-bold text-3xl md:text-4xl leading-[1.1] tracking-tight group-hover:text-primary transition-colors">
-        {post.title}
-      </h2>
-      {post.excerpt && (
-        <p className="text-base text-muted-foreground leading-relaxed">{post.excerpt}</p>
-      )}
-      <div className="flex items-center gap-4 pt-1 text-sm text-muted-foreground">
-        <span className="inline-flex items-center gap-1.5">
-          <Clock className="w-4 h-4" /> {post.read_time ?? 5} min read
-        </span>
-        <span className="inline-flex items-center gap-1 text-primary">
-          Read story <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-        </span>
-      </div>
-    </div>
-  </Link>
+  </div>
 );
-
-const AsymmetricGrid = ({ posts }: { posts: Blog[] }) => {
-  return (
-    <div className="container pb-28">
-      <div className="divide-y divide-border">
-        {posts.map((post, i) => (
-          <Link
-            key={post.id}
-            to={`/blogs/${slugify(post.category)}/${post.slug}`}
-            className="reveal group flex flex-col md:flex-row md:items-start gap-4 md:gap-10 py-8"
-            style={{ transitionDelay: `${(i % 4) * 60}ms` }}
-          >
-            <div className="md:w-44 shrink-0 flex md:flex-col flex-wrap items-center md:items-start gap-x-3 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-muted-foreground">
-              <span className="text-primary">{post.category}</span>
-              <span>{formatDate(post.created_at)}</span>
-              <span className="inline-flex items-center gap-1">
-                <Clock className="w-3 h-3" /> {post.read_time ?? 5} min
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-display font-semibold text-xl md:text-2xl leading-snug tracking-tight group-hover:text-primary transition-colors">
-                {post.title}
-              </h3>
-              {post.excerpt && (
-                <p className="mt-2 text-muted-foreground leading-relaxed line-clamp-2">
-                  {post.excerpt}
-                </p>
-              )}
-            </div>
-            <ArrowRight className="hidden md:block w-4 h-4 mt-2 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 const CategoryHeader = ({ category, count }: { category: string; count: number }) => (
   <div className="container pt-28 md:pt-32 pb-8 reveal">
@@ -266,8 +207,6 @@ const Blogs = () => {
 
   useReveal(filtered);
 
-  const featured = filtered?.[0];
-  const rest = filtered?.slice(1) ?? [];
 
   const title = activeCategory === "All"
     ? "Journal — Aman Gairola"
@@ -298,10 +237,7 @@ const Blogs = () => {
             {filtered && filtered.length === 0 ? (
               <EmptyState category={activeCategory === "All" ? undefined : activeCategory} />
             ) : (
-              <>
-                {featured && <FeaturedPost post={featured} />}
-                {rest.length > 0 && <AsymmetricGrid posts={rest} />}
-              </>
+              <PostList posts={filtered ?? []} />
             )}
           </>
         )}

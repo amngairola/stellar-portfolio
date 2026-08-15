@@ -145,6 +145,11 @@ export const Navbar = () => {
     root.style.setProperty("--primary-glow", `${a.glowH} ${gs}% ${gl}%`);
     root.style.setProperty("--accent", `${a.h} ${s}% ${l}%`);
     root.style.setProperty("--ring", `${a.h} ${s}% ${l}%`);
+    // Keep gradients (stat numbers, gradient-text) tied to the chosen accent + theme.
+    root.style.setProperty(
+      "--gradient-primary",
+      `linear-gradient(to right, hsl(${a.h} ${s}% ${l}%), hsl(${a.glowH} ${gs}% ${gl}%))`
+    );
     root.style.setProperty("--home-glow-1", a.homeGlow[0]);
     root.style.setProperty("--home-glow-2", a.homeGlow[1]);
     root.style.setProperty("--home-glow-3", a.homeGlow[2]);
