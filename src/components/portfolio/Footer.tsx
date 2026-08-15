@@ -11,6 +11,9 @@ export const Footer = () => (
       <div className="text-sm text-muted-foreground">
         Built by <span className="text-foreground font-medium">{personal.name}</span> · ©{" "}
         {new Date().getFullYear()}
+        <span className="block sm:inline sm:ml-1 text-muted-foreground">
+          Copyright © {new Date().getFullYear()} · All rights reserved.
+        </span>
       </div>
       <div className="flex items-center gap-2">
         <a
