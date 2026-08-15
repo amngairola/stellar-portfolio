@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, keepPreviousData } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 export type BlogSummary = {
@@ -53,9 +53,9 @@ export const useBlogList = () =>
   useQuery<BlogSummary[]>({
     queryKey: blogKeys.list(),
     queryFn: fetchBlogList,
-    staleTime: 60 * 1000,
+    staleTime: 5 * 60 * 1000,
     gcTime: 30 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
   });
 
@@ -72,7 +72,7 @@ export const prefetchBlogList = (queryClient: import("@tanstack/react-query").Qu
   void queryClient.prefetchQuery({
     queryKey: blogKeys.list(),
     queryFn: fetchBlogList,
-    staleTime: 60 * 1000,
+    staleTime: 5 * 60 * 1000,
   });
 };
 
