@@ -23,7 +23,7 @@ export const personal = {
 
 export const about = {
   summary:
-    "I don't chase trendy tech — I solve problems with thoughtful engineering. Currently deep in full-stack JavaScript, always learning what's underneath it — systems, data, and the trade-offs that don't show up in a tutorial.",
+    "I don't chase trendy tech — I solve problems with thoughtful engineering. Currently deep in full-stack JavaScript, always learning what's underneath it — systems, data, and the trade-offs.",
   
   highlight:
     "As a Software Engineering Intern, I built a reusable component system that cut feature delivery time by two weeks and improved Lighthouse scores by 30 points.\n\nSince then, I've built and shipped 5+ systems end-to-end — from a real-time collaborative code editor to a hyperlocal delivery platform with live booking sync — handling data models, Socket.io, auth, deployment, and CI/CD along the way.\n\nI'm strongest in full-stack JavaScript, but I'm most interested in what happens underneath the stack: how systems are structured, how data moves between them, and where they break under real usage.",
