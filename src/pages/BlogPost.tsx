@@ -35,8 +35,7 @@ const ReadingProgress = () => {
 
 const Skeleton = () => (
   <div className="animate-pulse">
-    <div className="w-full h-[60vh] bg-muted" />
-    <div className="max-w-[680px] mx-auto px-6 py-16 space-y-4">
+    <div className="max-w-[680px] mx-auto px-6 pt-32 pb-16 space-y-4">
       <div className="h-4 w-32 bg-muted rounded" />
       <div className="h-12 bg-muted rounded" />
       <div className="h-12 bg-muted rounded w-3/4" />
