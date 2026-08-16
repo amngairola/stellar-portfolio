@@ -108,35 +108,20 @@ const BlogPost = () => {
         <meta property="og:type" content="article" />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt ?? ""} />
-        {post.cover_image && <meta property="og:image" content={post.cover_image} />}
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="summary" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
       <ReadingProgress />
 
-      {/* Full-bleed cover */}
-      <header className="relative w-full h-[52vh] min-h-[380px] md:min-h-[440px] overflow-hidden">
-        {post.cover_image ? (
-          <img
-            src={post.cover_image}
-            alt={post.title}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-muted" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/60 to-background" />
-        <div className="relative h-full container flex flex-col justify-end pb-12 md:pb-16">
+      <header className="relative w-full border-b border-border">
+        <div className="container pt-28 md:pt-36 pb-12 md:pb-16 flex flex-col">
           <Link
             to={`/blogs/${slugify(post.category)}`}
-            className="inline-flex items-center gap-2 self-start mb-5 px-3 py-1 rounded-full bg-background/60 backdrop-blur-md border border-border font-mono text-xs uppercase tracking-widest text-primary hover:border-primary/60 transition"
+            className="inline-flex items-center gap-2 self-start mb-5 px-3 py-1 rounded-full border border-border font-mono text-xs uppercase tracking-widest text-primary hover:border-primary/60 transition"
           >
             {post.category}
           </Link>
-          <h1
-            className="font-display font-bold text-3xl md:text-5xl tracking-tight leading-[1.08] max-w-3xl"
-            style={{ textShadow: "0 4px 24px hsl(var(--background) / 0.6)" }}
-          >
+          <h1 className="font-display font-bold text-3xl md:text-5xl tracking-tight leading-[1.08] max-w-3xl">
             {post.title}
           </h1>
           <div className="mt-6 flex items-center gap-5 text-sm text-muted-foreground">
