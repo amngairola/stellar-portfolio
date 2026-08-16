@@ -13,7 +13,6 @@ export type BlogSummary = {
 
 export type BlogDetail = BlogSummary & {
   content: string | null;
-  cover_image: string | null;
 };
 
 export const slugify = (c: string) => c.toLowerCase().replace(/\s+/g, "-");
@@ -42,7 +41,7 @@ const fetchBlogDetail = async (
 ): Promise<BlogDetail | null> => {
   const { data, error } = await supabase
     .from("blogs")
-    .select("*")
+    .select("id,title,slug,category,excerpt,read_time,created_at,content")
     .eq("slug", slug)
     .eq("published", true)
     .maybeSingle();
