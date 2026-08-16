@@ -109,7 +109,8 @@ const ACCENTS: AccentOption[] = [
 ];
 
 const STORAGE_KEY = "accent-color";
-const ORANGE_INDEX = ACCENTS.findIndex((a) => a.name === "Orange");
+const DEFAULT_ACCENT_NAME = "Orange";
+const DEFAULT_ACCENT_INDEX = ACCENTS.findIndex((a) => a.name === DEFAULT_ACCENT_NAME);
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -125,7 +126,7 @@ export const Navbar = () => {
     };
     const savedName = stored ? aliases[stored] ?? stored : "";
     const idx = savedName ? ACCENTS.findIndex((a) => a.name === savedName) : -1;
-    return idx >= 0 ? idx : ORANGE_INDEX;
+    return idx >= 0 ? idx : DEFAULT_ACCENT_INDEX;
   });
   const location = useLocation();
   const { theme, toggle } = useTheme();
