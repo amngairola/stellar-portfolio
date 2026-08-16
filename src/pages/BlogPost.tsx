@@ -94,7 +94,6 @@ const BlogPost = () => {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt ?? "",
-    image: post.cover_image ?? undefined,
     datePublished: post.created_at,
     author: { "@type": "Person", name: "Aman Gairola", url: "https://amangairola.vercel.app" },
     mainEntityOfPage: url,
