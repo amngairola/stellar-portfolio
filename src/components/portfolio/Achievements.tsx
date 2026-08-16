@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Github, Trophy } from "lucide-react";
+import { Github, Trophy, ListChecks } from "lucide-react";
 import { achievements, personal } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -59,6 +59,19 @@ export const Achievements = () => (
       </div>
 
       <div className="reveal flex flex-wrap gap-3">
+        <Button
+          asChild
+          variant="outline"
+          className="border-primary/40 hover:border-primary"
+        >
+          <a
+            href="https://neetcode.io/user/DormantMachamp311"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ListChecks className="w-4 h-4 mr-1.5" /> NeetCode
+          </a>
+        </Button>
         <Tooltip
           containerClassName="text-neutral-600 dark:text-neutral-400"
           content={<img src={images.lc} />}
