@@ -1,4 +1,4 @@
-import { Code2, Trophy, Target, TrendingUp, Github } from "lucide-react";
+import { Code2, Trophy, Target, TrendingUp, Github, ListChecks } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Button } from "@/components/ui/button";
 import { personal } from "@/data/portfolio";
@@ -51,12 +51,17 @@ export const CompetitiveProgramming = () => (
       <div className="reveal flex flex-wrap gap-3">
         <Button asChild variant="outline" className="border-primary/40 hover:border-primary">
           <a href="https://neetcode.io/user/DormantMachamp311" target="_blank" rel="noopener noreferrer">
-            <Trophy className="w-4 h-4 mr-1.5" /> NeetCode
+            <ListChecks className="w-4 h-4 mr-1.5" /> NeetCode
           </a>
         </Button>
         <Button asChild variant="outline" className="border-primary/40 hover:border-primary">
           <a href={personal.leetcode} target="_blank" rel="noreferrer">
             <Trophy className="w-4 h-4 mr-1.5" /> View LeetCode Profile
+          </a>
+        </Button>
+        <Button asChild variant="outline" className="border-primary/40 hover:border-primary">
+          <a href={personal.github} target="_blank" rel="noreferrer">
+            <Github className="w-4 h-4 mr-1.5" /> GitHub Profile
           </a>
         </Button>
       </div>
