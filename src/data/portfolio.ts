@@ -23,10 +23,10 @@ export const personal = {
 
 export const about = {
   summary:
-    "I don't chase trendy tech — I solve product problems with thoughtful engineering Full-stack developer building modern web applications where performance, architecture, and user experience actually work together.",
+    "I don't chase trendy tech — I solve problems with thoughtful engineering. Currently deep in full-stack JavaScript, always learning what's underneath it — systems, data, and the trade-offs that don't show up in a tutorial.",
   
   highlight:
-    "As a Software Engineering Intern at VerveGen Tech, I shipped 15+ reusable React components, cut feature delivery time by two weeks, and pushed Lighthouse scores up by 30 points. I've since built and deployed five production-grade products — from a real-time collaborative code editor to a hyperlocal delivery platform with live booking sync.",
+    "As a Software Engineering Intern, I built a reusable component system that cut feature delivery time by two weeks and improved Lighthouse scores by 30 points.\n\nSince then, I've built and shipped 5+ systems end-to-end — from a real-time collaborative code editor to a hyperlocal delivery platform with live booking sync — handling data models, Socket.io, auth, deployment, and CI/CD along the way.\n\nI'm strongest in full-stack JavaScript, but I'm most interested in what happens underneath the stack: how systems are structured, how data moves between them, and where they break under real usage.",
   stats: [
     { value: "5+", label: "Production apps shipped" },
     { value: "300+", label: "DSA problems solved" },
@@ -35,20 +35,20 @@ export const about = {
   ],
   values: [
      {
-      title: "Fast by default",
-      desc: "Sub-200ms isn't a target, it's a floor. Lazy loading and lean bundles aren't optimizations — they're table stakes.",
+      title: "Performance is a feature",
+      desc: "Speed is part of the product, not a final optimization. Efficient rendering, lean bundles, caching, and fast APIs belong in the architecture from day one.",
     },
     {
-      title: "Architecture over shortcuts",
-      desc: "Every shortcut is a future bug with a delayed timer. I build for the version six months from now.",
+      title: "Build for the next version",
+      desc: "I avoid solving today's problem in a way that creates tomorrow's rewrite. Data models and system boundaries should leave room for more features, users, and load.",
     },
     {
-      title: "Product before pixels",
-      desc: "A beautiful UI on a confusing flow is still a confusing flow. I design for the decision, not just the screen.",
+      title: "Engineering serves the product",
+      desc: "Good engineering starts with understanding what the product needs: clear user flows, useful abstractions, and the simplest system that solves the actual problem.",
     },
     {
-      title: "Compounding curiosity",
-      desc: "New stacks, open-source reading, consistent reps — the goal isn't to know everything, it's to never plateau.",
+      title: "Learn from the internals",
+      desc: "I don't just want to use a technology, I want to understand what's underneath it. I explore runtimes, databases, networking, and system design to keep getting better.",
     },
   ],
 };

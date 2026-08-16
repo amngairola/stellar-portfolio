@@ -1,4 +1,4 @@
-import { Code2, Layers, Rocket, BookOpen } from "lucide-react";
+import { Code as Code2, Layers, Rocket, BookOpen } from "lucide-react";
 import { about } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
 import { Keywords } from "./Keywords";
@@ -12,7 +12,9 @@ export const About = () => (
       <div className="grid lg:grid-cols-5 gap-10 lg:gap-16">
         <div className="lg:col-span-3 reveal space-y-5 text-base md:text-lg leading-relaxed text-muted-foreground">
           <p><Keywords text={about.summary} /></p>
-          <p className="text-foreground"><Keywords text={about.highlight} /></p>
+          {about.highlight.split("\n\n").map((para, i) => (
+            <p key={i} className="text-foreground"><Keywords text={para} /></p>
+          ))}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
             {about.stats.map((s) => (
               <div key={s.label} className="glass rounded-xl p-4">
