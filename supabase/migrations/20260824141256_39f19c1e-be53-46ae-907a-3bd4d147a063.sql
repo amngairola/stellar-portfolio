@@ -1,0 +1,2 @@
+CREATE POLICY "Chat data is server-side only" ON public.ai_conversations FOR ALL TO anon, authenticated USING (false) WITH CHECK (false);
+CREATE POLICY "Chat data is server-side only" ON public.ai_messages FOR ALL TO anon, authenticated USING (false) WITH CHECK (false);
