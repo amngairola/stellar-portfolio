@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Navbar } from "./Navbar";
@@ -15,7 +15,7 @@ export const CHAPTERS = [
 export const ChapterLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const touchX = useRef<number | null>(null);
+
 
   const idx = useMemo(() => {
     const exact = CHAPTERS.findIndex((c) => c.path === location.pathname);
