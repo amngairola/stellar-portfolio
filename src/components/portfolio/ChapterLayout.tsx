@@ -45,23 +45,9 @@ export const ChapterLayout = () => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [location.pathname]);
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchX.current = e.touches[0].clientX;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchX.current;
-    touchX.current = null;
-    if (Math.abs(dx) < 80) return;
-    navigate(dx < 0 ? next.path : prev.path);
-  };
-
   return (
-    <div
-      className="min-h-screen bg-background text-foreground overflow-x-hidden"
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+
       <Navbar />
       <main>
         <Outlet />
