@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Navbar } from "./Navbar";
@@ -44,6 +44,53 @@ export const ChapterLayout = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [location.pathname]);
+
+  const touch = useRef<{ x: number; y: number; t: number } | null>(null);
+
+  useEffect(() => {
+    const MIN_DIST = 60;
+    const RATIO = 2;
+    const MAX_TIME = 500;
+
+    const isInteractive = (el: EventTarget | null) => {
+      const node = el as HTMLElement | null;
+      return !!node?.closest?.(
+        "input, textarea, select, [contenteditable='true'], [data-no-swipe], [role='slider']"
+      );
+    };
+
+    const onStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1 || isInteractive(e.target)) {
+        touch.current = null;
+        return;
+      }
+      const t = e.touches[0];
+      touch.current = { x: t.clientX, y: t.clientY, t: Date.now() };
+    };
+
+    const onEnd = (e: TouchEvent) => {
+      const start = touch.current;
+      touch.current = null;
+      if (!start) return;
+      const t = e.changedTouches[0];
+      if (!t) return;
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+      const dt = Date.now() - start.t;
+      if (dt > MAX_TIME) return;
+      if (Math.abs(dx) < MIN_DIST) return;
+      if (Math.abs(dx) <= Math.abs(dy) * RATIO) return;
+      navigate(dx < 0 ? next.path : prev.path);
+    };
+
+    window.addEventListener("touchstart", onStart, { passive: true });
+    window.addEventListener("touchend", onEnd, { passive: true });
+    window.addEventListener("touchcancel", () => (touch.current = null), { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onStart);
+      window.removeEventListener("touchend", onEnd);
+    };
+  }, [navigate, next.path, prev.path]);
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
