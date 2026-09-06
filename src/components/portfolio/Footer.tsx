@@ -31,7 +31,7 @@ export const Footer = () => (
             href={personal.linkedin}
             target="_blank"
             rel="noreferrer"
-            className="icon-action w-11 h-11 rounded-lg border border-border text-muted-foreground hover:border-primary/60 hover:text-primary flex items-center justify-center"
+            className="icon-action w-11 h-11 rounded-lg border border-border text-muted-foreground [@media(hover:hover)]:hover:border-primary/60 [@media(hover:hover)]:hover:text-primary flex items-center justify-center"
             aria-label="LinkedIn"
           >
             <Linkedin className="w-4 h-4" />
@@ -47,7 +47,7 @@ export const Footer = () => (
             target="_blank"
             rel="noreferrer"
             aria-label="x.com"
-            className="icon-action grid h-11 w-11 place-items-center rounded-lg border border-border text-muted-foreground hover:border-primary/60 hover:text-primary"
+            className="icon-action grid h-11 w-11 place-items-center rounded-lg border border-border text-muted-foreground [@media(hover:hover)]:hover:border-primary/60 [@media(hover:hover)]:hover:text-primary"
           >
             <FaXTwitter className="w-5 h-5" />
           </a>
@@ -61,7 +61,7 @@ export const Footer = () => (
             href={personal.github}
             target="_blank"
             rel="noreferrer"
-            className="icon-action w-11 h-11 rounded-lg border border-border text-muted-foreground hover:border-primary/60 hover:text-primary flex items-center justify-center"
+            className="icon-action w-11 h-11 rounded-lg border border-border text-muted-foreground [@media(hover:hover)]:hover:border-primary/60 [@media(hover:hover)]:hover:text-primary flex items-center justify-center"
             aria-label="GitHub"
           >
             <Github className="w-4 h-4" />
