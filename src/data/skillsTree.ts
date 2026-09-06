@@ -27,6 +27,10 @@ export const skillCategories: SkillCategory[] = [
       ],
       [
         { name: "C++", progress: 78 },
+        { name: "Python", progress: 75, highlight: true },
+        { name: "C", progress: 70 },
+      ],
+      [
         { name: "SQL", progress: 72 },
         { name: "HTML5 / CSS3", progress: 90, highlight: true },
       ],
@@ -71,10 +75,13 @@ export const skillCategories: SkillCategory[] = [
         { name: "Tailwind CSS", progress: 92, highlight: true },
       ],
       [
+        { name: "React Query", progress: 86, highlight: true },
         { name: "Material UI", progress: 76 },
-        { name: "Responsive Design", progress: 90 },
       ],
-      [{ name: "Performance Optimization", progress: 82 }],
+      [
+        { name: "Responsive Design", progress: 90 },
+        { name: "Performance Optimization", progress: 82 },
+      ],
     ],
   },
   {
@@ -89,10 +96,13 @@ export const skillCategories: SkillCategory[] = [
       ],
       [
         { name: "WebSockets / Socket.io", progress: 80 },
-        { name: "JWT Auth", progress: 84 },
+        { name: "Redis", progress: 78, highlight: true },
       ],
       [
+        { name: "JWT Auth", progress: 84 },
         { name: "MongoDB", progress: 82 },
+      ],
+      [
         { name: "PostgreSQL", progress: 70 },
       ],
     ],
