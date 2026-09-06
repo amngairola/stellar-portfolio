@@ -87,7 +87,7 @@ const StatsRow = () => (
         </div>
         <div className="flex items-baseline gap-1.5">
           <span className="font-display font-bold text-4xl md:text-5xl tracking-tight text-foreground group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-primary-glow transition-all duration-500">
-            506K+
+            550K+
           </span>
           <span className="text-sm text-muted-foreground font-medium">
             views
@@ -258,6 +258,17 @@ export const Photography = () => {
                     <div className="pointer-events-none absolute bottom-2 left-3 font-mono text-[10px] text-white/0 group-hover:text-white/80 transition-colors duration-300">
                       {String(originalIndex + 1).padStart(2, "0")}
                     </div>
+
+                    {/* Featured-in credit */}
+                    {(originalIndex === 3 || originalIndex === 5) && (
+                      <div className="pointer-events-none absolute top-3 left-3 z-10">
+                        <span className="inline-block px-2 py-1 text-[10px] font-mono uppercase tracking-[0.12em] text-white/90 bg-black/30 backdrop-blur-sm rounded-sm border border-white/10">
+                          {originalIndex === 3
+                            ? "Featured in India.com"
+                            : "Featured in NDTV.com"}
+                        </span>
+                      </div>
+                    )}
                   </motion.div>
                 );
               })}
