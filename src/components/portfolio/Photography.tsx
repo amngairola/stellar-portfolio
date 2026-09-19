@@ -272,7 +272,7 @@ export const Photography = () => {
                             : originalIndex === 3
                             ? "Featured in India.com"
                             : originalIndex === 4
-                            ? "indulgexpress.com"
+                            ? "Featured in indulgexpress.com"
                             : originalIndex === 5
                             ? "Featured in NDTV.com"
                             : "Featured in TravelAndLeisureAsia.com"}

@@ -1,5 +1,7 @@
 import { Hero } from "@/components/portfolio/Hero";
 import { Skills } from "@/components/portfolio/Skills";
+import { Achievements } from "@/components/portfolio/Achievements";
+import { Projects } from "@/components/portfolio/Projects";
 import { useReveal } from "@/hooks/useReveal";
 
 const Home = () => {
@@ -10,6 +12,8 @@ const Home = () => {
       <div className="relative z-10">
         <Hero />
         <Skills />
+        <Achievements />
+        <Projects />
       </div>
     </div>
   );

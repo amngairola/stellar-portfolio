@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 
@@ -101,6 +101,17 @@ export const ChapterLayout = () => {
       </main>
 
       <Footer />
+
+      <div className="fixed bottom-5 left-5 md:bottom-8 md:left-8 z-40 hidden sm:block">
+        <button
+          onClick={() => navigate(prev.path)}
+          aria-label={`Go to ${prev.label}`}
+          className="group inline-flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-primary text-primary-foreground font-medium text-sm hover:brightness-110 transition"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+          <span>{prev.label}</span>
+        </button>
+      </div>
 
       <div className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 flex items-center gap-3">
         <div className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-full bg-card/80 backdrop-blur-md border border-border">
