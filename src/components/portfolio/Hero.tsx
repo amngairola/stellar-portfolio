@@ -11,11 +11,6 @@ export const Hero = () => {
 
       <div className="container relative">
         <div className="max-w-3xl">
-          <div className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground mb-5 flex items-center gap-2">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary" />
-            {personal.roles?.[0] ?? "Software Engineer"}
-          </div>
-
           <h1 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] tracking-tight">
             Hi, I'm <span className="text-primary">{personal.name}.</span>
           </h1>
