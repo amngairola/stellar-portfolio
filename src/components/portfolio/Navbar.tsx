@@ -10,7 +10,6 @@ import { prefetchBlogList } from "@/hooks/useBlogs";
 
 const chapters = [
   { to: "/", label: "Home" },
-  { to: "/work", label: "Work" },
   { to: "/journey", label: "Journey" },
   { to: "/lens", label: "Lens" },
   { to: "/blogs", label: "Blogs" },

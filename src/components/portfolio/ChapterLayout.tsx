@@ -6,7 +6,6 @@ import { Footer } from "./Footer";
 
 export const CHAPTERS = [
   { path: "/", label: "Home" },
-  { path: "/work", label: "Work" },
   { path: "/journey", label: "Journey" },
   { path: "/lens", label: "Lens" },
   { path: "/blogs", label: "Blogs" },
@@ -102,7 +101,7 @@ export const ChapterLayout = () => {
 
       <Footer />
 
-      <div className="fixed bottom-5 left-5 md:bottom-8 md:left-8 z-40 hidden sm:block">
+      <div className="fixed bottom-5 left-5 md:bottom-8 md:left-8 z-50 hidden sm:block">
         <button
           onClick={() => navigate(prev.path)}
           aria-label={`Go to ${prev.label}`}

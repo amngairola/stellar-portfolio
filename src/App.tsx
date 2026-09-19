@@ -5,7 +5,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "./pages/Home.tsx";
-import Work from "./pages/Work.tsx";
 import Journey from "./pages/Journey.tsx";
 import Lens from "./pages/Lens.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -50,7 +49,6 @@ const App = () => {
             <Routes>
               <Route element={<ChapterLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/work" element={<Work />} />
                 <Route path="/journey" element={<Journey />} />
                 <Route path="/lens" element={<Lens />} />
                 <Route path="/blogs" element={<Blogs />} />
