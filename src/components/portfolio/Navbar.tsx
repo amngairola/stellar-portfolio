@@ -252,7 +252,7 @@ export const Navbar = () => {
             size="sm"
             className="hidden sm:inline-flex min-h-[44px] bg-primary text-primary-foreground transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
           >
-            <a href={personal.resumeUrl} download>
+            <a href="https://inapp.app/amangairola/resume" target="_blank" rel="noopener noreferrer">
               <Download className="w-4 h-4 mr-1.5" /> Resume
             </a>
           </Button>
@@ -285,8 +285,9 @@ export const Navbar = () => {
             ))}
             <div className="mt-2">
               <a
-                href={personal.resumeUrl}
-                download
+                href="https://inapp.app/amangairola/resume"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="icon-action min-h-[44px] flex items-center justify-center gap-1.5 rounded-md bg-primary text-primary-foreground text-sm"
               >
                 <Download className="w-4 h-4" /> Resume

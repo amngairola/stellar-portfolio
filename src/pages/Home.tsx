@@ -1,5 +1,5 @@
 import { Hero } from "@/components/portfolio/Hero";
-import { About } from "@/components/portfolio/About";
+import { Skills } from "@/components/portfolio/Skills";
 import { useReveal } from "@/hooks/useReveal";
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
       <div aria-hidden className="pointer-events-none absolute inset-x-[-10%] top-0 z-0 h-[78vh] home-ambient-glow" />
       <div className="relative z-10">
         <Hero />
-        <About />
+        <Skills />
       </div>
     </div>
   );

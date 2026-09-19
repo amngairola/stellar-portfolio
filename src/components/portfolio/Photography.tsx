@@ -260,12 +260,22 @@ export const Photography = () => {
                     </div>
 
                     {/* Photo credit / provenance tag */}
-                    {(originalIndex === 3 || originalIndex === 5) && (
+                    {(originalIndex === 1 ||
+                      originalIndex === 3 ||
+                      originalIndex === 4 ||
+                      originalIndex === 5 ||
+                      originalIndex === 6) && (
                       <div className="pointer-events-none absolute top-3 left-3 z-10">
                         <span className="inline-block px-2 py-1 text-[10px] font-mono uppercase tracking-[0.12em] text-white/90 bg-black/30 backdrop-blur-sm rounded-sm border border-white/10">
-                          {originalIndex === 3
+                          {originalIndex === 1
+                            ? "Featured in NDTV.com"
+                            : originalIndex === 3
                             ? "Featured in India.com"
-                            : "Featured in NDTV.com"}
+                            : originalIndex === 4
+                            ? "indulgexpress.com"
+                            : originalIndex === 5
+                            ? "Featured in NDTV.com"
+                            : "Featured in TravelAndLeisureAsia.com"}
                         </span>
                       </div>
                     )}
