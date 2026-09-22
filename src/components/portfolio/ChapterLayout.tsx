@@ -101,7 +101,7 @@ export const ChapterLayout = () => {
 
       <Footer />
 
-      <div className="fixed bottom-5 left-5 md:bottom-8 md:left-8 z-50">
+      <div className="fixed bottom-5 left-5 md:bottom-8 md:left-8 z-50 hidden lg:block">
         <button
           onClick={() => navigate(prev.path)}
           aria-label={`Go to ${prev.label}`}

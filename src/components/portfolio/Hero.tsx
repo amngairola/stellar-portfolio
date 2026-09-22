@@ -1,4 +1,4 @@
-import { Download } from "lucide-react";
+import { Download, Calendar } from "lucide-react";
 import { personal } from "@/data/portfolio";
 
 export const Hero = () => {
@@ -21,14 +21,22 @@ export const Hero = () => {
 
           <div className="mt-8 h-px w-24 bg-primary/40" />
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3">
             <a
               href="https://inapp.app/amangairola/resume"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
             >
               <Download className="w-4 h-4" /> Resume
+            </a>
+            <a
+              href="https://cal.com/aman-gairola-yqarjb/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border border-primary/50 bg-transparent text-primary text-sm font-medium transition-all duration-200 hover:bg-primary/10 hover:-translate-y-0.5 active:scale-95"
+            >
+              <Calendar className="w-4 h-4" /> Schedule a Meeting
             </a>
           </div>
         </div>
